@@ -125,7 +125,7 @@ body → `409 idempotency_key_reused`.
 
 | Bucket | Limit | Scope |
 | :--- | :--- | :--- |
-| `auth` | 5/min per IP + 10/min per email | login, reset |
+| `auth` | 20/min per IP + 10/min per email | login, reset |
 | `public` | 60/min per IP | unauthenticated |
 | `user` | 600/min per user | standard |
 | `upload` | 20/min per device | screenshots |
