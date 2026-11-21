@@ -68,7 +68,7 @@ review and finalise the scope).
   M3 Time/Monitoring/Desktop → M4 Reports/Console → M5 Hardening/Launch**, plus P2 (chat/mobile)
   and P3 (AI). Includes workstreams, quality gates, effort estimates, risk register, decision
   summary and a live checklist board.
-- `docs/DEVELOPMENT_PLAN.md` — the executable backlog: **182 tasks** with IDs (`M0-T01` … `P3-T16`),
+- `docs/DEVELOPMENT_PLAN.md` — the executable backlog: **230 tasks** with IDs (`M0-T01` … `P3-T16`),
   dependencies, acceptance criteria and status board. This is what gets ticked as we build.
 - `docs/TEST_PLAN.md` — strategy, suites `TS-01…TS-11`, **100+ named test cases**, tenant-isolation
   harness, privacy-deletion verification against storage, performance targets, defect severity and

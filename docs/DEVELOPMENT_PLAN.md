@@ -31,6 +31,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | M5 Hardening & Launch | 28 | 0 | Not started |
 | P2 Collaboration | 22 | 0 | Deferred |
 | P3 Intelligence | 16 | 0 | Deferred |
+| Cross-cutting (X-01…07) | 7 | 0 | Continuous |
 
 ---
 
@@ -163,7 +164,7 @@ present · tenant-scope and permission checks reviewed · docs/checkbox/changelo
 - [ ] **M0-T24** Write `docs/RUNBOOKS.md` skeleton (start/stop, reset DB, rotate dev keys, logs).
 
 **M0 exit gate**: `docker compose up -d` → every `/healthz` green through the gateway → seeded
-login works → CI green on an empty PR → ADR-001…008 accepted.
+login works → CI green on an empty PR → ADR-001…004, 007–009, 013, 014 accepted.
 
 ---
 

@@ -466,7 +466,7 @@ Cache failures degrade to database reads where safe; auth decisions **fail close
 
 | Environment | Topology |
 | :--- | :--- |
-| Local | Docker Compose: 13 containers + observability profile |
+| Local | Docker Compose: 15 containers + observability profile |
 | CI | Ephemeral containers per test job; images built and scanned |
 | Staging | Single-node Kubernetes (or compose on a VM for earliest stages) + managed Postgres |
 | Production MVP | Managed Postgres (PITR), managed Redis, S3, 2 replicas per stateless service, Traefik ingress |

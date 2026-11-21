@@ -91,7 +91,7 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done · `[!]` blocked
 - [ ] CI workflow template for services and clients (lint, test, build, scan)
 - [ ] Root `Makefile`/scripts: `bootstrap`, `migrate`, `seed`, `test`, `lint`, `down`
 - [ ] `.env.example` complete and documented
-- [ ] ADR-001…ADR-008 accepted in `docs/DECISIONS.md`
+- [ ] ADR-001…004, 007–009, 013, 014 accepted in `docs/DECISIONS.md` (005/006/010 confirmed before M3)
 - [ ] Demo seed: 1 tenant, 6 users, 2 teams, 2 projects, 1 sprint, 20 items
 
 **Exit gate**: `docker compose up -d` on a clean machine yields a green `/healthz` for every
@@ -338,7 +338,7 @@ Full records in `docs/DECISIONS.md`.
 | `docs/GLOSSARY.md` | Shared vocabulary | Done |
 | `docs/CONTRIBUTING.md` | Working conventions | Done |
 | `docs/RUNBOOKS.md` | Operational procedures | M5 |
-| `docs/CHANGELOG.md` | Delivered changes | M0 onward |
+| `docs/CHANGELOG.md` | Delivered changes | Living |
 | `docs/RELEASE_NOTES.md` | Version history | M5 |
 
 ---
