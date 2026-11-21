@@ -179,3 +179,99 @@ No product code was written in this step, so there are no tests to report; the w
 and repository planning. This delivery is committed and pushed per rule 11.
 
 — OpenCade
+
+# Human Message: 20261121193143
+
+Regarding Q1, why do you suggest FastAPI over NextJS?
+How about Rust for CPU intensive work?
+
+# AI Message: 20261121193234
+
+Good challenge — and the framing matters, so let me separate two questions.
+
+## 1. FastAPI versus *Next.js* is a category mismatch
+
+Next.js is a React UI framework with a request/response server layer (Route Handlers, Server
+Actions). It is excellent at rendering pages and holding httpOnly session cookies, which is exactly
+how we use it (the web BFF). It is a poor fit for **long-lived domain services**:
+
+- No durable queue consumers or scheduled workers (report exports, screenshot retention, event
+  projectors).
+- Weak/awkward WebSocket hosting for Phase 2 chat; typically needs a custom server, which erodes
+  the reason to use the framework.
+- Each "service" would bundle React and ship a 200 MB+ image — nine of them.
+- Request/response, serverless-shaped timeouts do not suit batch sync, retention jobs or streams.
+- No native OpenAPI generation from handlers; you would bolt on Zod + a generator and maintain it.
+
+The real alternative was **NestJS/Fastify (TypeScript) as the backend runtime**. That is a
+legitimate architecture, not a straw man.
+
+## 2. Why I still chose Python/FastAPI
+
+1. **Alignment with the existing design set** — `tech-design.md` already specifies FastAPI, the
+   `src/api|core|db|services` layout and `pyproject.toml`. Fewer contradictions to unwind.
+2. **Migration and reporting ergonomics** — SQLAlchemy 2 async + Alembic is a mature story for nine
+   independently migrated logical databases, partitions and reporting projections. TS options are
+   good but less proven for this shape.
+3. **Contract-first without losing TS types** — FastAPI derives OpenAPI 3.1 from Pydantic, and the
+   web/mobile/desktop clients generate TypeScript from it. The frontend still gets end-to-end
+   types; it just gets them at build time instead of from a shared package.
+4. **Delivery speed for this workload** — the services are mostly validation, authorisation, SQL and
+   events. Pydantic + dependency injection gets there with less boilerplate than NestJS.
+5. **AI/data headroom** — the Phase 3 service (retrieval, embeddings, evaluation tooling) is
+   strongest in Python. If the backend were TypeScript we would likely still end up with Python
+   somewhere.
+
+**Honest counter-case for NestJS**: one language across web and backend, shared Zod schemas, a
+larger hiring pool for product teams, and no Python GIL. If the team were JS-native, I would
+seriously consider it. For a human owner + AI agent with an existing FastAPI design, the tie
+breakers favour Python. It is close enough that I recorded it as a decision you can overturn before
+M0 rather than burying it.
+
+## 3. Rust — yes, but targeted, not as the service runtime
+
+Rust is the right tool where cycles, memory or the endpoint matter:
+
+| Surface | Rust? | Why |
+| :--- | :--- | :--- |
+| Desktop agent | **Yes, already** | Capture, image encode, AES-GCM, hashing, SQLCipher, idle detection, offline queue — on user machines with CPU/RAM budgets |
+| Media pipeline (server) | **Conditional** | Encrypt/thumbnail/hash can be hot; decide by benchmark at M3 |
+| Crypto / parsing hot paths | Conditional | Only if profiling shows a real cost |
+| CRUD/auth/reporting services | No | Database- and I/O-bound; Rust adds boilerplate and slows iteration |
+| Gateway | No | Traefik (Go) already does this well |
+| Reports/PDF | No | DB-bound or headless-Chromium-bound, not CPU-bound in our code |
+
+The rule I propose (now ADR-018, **Proposed**):
+
+1. Profile first — the work must be **CPU-bound**, not DB- or I/O-bound.
+2. Exhaust the boring option: `libvips`/`pyvips`, OpenCV, `orjson`, PostgreSQL aggregation, worker
+   parallelism.
+3. If Rust is justified, ship it as a **narrow-interface worker/CLI** (or a PyO3 extension when call
+   overhead dominates), never a big-bang rewrite.
+4. Concrete M3 gate: encrypt + thumbnail + hash of a 1 MB capture in < 50 ms, agent < 2% average
+   CPU and < 250 MB RSS. If Python/libvips misses that on the capture path, the media pipeline
+   moves to Rust.
+
+Writing **all** backend services in Rust (Axum + sqlx) would be fast and safe, but it trades away
+CRUD velocity, migration/reporting ergonomics and the LLM ecosystem for performance we do not need
+at MVP scale. It is a reasonable choice for a specific future service (e.g. high-volume screenshot
+ingest), not for the platform.
+
+## 4. What I changed
+
+- `docs/DECISIONS.md`: added **ADR-018** (runtime language policy) and a clarification in ADR-001
+  that Next.js was never a backend candidate.
+- `docs/ARCHITECTURE.md`: added §16 “Runtime & Language Boundaries”.
+- `AGENTS.md`: recorded the same rule for agents.
+- `docs/CHANGELOG.md`: noted the decision.
+
+## 5. Your call
+
+- **Confirm ADR-018** (Python services + targeted Rust) — keeps M0 as planned.
+- **Or choose NestJS/TypeScript services** — say so now, before M0; I will re-run the stack,
+  library and scaffolding choices and re-issue ADR-001/018. The plans do not change materially;
+  the implementation details do.
+- **Or choose all-Rust services** — possible, but I would advise against it for MVP; I will write
+  the trade-off ADR if you want it explored.
+
+— OpenCade

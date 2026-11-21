@@ -23,7 +23,10 @@ Status values: `Proposed` · `Accepted` · `Rejected` · `Superseded by ADR-xxx`
 - **Consequences**: Two languages (Python + TypeScript) in the codebase; performance is adequate
   for the stated scale; heavy AI/CPU work can be isolated in workers.
 - **Alternatives considered**: NestJS/TypeScript (single language, weaker AI ecosystem, more
-  boilerplate); Go (fast, but slower iteration and weaker AI ergonomics).
+  boilerplate); Go (fast, but slower iteration and weaker AI ergonomics); **Next.js as the backend
+  (rejected — see ADR-018; it is a UI framework, not a service runtime)**.
+- **Clarification (2026-11-21)**: the comparison is Python vs Node/TypeScript for services, not
+  FastAPI vs Next.js. Next.js remains the web UI and BFF only.
 - **Revisit if**: p95 targets cannot be met after profiling, or the team grows a strong TS backend
   preference.
 
@@ -253,6 +256,48 @@ Status values: `Proposed` · `Accepted` · `Rejected` · `Superseded by ADR-xxx`
 
 ---
 
+## ADR-018 — Runtime language policy: Python services, Rust for CPU-bound components, TypeScript clients
+
+- **Status**: Proposed
+- **Context**: Question raised by Laksiri (2026-11-21): "why FastAPI over Next.js?" and "how about
+  Rust for CPU-intensive work?" The platform is inherently polyglot (Next.js web, Tauri/Rust
+  desktop), so the real question is where each runtime earns its place.
+- **Decision**:
+  1. **Domain services** remain Python 3.12 + FastAPI (ADR-001).
+  2. **Next.js is never a service runtime.** It is the web UI plus a thin BFF for httpOnly cookie
+     sessions. Using it as a backend would mean 9 React-bundled deployments with no long-lived
+     consumers, no durable queue workers, weak WebSocket support for P2 chat, and serverless-shaped
+     timeouts — the wrong shape for this architecture.
+  3. **Rust is the default for CPU-bound, memory-constrained, or endpoint-resident components.**
+     Already true for the desktop agent (capture, image encode, AES-GCM, hashing, SQLCipher, idle
+     detection). It becomes the choice for a new component only when profiling proves CPU-bound
+     work that cannot be solved by a library or configuration.
+  4. **Exhaust the boring option first**: `libvips`/`pyvips`, OpenCV, Pillow, `orjson`, PostgreSQL
+     aggregation, and worker parallelism before adding Rust. A Rust rewrite of a DB-bound CRUD
+     service is prohibited by this policy.
+  5. **Rust integration shape**: a narrow-interface worker/CLI (or a PyO3 extension when the call
+     overhead dominates), with a versioned contract, deployed beside the service. Never a
+     big-bang rewrite.
+  6. **TypeScript backend (NestJS/Fastify)** remains a legitimate alternative but requires a new
+     ADR with a team-capability rationale; it is not selected for MVP.
+- **Rationale**: Python maximises delivery speed for I/O-bound orchestration (auth, CRUD,
+  validation, reporting SQL) and keeps the AI/analytics headroom. Rust is genuinely superior where
+  cycles and memory matter (desktop, media, crypto) and is already required for Tauri, so it is a
+  targeted tool rather than a second backend platform. Contract-first OpenAPI generation preserves
+  end-to-end TypeScript types for clients, so a Python backend does not cost the frontend its type
+  safety.
+- **Consequences**: Two backend languages on the server side (Python, plus Rust only in isolated
+  components); a benchmark gate at M3 decides whether the media pipeline needs Rust; CI must build
+  Rust artefacts only for the desktop and any approved worker.
+- **Benchmark gate (M3)**: encrypt + thumbnail + hash of a 1 MB capture should complete in
+  < 50 ms and the agent should stay < 2% average CPU / < 250 MB RSS. If Python/libvips misses this
+  on the capture path, the media pipeline moves to Rust.
+- **Alternatives**: All-Rust backend (Axum + sqlx): excellent runtime, slower CRUD/iteration and
+  thinner LLM/reporting ecosystem; all-TypeScript backend: fewest languages, but poor fit for
+  background consumers and AI data work; Next.js backend: rejected outright.
+
+---
+
 ## Decision Log Summary
 
 | ADR | Title | Status | Milestone |
@@ -274,9 +319,11 @@ Status values: `Proposed` · `Accepted` · `Rejected` · `Superseded by ADR-xxx`
 | 015 | Manual billing in MVP | Proposed | M1 |
 | 016 | No screenshot backups | Accepted | M3 |
 | 017 | Monotonic time + server clamp | Accepted | M3 |
+| 018 | Runtime language policy (Python / Rust / TS) | Proposed | M3 |
 
 ## Change Log
 
 | Date | Change |
 | :--- | :--- |
 | 2026-11-21 | ADR-001…017 recorded during initial planning |
+| 2026-11-21 | ADR-018 added: runtime language policy (Python services, Rust for CPU-bound work, Next.js not a backend) |

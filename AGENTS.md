@@ -130,6 +130,11 @@ The orchestrator only pins submodule commits and wires them together.
 
 Deviations require an ADR in `docs/DECISIONS.md`.
 
+**Runtime boundaries (ADR-018)**: domain services are Python/FastAPI; Next.js is only the web UI +
+thin BFF; Rust is reserved for CPU-bound, memory-constrained or endpoint-resident components (the
+desktop agent today, a media worker if the M3 benchmark demands it). Exhaust `libvips`, DB
+aggregation and worker parallelism before introducing Rust. Never rewrite a CRUD service in Rust.
+
 ---
 
 ## 7. Coding Standards (summary)

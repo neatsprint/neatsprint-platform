@@ -503,7 +503,24 @@ as a pre-deploy job per service, forward-only.
 
 ---
 
-## 16. Open Architecture Items
+## 16. Runtime & Language Boundaries
+
+| Layer | Language | Rule |
+| :--- | :--- | :--- |
+| Domain services | Python / FastAPI | I/O-bound orchestration, validation, SQL, events |
+| Web UI + BFF | TypeScript / Next.js | Session cookies, rendering; **never** a service runtime |
+| Desktop agent | Rust + React | Capture, crypto, local DB, offline queue |
+| Media / hot paths | Rust *(conditional)* | Only when a benchmark proves Python/libvips is insufficient |
+| Reports | Python | DB-bound aggregation, no Rust rewrite |
+| AI | Python | Provider calls, retrieval, guardrails |
+
+Decision rule for Rust (ADR-018): profile first; the work must be CPU-bound, the interface narrow,
+and the component either high-volume or resident on a user device. Exhaust `libvips`, PostgreSQL
+aggregation and worker parallelism before adding a Rust build to CI.
+
+---
+
+## 17. Open Architecture Items
 
 | Item | Needed by | Note |
 | :--- | :--- | :--- |

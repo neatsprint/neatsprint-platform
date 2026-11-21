@@ -315,6 +315,10 @@ Full records in `docs/DECISIONS.md`.
 | 012 | Billing manual in MVP, Stripe in Phase 3 | Proposed |
 | 013 | Multi-repo with submodules and a contracts repo | Accepted |
 | 014 | Next.js App Router + Tailwind + shadcn/ui for web | Accepted |
+| 015 | Manual billing in MVP, Stripe in Phase 3 | Proposed |
+| 016 | Screenshot blobs excluded from backups | Accepted |
+| 017 | Monotonic time + server clamp for durations | Accepted |
+| 018 | Runtime policy: Python services, Rust for CPU-bound, Next.js not a backend | Proposed |
 
 ---
 

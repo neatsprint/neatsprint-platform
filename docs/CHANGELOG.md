@@ -27,6 +27,8 @@ All notable changes to NeatSprint are recorded here. Format follows
   documents (encryption model, privacy window authority, reporting architecture, device binding).
 - 2026-11-21 — Defined the 15 component repositories and the submodule workflow in
   `docs/REPOSITORIES.md`.
+- 2026-11-21 — Added ADR-018 (runtime language policy: Python services, Next.js as UI/BFF only,
+  Rust for CPU-bound components) in response to the backend-runtime question.
 
 ### Changed
 
