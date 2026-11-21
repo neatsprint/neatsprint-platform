@@ -1,0 +1,373 @@
+# NeatSprint — Master Plan
+
+> **Status**: Draft v1 for review · **Version**: 1.0 · **Last updated**: 2026-11-21
+> **Owner**: Laksiri Fernando · **Author**: OpenCade (AI)
+> **Supersedes**: `documents/step2-mvp-roadmap.md` (kept as reference)
+> **Detail level**: This is the *portfolio* view. Task-level execution lives in
+> `DEVELOPMENT_PLAN.md`; verification lives in `TEST_PLAN.md`.
+
+---
+
+## 1. Mission & Definition of Success
+
+**Mission**: Ship a trustworthy, privacy-honest agile delivery platform that a small team can
+run in a browser and on their desktops, and that an enterprise can buy without a compliance
+exception.
+
+**Definition of success for MVP (v1.0)**:
+
+1. Tenants can onboard, plan, execute and report on a sprint without leaving the product.
+2. Desktop tracking survives four hours offline and loses nothing.
+3. Screenshot deletion is real, immediate and provably irreversible — the flagship trust feature.
+4. Tenant isolation and RBAC are enforced by tests, not by convention.
+5. A new developer can run the whole stack locally in under 30 minutes.
+
+---
+
+## 2. Guiding Constraints
+
+| Constraint | Impact on plan |
+| :--- | :--- |
+| Two-person effective team (human owner + AI) | Strict sequencing; no parallel horizontal layer builds; vertical slices only |
+| Multi-repo with submodules | Contract-first APIs; versioned releases; no shared mutable code |
+| No dedicated DevOps staff | Docker Compose for MVP, minimal k8s manifests only when needed |
+| Compliance claims must be defensible | Security and privacy work is scheduled, not deferred |
+| AGPLv3 open core | No dependency with incompatible licensing; legal docs before launch |
+
+---
+
+## 3. Phase Model
+
+| Phase | Name | Theme | Exit gate |
+| :--- | :--- | :--- | :--- |
+| **M0** | Foundations | Repos, orchestration, contracts, CI skeleton | Clean `docker compose up`, CI green, contracts published |
+| **M1** | Identity & Tenancy | Who you are, which tenant, what you may do | Invite → login → permission-enforced API, tested |
+| **M2** | Work Management | Projects, backlog, sprints, teams | A team can plan and run a sprint end-to-end |
+| **M3** | Time & Monitoring | Timer, screenshots, privacy, offline agent | 4-hour offline session syncs losslessly; deletion verified |
+| **M4** | Insight & Console | Reports, dashboards, admin, UX polish | All MVP screens complete; metrics reconcile |
+| **M5** | Hardening & Launch | Security, performance, docs, legal, release | MVP acceptance criteria (§8 of SCOPE) all met |
+| **P2** | Collaboration | Chat, notifications, mobile, integrations | Team chat + mobile beta in production |
+| **P3** | Intelligence | AI assistant, summaries, enterprise compliance | AI features GA behind enterprise plan |
+
+M0–M5 = MVP. P2 and P3 are planned but **not started** during MVP hardening.
+
+---
+
+## 4. Workstreams
+
+Each workstream has a lead (owner of decisions) and an executor. On this project the AI is the
+executor for all streams; Laksiri approves gates and provides accounts/credentials.
+
+| ID | Workstream | Scope | Gate owner |
+| :--- | :--- | :--- | :--- |
+| WS1 | Product & Scope | Scope, requirements, acceptance criteria, prioritisation | Laksiri |
+| WS2 | Architecture | Service boundaries, contracts, data model, ADRs | Laksiri (approve) / AI (author) |
+| WS3 | Platform & DevOps | Repos, compose, gateway, CI/CD, observability, backups | AI |
+| WS4 | Backend services | IAM, core, task, team, worklog, monitoring, reports | AI |
+| WS5 | Clients | Web, desktop agent, mobile (P2) | AI |
+| WS6 | Quality | Test strategy, automation, performance, security testing | AI |
+| WS7 | Security & Privacy | Threat model, controls, privacy window, audits, compliance | Laksiri (approve) / AI (author) |
+| WS8 | UX & Design system | Screens, flows, tokens, copy, accessibility | AI (decides), Laksiri (reviews) |
+| WS9 | Release & Operations | Environments, release process, runbooks, support | AI |
+
+---
+
+## 5. Milestones & Deliverables
+
+Legend: `[ ]` not started · `[~]` in progress · `[x]` done · `[!]` blocked
+
+### M0 — Foundations
+
+**Goal**: every future commit lands in a working, tested skeleton.
+
+- [ ] Repositories created by Laksiri per `docs/REPOSITORIES.md` (15 new + this orchestrator)
+- [ ] Submodules added under `services/` and pinned
+- [ ] `neatsprint-contracts` published: OpenAPI bootstrap + shared error model
+- [ ] Orchestrator `docker-compose.yml`: gateway, postgres, redis, minio, mailpit, 10 services
+- [ ] Traefik routing for `/api/v1/*` with ForwardAuth stub
+- [ ] Service template: FastAPI + health endpoints + structured logging + pytest harness
+- [ ] Shared Python libraries: config, logging, auth middleware, DB session, outbox
+- [ ] Web app skeleton: Next.js, design tokens, layout, auth placeholder
+- [ ] CI workflow template for services and clients (lint, test, build, scan)
+- [ ] Root `Makefile`/scripts: `bootstrap`, `migrate`, `seed`, `test`, `lint`, `down`
+- [ ] `.env.example` complete and documented
+- [ ] ADR-001…ADR-008 accepted in `docs/DECISIONS.md`
+- [ ] Demo seed: 1 tenant, 6 users, 2 teams, 2 projects, 1 sprint, 20 items
+
+**Exit gate**: `docker compose up -d` on a clean machine yields a green `/healthz` for every
+service, seeded demo data, and CI passing on an empty PR.
+
+### M1 — Identity & Tenancy
+
+**Goal**: a real person can be invited, log in, and be correctly authorised.
+
+- [ ] IAM: user model, credentials (Argon2id), sessions, refresh rotation
+- [ ] IAM: invitations (create, accept, revoke, expire)
+- [ ] IAM: Google OAuth2/OIDC login
+- [ ] IAM: RBAC model (roles, permissions, role_permissions, user_roles)
+- [ ] IAM: JWT issuance (RS256) + JWKS endpoint + revocation
+- [ ] IAM: password reset, deactivation, profile
+- [ ] IAM: audit log (append-only) + admin queries
+- [ ] Core: tenant provisioning, plans, settings
+- [ ] Core: application registry + tenant application enablement
+- [ ] Core: plan-limit enforcement helper + tenant settings API
+- [ ] Gateway: ForwardAuth, rate limits, security headers, CORS
+- [ ] Web: login, invitation acceptance, password reset, tenant switcher-free session shell
+- [ ] Web: admin — users list, invite, role assignment, deactivation
+- [ ] Tests: RBAC matrix, tenant isolation suite, auth E2E
+
+**Exit gate**: invitation → registration → login → admin grants a role → member sees exactly the
+permitted menu and receives `403` on everything else (verified by automated test).
+
+### M2 — Work Management
+
+**Goal**: a team can plan, run and close a sprint.
+
+- [ ] Task service: projects, project teams, backlog items, ranking, history, comments
+- [ ] Task service: sprint lifecycle (plan/start/complete), carry-over
+- [ ] Task service: attachments to object storage (presigned)
+- [ ] Team service: teams, members, leads, project mapping
+- [ ] Cross-service validation: user existence, team membership, project access
+- [ ] Web: projects list/create/settings
+- [ ] Web: backlog table with inline edit, filters, bulk actions
+- [ ] Web: Kanban board with drag-and-drop and optimistic updates
+- [ ] Web: sprint planning, sprint board, sprint completion dialog
+- [ ] Web: item detail drawer — description, comments, history, time summary
+- [ ] Web: teams admin
+- [ ] Tests: lifecycle rules, ranking concurrency, permission matrix per screen
+
+**Exit gate**: create project → add items → plan sprint → move items across the board → complete
+sprint with carry-over, all permission-correct.
+
+### M3 — Time Tracking, Monitoring & Desktop Agent
+
+**Goal**: the trust story becomes real.
+
+- [ ] Worklog: server-authoritative timer, sessions, manual entries, timesheets
+- [ ] Worklog: idempotent sync endpoint + conflict handling
+- [ ] Monitoring: device registration (key pair), sessions, heartbeat
+- [ ] Monitoring: screenshot upload (KMS envelope encryption), pending/visible states
+- [ ] Monitoring: privacy window enforcement, deletion pipeline, tombstones, audit
+- [ ] Monitoring: retention job (hard delete blobs + metadata + embeddings)
+- [ ] Desktop: Tauri shell, tray, login, device registration, timer, idle detection
+- [ ] Desktop: capture engine (multi-monitor, DPI), encryption, local queue
+- [ ] Desktop: review tray (view/delete), transparency log
+- [ ] Desktop: sync engine (push/pull, backoff, conflict resolution), updater
+- [ ] Web: my screenshots gallery, deletion flow, personal transparency log
+- [ ] Web: manager monitoring gallery (tombstones), session detail
+- [ ] Tests: offline 4-hour simulation, deletion irreversibility, device controls
+
+**Exit gate**: the four-hour offline scenario and the deletion-irreversibility scenario pass on a
+real desktop build, evidenced by test artefacts.
+
+### M4 — Reports, Dashboards & Console Polish
+
+**Goal**: managers get answers; the product feels finished.
+
+- [ ] Reports: read-model database and projectors (events/outbox)
+- [ ] Reports: time by project/user, completion, velocity, burndown, monitoring summary
+- [ ] Reports: personal transparency report
+- [ ] Reports: CSV export; PDF executive summary (async job + signed URL)
+- [ ] Web: dashboard with role-aware widgets
+- [ ] Web: reports screens with filters, charts, empty/loading/error states
+- [ ] Web: settings (tenant, monitoring policy, retention, aggregation mode)
+- [ ] Web: audit log viewer
+- [ ] Web: responsive + dark mode + accessibility pass
+- [ ] Mobile (stretch, only if M0–M4 on schedule): read-only shell
+
+**Exit gate**: report totals reconcile to the second with raw entries; every MVP screen matches
+`UI_UX_DESIGN.md`; accessibility audit passes AA.
+
+### M5 — Hardening & Launch
+
+**Goal**: defensible release.
+
+- [ ] Threat model reviewed; mitigations verified
+- [ ] OWASP ASVS L2 checklist (in-scope items) signed off
+- [ ] Performance test at target scale; bottlenecks fixed
+- [ ] Backup + restore rehearsal documented in `docs/RUNBOOKS.md`
+- [ ] Observability: dashboards, alerts, SLOs, on-call runbook
+- [ ] Legal: ToS, privacy policy, DPA, sub-processor list, monitoring disclosure template
+- [ ] Security headers, CSP, rate limits, dependency and container scans clean
+- [ ] Release pipeline: signed images, versioned release, rollback procedure
+- [ ] Docs: `README`, onboarding, API reference published
+- [ ] UAT script executed with Laksiri; acceptance criteria signed
+- [ ] v1.0.0 tagged
+
+**Exit gate**: SCOPE §8 acceptance criteria satisfied and recorded in `docs/RELEASE_NOTES.md`.
+
+### P2 — Collaboration (post-MVP)
+
+- [ ] Chat service: channels, messages, read state, WebSocket gateway
+- [ ] Presence from desktop heartbeat, client-type icons
+- [ ] Daily scrum flow
+- [ ] Notification service: in-app, email, push tokens
+- [ ] Mobile app: auth, assigned work, status updates, manual time, chat, push
+- [ ] GitHub integration: commit/PR linking
+- [ ] Saved views and command palette (if not delivered in M4)
+
+### P3 — Intelligence (post-MVP)
+
+- [ ] AI service scaffolding, provider adapter, prompt registry
+- [ ] RAG over permitted project data (pgvector)
+- [ ] Work summaries and standup drafts
+- [ ] Backlog assistant with confirmation-gated writes
+- [ ] Voice push-to-talk
+- [ ] Custom role builder UI, legal hold, SIEM export
+- [ ] Stripe billing, Gmail integration
+
+---
+
+## 6. Delivery Sequence (critical path)
+
+```text
+M0 Foundations
+   └─ M1 IAM + Core ──┬─ M2 Task + Team ──┬─ M3 Worklog + Monitoring + Desktop
+                      │                    └─ M4 Reports
+                      └─ Web shell (parallel within M1/M2, same milestone)
+                                            └─ M5 Hardening ── v1.0.0
+```
+
+Rules:
+
+- **Contract before code**: the OpenAPI fragment for a service is merged before its
+  implementation, so clients can build against a stable shape.
+- **Vertical slice**: each milestone ends with a demoable user journey, not a layer.
+- **No milestone skipping**: M3 depends on M2 item identity and M1 identity.
+
+---
+
+## 7. Estimated Effort
+
+Indicative, in AI-agent working sessions (≈ 1 session = a focused delivery block). Human review
+time is separate.
+
+| Milestone | Sessions (low) | Sessions (high) | Confidence |
+| :--- | ---: | ---: | :--- |
+| M0 Foundations | 4 | 6 | High |
+| M1 Identity & Tenancy | 8 | 12 | Medium |
+| M2 Work Management | 8 | 12 | Medium |
+| M3 Time & Monitoring | 12 | 18 | Low (desktop + crypto) |
+| M4 Reports & Console | 7 | 10 | Medium |
+| M5 Hardening & Launch | 6 | 9 | Medium |
+| **MVP total** | **45** | **67** | |
+| P2 Collaboration | 14 | 20 | Low |
+| P3 Intelligence | 12 | 18 | Low |
+
+The widest uncertainty is M3 (desktop capture, encryption, offline sync) — it is scheduled early
+enough to absorb surprises without moving the launch gate.
+
+---
+
+## 8. Quality Gates
+
+Every milestone must pass **all** gates before the next begins.
+
+| Gate | Criteria |
+| :--- | :--- |
+| G1 Build | All repos build from clean checkout; images build; compose starts |
+| G2 Test | Unit + integration green; coverage ≥ 80% on domain logic; no skipped P0 tests |
+| G3 Security | Secret scan clean; dependency scan no high/critical; authz tests green |
+| G4 Contract | OpenAPI/event schemas valid, versioned, published; breaking changes recorded |
+| G5 Docs | Plan checkboxes updated; ADRs recorded; README/runbook current |
+| G6 Review | Laksiri reviews the milestone demo and signs the gate in `conversation.md` |
+
+---
+
+## 9. Risk Register
+
+Likelihood (L) and impact (I): H/M/L. Owner is accountable for the mitigation.
+
+| ID | Risk | L | I | Mitigation | Owner |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| R-01 | Desktop capture/offline complexity overruns | H | H | Build M3 spike first; Windows-first; keep macOS/Linux behind a feature flag | AI |
+| R-02 | Privacy feature mis-implemented (blob survives) | M | H | Deletion pipeline tested with storage inspection; tombstone test in CI; manual adversarial review | AI |
+| R-03 | Cross-tenant leakage | M | H | Repository-level tenant scoping helper, mandatory isolation tests, code review checklist | AI |
+| R-04 | Microservice sprawl slows delivery | H | M | Strict service template, shared libraries, outbox, no per-service bespoke infra | Laksiri |
+| R-05 | Multi-repo overhead (15 components + orchestrator) | H | M | CI templates, scripted releases, contract repo; consider merging thin services if overhead dominates | Laksiri |
+| R-06 | Scope creep during MVP | M | M | Icebox rule; scope change requires DECISIONS entry | Laksiri |
+| R-07 | Legal/compliance gaps block launch | M | H | Legal draft in M4, not M5; monitoring disclosure template early | Laksiri |
+| R-08 | Single-region data loss | L | H | Managed Postgres with PITR, nightly logical dump to object storage, restore drill | AI |
+| R-09 | LLM cost/latency (P3) | M | M | Provider adapter, caching, per-tenant quotas, streaming | AI |
+| R-10 | Key management compromise (KMS) | L | H | Least-privilege KMS policies, key rotation, access audit, no keys on disk | AI |
+| R-11 | Browser/OS capture permissions (macOS TCC) | M | M | Onboarding permission wizard, clear diagnostics, support runbook | AI |
+| R-12 | Team bandwidth (one human reviewer) | M | M | Milestone-sized review requests, async decision log, defaults documented | Laksiri |
+
+---
+
+## 10. Decision Log (summary)
+
+Full records in `docs/DECISIONS.md`.
+
+| ADR | Decision | Status |
+| :--- | :--- | :--- |
+| 001 | Backend = Python 3.12 + FastAPI | Proposed |
+| 002 | Database-per-service (logical DBs on one cluster for MVP) | Accepted |
+| 003 | Gateway = Traefik v3 with ForwardAuth | Accepted |
+| 004 | UUIDv7 client-generated identifiers | Accepted |
+| 005 | Screenshot encryption = KMS envelope, not E2E | Proposed |
+| 006 | Privacy window enforced server-side with pending state | Accepted |
+| 007 | Services verify JWTs via JWKS (defence in depth) | Accepted |
+| 008 | Reporting via read-model projections, not cross-DB joins | Accepted |
+| 009 | Redis Streams + outbox for events in MVP | Accepted |
+| 010 | Device binding via key pair + signed request (DPoP-style) | Proposed |
+| 011 | Chat deferred to Phase 2 | Accepted |
+| 012 | Billing manual in MVP, Stripe in Phase 3 | Proposed |
+| 013 | Multi-repo with submodules and a contracts repo | Accepted |
+| 014 | Next.js App Router + Tailwind + shadcn/ui for web | Accepted |
+
+---
+
+## 11. Documentation Map
+
+| Document | Purpose | Status |
+| :--- | :--- | :--- |
+| `docs/README.md` | Index and documentation conventions | Done |
+| `docs/SCOPE.md` | Requirements, boundaries, acceptance | Done (review) |
+| `docs/MASTER_PLAN.md` | This plan | Done (review) |
+| `docs/DEVELOPMENT_PLAN.md` | Task backlog with checkboxes | Done (review) |
+| `docs/TEST_PLAN.md` | Test strategy, suites, cases | Done (review) |
+| `docs/ARCHITECTURE.md` | System, services, flows, deployment | Done (review) |
+| `docs/DATA_MODEL.md` | Schemas, keys, indexes, migrations | Done (review) |
+| `docs/API_SPEC.md` | Conventions and endpoint catalogue | Done (review) |
+| `docs/SECURITY.md` | Threat model, controls, privacy, compliance | Done (review) |
+| `docs/UI_UX_DESIGN.md` | Screens, design system, copy | Done (review) |
+| `docs/DEVOPS.md` | Environments, CI/CD, observability, backups | Done (review) |
+| `docs/REPOSITORIES.md` | Repo creation and submodule plan | Done (review) |
+| `docs/DECISIONS.md` | ADRs | Done (review) |
+| `docs/GLOSSARY.md` | Shared vocabulary | Done |
+| `docs/CONTRIBUTING.md` | Working conventions | Done |
+| `docs/RUNBOOKS.md` | Operational procedures | M5 |
+| `docs/CHANGELOG.md` | Delivered changes | M0 onward |
+| `docs/RELEASE_NOTES.md` | Version history | M5 |
+
+---
+
+## 12. Governance & Cadence
+
+| Ritual | When | Output |
+| :--- | :--- | :--- |
+| Task pickup | Each `attend` message | AI message: plan + assumptions |
+| Milestone demo | End of each milestone | Evidence pack (tests, screenshots), gate sign-off |
+| Decision review | As needed | ADR entry + scope note |
+| Risk review | End of each milestone | Updated register in §9 |
+| Doc reconciliation | End of each milestone | Checkbox + doc diffs |
+| Commit discipline | Every task | Conventional Commit, pushed |
+
+**Checklist update protocol**: `[ ]` → `[~]` when started, `[x]` only with evidence. A milestone
+line in §5 is ticked only when its exit gate passes.
+
+---
+
+## 13. Next Actions (this planning cycle)
+
+1. Laksiri reviews `SCOPE.md` (especially §12 open questions), `REPOSITORIES.md`, and the
+   milestone sequence.
+2. Laksiri creates the 16 GitHub repositories and adds remotes; AI adds them as submodules.
+3. AI executes **M0** as the first development task.
+4. AI scaffolds the service template and one reference service (IAM) as the pattern for the rest.
+5. Gate G6 review after M0.
+
+---
+
+**End of Master Plan**

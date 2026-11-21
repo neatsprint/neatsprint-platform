@@ -205,3 +205,119 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# ---------------------------------------------------------------------------
+# NeatSprint — project specific
+# ---------------------------------------------------------------------------
+
+# Environment & secrets (never commit; .env.example is the contract)
+.env
+.env.*
+!.env.example
+!**/.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+!**/fixtures/**/*.crt
+secrets/
+.secrets/
+
+# Local data & volumes
+data/
+pgdata/
+minio-data/
+uploads/
+temp/
+tmp/
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Logs & coverage
+*.log
+logs/
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+blob-report/
+allure-results/
+
+# Node / JavaScript / TypeScript
+node_modules/
+.pnpm-store/
+.pnpm-debug.log*
+.yarn/
+.yarn-error.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp.*
+dist/
+build/
+out/
+.next/
+.next-env.d.ts
+.turbo/
+.vercel/
+*.tsbuildinfo
+.eslintcache
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Tauri / Rust
+target/
+**/src-tauri/target/
+**/src-tauri/gen/
+Cargo.lock.bak
+*.rlib
+*.rmeta
+
+# Docker / infra
+*.pid
+docker-compose.override.yml
+infra/grafana/data/
+infra/prometheus/data/
+infra/loki/data/
+infra/traefik/acme.json
+
+# Test & tool caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+.vitest/
+.cache/
+
+# OS & editors
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+*.iml
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.example.json
+*.swp
+*~
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+
+# AI / agent scratch
+.agent-tmp/
+.ai-cache/
+opencode.local.json
+CLAUDE.local.md
+

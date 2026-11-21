@@ -1,114 +1,208 @@
-# NeatSprint – Agile Task Management Platform
+# NeatSprint
 
-![License: AGPLv3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)
-![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
-![Status](https://img.shields.io/badge/status-active-success)
+**Privacy-honest agile delivery for real teams.**
 
-**NeatSprint** is a **Commercial Open Source** agile task management platform. It combines a modern Web UI, a secure Desktop Agent for time tracking, Mobile apps and an AI native agentic system into a cohesive suite for teams and enterprises.
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](LICENSE)
+[![Status: pre-alpha](https://img.shields.io/badge/status-pre--alpha-orange)](#project-status)
+[![Docs: v1 for review](https://img.shields.io/badge/docs-v1%20for%20review-informational)](docs/README.md)
+
+NeatSprint is a multi-tenant, open-source (AGPLv3) platform for agile task management with
+transparent work tracking. It brings planning, a secure desktop agent, and honest monitoring into
+one product — and gives employees a real way to see and delete what was captured about them.
+
+> **Project status**: pre-alpha. The architecture and plans are complete and under review; the
+> first line of product code lands at milestone **M0**. Nothing in this repository is production
+> ready yet.
 
 ---
 
-## ⚡ Key Features
+## Why NeatSprint
 
--   **Multi-Tenant SaaS**: Built for isolation and scale (Tenants, Plans, Billing).
--   **Privacy-First Monitoring**: Desktop agent with "Delete Screenshot" privacy window.
--   **Enterprise Ready**: RBAC, Audit Logs, and GDPR Compliance out of the box.
--   **Open Source Core**: Licensed under **AGPLv3**, ensuring freedom for self-hosters.
+- **Privacy you can verify** — screenshots are captured only while a timer runs, are visible to you
+  first, and can be permanently deleted. Deleted means deleted: the image and any derived AI data
+  are destroyed, and managers see only a tombstone.
+- **Offline that actually works** — the desktop agent keeps tracking through network loss and syncs
+  without duplicates or data loss.
+- **Multi-tenant by construction** — tenant isolation and feature-level permissions are enforced
+  server-side and tested on every change.
+- **Agile without ceremony** — backlog, sprints, board, timesheets, velocity and burndown, with no
+  gamified busywork.
+- **Open core** — self-host the AGPLv3 code; the commercial cloud adds billing, SLA and compliance.
 
 ---
 
-## 🏗️ Architecture & Services
+## What Ships
 
-NeatSprint follows a **Microservices Architecture**.
-
-| Service | Port | Description |
+| Component | Description | Technology |
 | :--- | :--- | :--- |
-| **Frontend (Web)** | `3000` | React/Next.js Web Interface |
-| **API Gateway** | `8000` | **Entry Point** (Traefik/Nginx) |
-| **IAM Service** | `8001` | Auth, Users, Roles |
-| **Core Service** | `8002` | Tenants, Billing, Apps |
-| **Task Service** | `8003` | Projects, Sprints, Backlogs |
-| **Team Service** | `8004` | Team Management |
-| **Worklog Service** | `8005` | Time Tracking |
-| **Monitoring** | `8006` | Screenshots & Privacy |
-| **Chat Service** | `8007` | Real-time Communication |
-| **Reports** | `8008` | Analytics & Exports |
-| **AI Service** | `8009` | Summarization & Process Automation |
+| **Web app** | Planning, boards, reports, admin, monitoring review | Next.js 15, TypeScript, Tailwind, shadcn/ui |
+| **Desktop agent** | Timer, idle detection, screenshots, offline sync, privacy review tray | Tauri v2, Rust, React, SQLCipher |
+| **Mobile app** *(Phase 2)* | Assigned work, manual time, chat, notifications | React Native (Expo) |
+| **API gateway** | Single ingress, auth, rate limits, routing | Traefik v3 |
+| **Backend services** | Identity, tenancy, tasks, teams, time, monitoring, reports, chat*(P2)*, AI*(P3)* | Python 3.12, FastAPI, PostgreSQL, Redis |
 
 ---
 
-## 📚 Documentation Map
+## Architecture at a Glance
 
-Our architecture is fully documented in the `documents/` directory.
+```mermaid
+graph LR
+    Web[Web app] --> GW[Traefik gateway]
+    Desktop[Desktop agent] --> GW
+    Mobile[Mobile P2] --> GW
 
-### 🏛️ Foundation
--   **[Scope & User Stories](documents/scope.md)**: The functional requirements.
--   **[Technical Design](documents/tech-design.md)**: High-level system architecture.
--   **[Step 1: Master Diagram](documents/step1-neatsprint-full-architecture-diagram.md)**: The big picture.
--   **[Step 2: Roadmap](documents/step2-mvp-roadmap.md)**: Product phases (MVP vs Enterprise).
+    GW --> IAM[iam]
+    GW --> Core[core]
+    GW --> Task[task]
+    GW --> Team[team]
+    GW --> Work[worklog]
+    GW --> Mon[monitoring]
+    GW --> Rep[reports]
 
-### 🧱 Core Architecture
--   **[Step 3: Microservices](documents/step3-microservice-boundaries-and-responsibilities.md)**: Service boundaries.
--   **[Step 4: API Gateway](documents/step4-api-gateway-architecture.md)**: Routing & Security.
--   **[Step 5: CI/CD](documents/step5-deployment-and-cicd-architecture.md)**: Deployment pipelines.
+    IAM & Core & Task & Team & Work & Mon & Rep --> PG[(PostgreSQL)]
+    Mon --> S3[(Object storage)]
+    IAM & Core --> Redis[(Redis)]
+```
 
-### 💾 Data & Security
--   **[Step 6: ER Diagrams](documents/step6-er-diagrams.md)**: Visual data models.
--   **[Step 7: Schemas](documents/step7-neatsprint-database-schemas.md)**: SQL Definitions.
--   **[Step 8: Security Model](documents/step8-security-and-privacy-model.md)**: Encryption & Privacy.
--   **[Step 9: Auth Flow](documents/step9-authorization-enforcement-flow.md)**: JWT & Enforcement.
--   **[Step 10: RBAC](documents/step10-rbac-definitions.md)**: Roles & Permissions.
--   **[Step 11: Retention](documents/step11-data-retention-policy.md)**: GDPR & Data Lifecycle.
+| Service | Dev port | Responsibility |
+| :--- | :--- | :--- |
+| Gateway | `8000` | Routing, TLS, rate limits, ForwardAuth |
+| IAM | `8001` | Auth, users, roles, permissions, invitations, audit |
+| Core | `8002` | Tenants, plans, application modules, settings |
+| Task | `8003` | Projects, backlog, sprints, comments |
+| Team | `8004` | Teams and membership |
+| Worklog | `8005` | Timer, time entries, timesheets |
+| Monitoring | `8006` | Devices, screenshots, privacy window, retention |
+| Chat *(P2)* | `8007` | Channels, messages, presence |
+| Reports | `8008` | Read-model analytics and exports |
+| AI *(P3)* | `8009` | RAG assistant, summaries, drafts |
+| Web | `3000` | Browser application |
 
-### 🔌 API & Connectivity
--   **[Step 12: API Contracts](documents/step12-api-contracts.md)**: Global standards (JSON, Errors).
--   **[Step 13: Endpoints](documents/step13-detailed-api-spec.md)**: Detailed API Reference.
--   **[Step 14: E2E Flows](documents/step14-end-to-end-flows.md)**: Sequence Diagrams (Login, Upload).
-
-### 🖥️ Clients
--   **[Step 15: Desktop Arch](documents/step15-desktop-app-architecture.md)**: Tauri/Rust Agent.
--   **[Step 16: Desktop Security](documents/step16-desktop-agent-security-and-offline-design.md)**: Offline & Anti-Tamper.
--   **[Step 17: Mobile Arch](documents/step17-mobile-app-architecture.md)**: React Native App.
--   **[Step 18: Web Arch](documents/step18-web-app-architecture.md)**: React Dashboard.
-
-### 🧠 Advanced Features
--   **[Step19: Reports](documents/step19-reports-architecture.md)**: Reporting Engine.
--   **[Step 20: Report Specs](documents/step20-reports-functional-specs.md)**: Metric Definitions.
--   **[Step 21: AI Arch](documents/step21-ai-architecture.md)**: RAG Pipeline.
--   **[Step 22: AI Specs](documents/step22-ai-functional-specs.md)**: Standard Prompts & Rules.
+Each service owns its own logical database. Services communicate over HTTP and events; no service
+reads another's database. See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
 ---
 
-## ⚖️ Legal & Licensing
+## Documentation
 
-NeatSprint uses a **Commercial Open Source** model.
+The authoritative set lives in [`docs/`](docs/README.md). The original architecture input is kept
+in [`documents/`](documents) for reference.
 
--   **Source Code**: Licensed under **[AGPLv3](LICENSE)**. Free for self-hosting.
--   **Hosted Service**: Usage of our Cloud is governed by the **[Terms of Service](legal/tos.md)**.
-
-See the **[Legal Directory](legal/README.md)** for details on Privacy, EULAs, and Trademarks.
+| Document | Read it for |
+| :--- | :--- |
+| [SCOPE](docs/SCOPE.md) | Requirements, boundaries, acceptance criteria |
+| [MASTER PLAN](docs/MASTER_PLAN.md) | Phases, gates, risks, progress |
+| [DEVELOPMENT PLAN](docs/DEVELOPMENT_PLAN.md) | The executable task backlog |
+| [TEST PLAN](docs/TEST_PLAN.md) | Test strategy, suites and cases |
+| [ARCHITECTURE](docs/ARCHITECTURE.md) | Services, flows, decisions in context |
+| [DATA MODEL](docs/DATA_MODEL.md) | Schemas, indexes, retention |
+| [API SPEC](docs/API_SPEC.md) | Conventions and endpoint catalogue |
+| [SECURITY](docs/SECURITY.md) | Threat model, RBAC matrix, privacy model |
+| [UI/UX](docs/UI_UX_DESIGN.md) | Design system, screens, flows, copy |
+| [DEVOPS](docs/DEVOPS.md) | Environments, CI/CD, observability, DR |
+| [REPOSITORIES](docs/REPOSITORIES.md) | Repo topology and submodule workflow |
+| [DECISIONS](docs/DECISIONS.md) | ADRs |
+| [GLOSSARY](docs/GLOSSARY.md) | Shared vocabulary |
+| [CONTRIBUTING](docs/CONTRIBUTING.md) | How to work in this codebase |
+| [AGENTS.md](AGENTS.md) | Process guide for AI agents |
 
 ---
 
-## 🚀 Getting Started
+## Roadmap
+
+| Phase | Theme | State |
+| :--- | :--- | :--- |
+| **M0** | Foundations: repos, Compose, contracts, CI | Next |
+| **M1** | Identity, tenancy, RBAC | Planned |
+| **M2** | Projects, backlog, sprints, teams | Planned |
+| **M3** | Time tracking, monitoring, desktop agent | Planned |
+| **M4** | Reports, dashboards, console polish | Planned |
+| **M5** | Hardening, legal, launch (`v1.0.0`) | Planned |
+| **P2** | Chat, notifications, mobile, GitHub | Deferred |
+| **P3** | AI assistant, enterprise compliance, billing | Deferred |
+
+Milestone detail and checkboxes: [`docs/MASTER_PLAN.md`](docs/MASTER_PLAN.md).
+
+---
+
+## Repository Structure
+
+This repository is the **orchestrator**. Product code lives in independent repositories linked as
+git submodules.
+
+```text
+neatsprint-platform/
+├── AGENTS.md              # AI/agent operating guide
+├── docs/                  # authoritative documentation
+├── documents/             # original reference architecture (read-only)
+├── agent/                 # conversation log
+├── infra/                 # gateway config, observability, compose overrides
+├── scripts/               # bootstrap, migrate, seed, release
+├── services/              # git submodules (see docs/REPOSITORIES.md)
+├── docker-compose.yml     # local full stack (created in M0)
+└── legal/                 # ToS, privacy, DPA (created in M5)
+```
+
+Submodule repositories: `neatsprint-contracts`, `neatsprint-lib`, `neatsprint-apigw`,
+`neatsprint-iam`, `neatsprint-core`, `neatsprint-task`, `neatsprint-team`, `neatsprint-worklog`,
+`neatsprint-monitoring`, `neatsprint-chat`, `neatsprint-reports`, `neatsprint-ai`,
+`neatsprint-web`, `neatsprint-desktop`, `neatsprint-mobile`.
+
+---
+
+## Getting Started (available from M0)
+
+```bash
+git clone --recurse-submodules https://github.com/neatsprint/neatsprint-platform.git
+cd neatsprint-platform
+./scripts/bootstrap.ps1     # Windows PowerShell (or ./scripts/bootstrap.sh)
+
+docker compose up -d --build
+```
+
+- Web: <http://localhost:3000>
+- API: <http://localhost:8000/api/v1>
+- Traefik dashboard: <http://localhost:8080>
+- Mailpit (email): <http://localhost:8025>
+
+Until M0 lands, the commands above will fail by design — the scaffolding does not exist yet.
 
 ### Prerequisites
--   Docker & Docker Compose
 
-### Fast Launch
-```bash
-# 1. Clone
-git clone https://github.com/neatsprint/neatsprint.git
-cd neatsprint
-
-# 2. Init Submodules
-git submodule update --init --recursive
-
-# 3. Start
-docker-compose up -d
-```
-Access the **Web UI** at `http://localhost:3000`.
+- Docker Desktop 4.x+ with Compose v2
+- Node 22 LTS and pnpm (web)
+- Python 3.12 and uv (services)
+- Rust stable + Tauri prerequisites (desktop)
 
 ---
 
-**NeatSprint** – *Simplify Agile.*
+## Security & Privacy
+
+- Tenant isolation and permission checks are enforced server-side and covered by an automated
+  isolation suite.
+- Screenshots are encrypted at rest, reviewed by the employee first, and permanently deleted on
+  request; blobs are excluded from backups so deletion cannot be undone by a restore.
+- Report a vulnerability privately — see [`SECURITY.md`](docs/SECURITY.md) §13, not a public issue.
+
+The full threat model and privacy design are in [`docs/SECURITY.md`](docs/SECURITY.md).
+
+---
+
+## Contributing
+
+Read [`AGENTS.md`](AGENTS.md) for the working process and [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md)
+for standards. In short:
+
+1. Pick the next unchecked task in `docs/DEVELOPMENT_PLAN.md`.
+2. Branch, implement, test, update docs.
+3. Open a PR with the checklist; squash-merge to `main`.
+4. Bump the submodule pin from the orchestrator.
+
+## Licence
+
+Source code is licensed under the **GNU Affero General Public License v3.0** — see [`LICENSE`](LICENSE).
+The hosted service will be governed by separate commercial terms (published before launch).
+
+---
+
+**NeatSprint — plan the work. Prove the work. Respect the person.**
