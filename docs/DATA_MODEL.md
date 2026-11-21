@@ -1,6 +1,6 @@
 # NeatSprint — Data Model
 
-> **Status**: Draft v1 for review · **Version**: 1.0 · **Last updated**: 2026-11-21
+> **Status**: Approved v1.0 · **Version**: 1.0 · **Last updated**: 2026-11-21
 > **Owner**: Laksiri Fernando · **Author**: OpenCade (AI)
 > **Supersedes**: `documents/step6-er-diagrams.md`, `documents/step7-neatsprint-database-schemas.md`
 > **Related**: `ARCHITECTURE.md` §11, `SECURITY.md` §4, `API_SPEC.md`

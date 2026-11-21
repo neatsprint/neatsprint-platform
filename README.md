@@ -10,9 +10,9 @@ NeatSprint is a multi-tenant, open-source (AGPLv3) platform for agile task manag
 transparent work tracking. It brings planning, a secure desktop agent, and honest monitoring into
 one product — and gives employees a real way to see and delete what was captured about them.
 
-> **Project status**: pre-alpha. The architecture and plans are complete and under review; the
-> first line of product code lands at milestone **M0**. Nothing in this repository is production
-> ready yet.
+> **Project status**: pre-alpha. Milestone **M0 (foundations)** is delivered: 15 component
+> repositories, a running local stack, contracts, the shared library and the web shell. Identity,
+> planning and tracking arrive in M1–M3. Nothing in this repository is production ready yet.
 
 ---
 
@@ -112,8 +112,8 @@ in [`documents/`](documents) for reference.
 
 | Phase | Theme | State |
 | :--- | :--- | :--- |
-| **M0** | Foundations: repos, Compose, contracts, CI | Next |
-| **M1** | Identity, tenancy, RBAC | Planned |
+| **M0** | Foundations: repos, Compose, contracts, CI | Done — 21/24 tasks; outbox + seed moved to M1 |
+| **M1** | Identity, tenancy, RBAC | Next |
 | **M2** | Projects, backlog, sprints, teams | Planned |
 | **M3** | Time tracking, monitoring, desktop agent | Planned |
 | **M4** | Reports, dashboards, console polish | Planned |
@@ -150,7 +150,7 @@ Submodule repositories: `neatsprint-contracts`, `neatsprint-lib`, `neatsprint-ap
 
 ---
 
-## Getting Started (available from M0)
+## Getting Started
 
 ```bash
 git clone --recurse-submodules https://github.com/neatsprint/neatsprint-platform.git
@@ -162,10 +162,11 @@ docker compose up -d --build
 
 - Web: <http://localhost:3000>
 - API: <http://localhost:8000/api/v1>
-- Traefik dashboard: <http://localhost:8080>
+- Traefik dashboard: <http://localhost:8089>
 - Mailpit (email): <http://localhost:8025>
 
-Until M0 lands, the commands above will fail by design — the scaffolding does not exist yet.
+Until M1 lands, the stack runs and every service answers `/healthz`; login, invitations and
+seeded demo data arrive with the identity milestone.
 
 ### Prerequisites
 

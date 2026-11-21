@@ -1,6 +1,6 @@
 # NeatSprint — API Specification (Conventions & Catalogue)
 
-> **Status**: Draft v1 for review · **Version**: 1.0 · **Last updated**: 2026-11-21
+> **Status**: Approved v1.0 · **Version**: 1.0 · **Last updated**: 2026-11-21
 > **Owner**: Laksiri Fernando · **Author**: OpenCade (AI)
 > **Supersedes**: `documents/step12-api-contracts.md`, `documents/step13-detailed-api-spec.md`
 > **Machine-readable source of truth**: `neatsprint-contracts` repo (OpenAPI 3.1). This document

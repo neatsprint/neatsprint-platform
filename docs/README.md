@@ -1,6 +1,6 @@
 # NeatSprint — Documentation Index
 
-> **Status**: Draft v1 for review · **Last updated**: 2026-11-21
+> **Status**: Approved v1.0 · **Last updated**: 2026-11-21
 
 This directory is the **authoritative** documentation set. The `documents/` directory at the
 repository root is the original input architecture and is kept as read-only reference.
@@ -33,17 +33,17 @@ repository root is the original input architecture and is kept as read-only refe
 
 | Document | Covers | Owner | Status |
 | :--- | :--- | :--- | :--- |
-| [`SCOPE.md`](SCOPE.md) | Vision, personas, in/out of scope, requirements `FR-*`/`NFR-*`, acceptance | Laksiri | Draft v1 — review |
-| [`MASTER_PLAN.md`](MASTER_PLAN.md) | Phases M0–M5/P2/P3, workstreams, gates, risks, effort | Laksiri | Draft v1 — review |
-| [`DEVELOPMENT_PLAN.md`](DEVELOPMENT_PLAN.md) | Task-level backlog with checkboxes and IDs | OpenCade | Draft v1 — review |
-| [`TEST_PLAN.md`](TEST_PLAN.md) | Strategy, suites `TS-*`, cases `TC-*`, security/perf/accessibility | OpenCade | Draft v1 — review |
-| [`ARCHITECTURE.md`](ARCHITECTURE.md) | Context, containers, services, flows, failure modes | OpenCade | Draft v1 — review |
-| [`DATA_MODEL.md`](DATA_MODEL.md) | Per-service schemas, constraints, indexes, retention | OpenCade | Draft v1 — review |
-| [`API_SPEC.md`](API_SPEC.md) | Conventions, endpoint catalogue, payloads, governance | OpenCade | Draft v1 — review |
-| [`SECURITY.md`](SECURITY.md) | Threat model, authz matrix, privacy model, compliance | OpenCade | Draft v1 — review |
-| [`UI_UX_DESIGN.md`](UI_UX_DESIGN.md) | Design system, screens, flows, copy, accessibility | OpenCade | Draft v1 — review |
-| [`DEVOPS.md`](DEVOPS.md) | Environments, CI/CD, observability, backup/DR | OpenCade | Draft v1 — review |
-| [`REPOSITORIES.md`](REPOSITORIES.md) | 15 repositories, creation order, submodule workflow | OpenCade | Awaiting creation |
+| [`SCOPE.md`](SCOPE.md) | Vision, personas, in/out of scope, requirements `FR-*`/`NFR-*`, acceptance | Laksiri | Approved v1.0 |
+| [`MASTER_PLAN.md`](MASTER_PLAN.md) | Phases M0–M5/P2/P3, workstreams, gates, risks, effort | Laksiri | Approved v1.0 |
+| [`DEVELOPMENT_PLAN.md`](DEVELOPMENT_PLAN.md) | Task-level backlog with checkboxes and IDs | OpenCade | Approved v1.0 |
+| [`TEST_PLAN.md`](TEST_PLAN.md) | Strategy, suites `TS-*`, cases `TC-*`, security/perf/accessibility | OpenCade | Approved v1.0 |
+| [`ARCHITECTURE.md`](ARCHITECTURE.md) | Context, containers, services, flows, failure modes | OpenCade | Approved v1.0 |
+| [`DATA_MODEL.md`](DATA_MODEL.md) | Per-service schemas, constraints, indexes, retention | OpenCade | Approved v1.0 |
+| [`API_SPEC.md`](API_SPEC.md) | Conventions, endpoint catalogue, payloads, governance | OpenCade | Approved v1.0 |
+| [`SECURITY.md`](SECURITY.md) | Threat model, authz matrix, privacy model, compliance | OpenCade | Approved v1.0 |
+| [`UI_UX_DESIGN.md`](UI_UX_DESIGN.md) | Design system, screens, flows, copy, accessibility | OpenCade | Approved v1.0 |
+| [`DEVOPS.md`](DEVOPS.md) | Environments, CI/CD, observability, backup/DR | OpenCade | Approved v1.0 |
+| [`REPOSITORIES.md`](REPOSITORIES.md) | 15 repositories, creation order, submodule workflow | OpenCade | Approved v1.0 |
 | [`DECISIONS.md`](DECISIONS.md) | ADR-001…017 | Laksiri (approve) | Living |
 | [`GLOSSARY.md`](GLOSSARY.md) | Shared vocabulary and naming conventions | OpenCade | Living |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Branching, standards, PR checklist, rules | OpenCade | Living |
@@ -60,7 +60,7 @@ repository root is the original input architecture and is kept as read-only refe
 Every document begins with a blockquote:
 
 ```markdown
-> **Status**: Draft v1 for review · **Version**: 1.0 · **Last updated**: YYYY-MM-DD
+> **Status**: Approved v1.0 · **Version**: 1.0 · **Last updated**: YYYY-MM-DD
 > **Owner**: … · **Author**: … · **Supersedes**: … · **Related**: …
 ```
 

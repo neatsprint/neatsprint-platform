@@ -1,6 +1,6 @@
 # NeatSprint — System Architecture
 
-> **Status**: Draft v1 for review · **Version**: 1.0 · **Last updated**: 2026-11-21
+> **Status**: Approved v1.0 · **Version**: 1.0 · **Last updated**: 2026-11-21
 > **Owner**: Laksiri Fernando · **Author**: OpenCade (AI)
 > **Supersedes**: `documents/tech-design.md`, `step1`, `step3`, `step6`, `step7`, `step12–14`, `step19`, `step21`
 > **Related**: `DATA_MODEL.md`, `API_SPEC.md`, `SECURITY.md`, `DEVOPS.md`, `DECISIONS.md`

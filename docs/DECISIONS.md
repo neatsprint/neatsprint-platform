@@ -11,7 +11,7 @@ Status values: `Proposed` · `Accepted` · `Rejected` · `Superseded by ADR-xxx`
 
 ## ADR-001 — Backend services use Python 3.12 + FastAPI
 
-- **Status**: Proposed (default assumed)
+- **Status**: Accepted
 - **Context**: The reference set is contradictory: Step 1 says "Node.js/Go/Rust", while
   `tech-design.md` and its standard layout specify FastAPI with `pyproject.toml`. We need one
   language for nine services, sharing libraries for auth, DB, events and errors.
@@ -75,7 +75,7 @@ Status values: `Proposed` · `Accepted` · `Rejected` · `Superseded by ADR-xxx`
 
 ## ADR-005 — Screenshots use KMS envelope encryption, not end-to-end encryption
 
-- **Status**: Proposed (requires Laksiri's confirmation)
+- **Status**: Accepted
 - **Context**: The reference documents claim both "the server never sees the image" and "AI analyses
   screenshots" / "managers view screenshots". These are mutually exclusive.
 - **Decision**: Screenshots are encrypted at rest with per-object data keys wrapped by a tenant KMS
@@ -153,7 +153,7 @@ Status values: `Proposed` · `Accepted` · `Rejected` · `Superseded by ADR-xxx`
 
 ## ADR-010 — Desktop device binding uses a key pair, not hardware fingerprints
 
-- **Status**: Proposed
+- **Status**: Accepted
 - **Context**: Step 16 proposes CPU serial, disk UUID and MAC address. These are spoofable, change
   on hardware upgrades, and are privacy-invasive to collect.
 - **Decision**: The agent generates an Ed25519 key pair, registers the public key, keeps the private
@@ -180,7 +180,7 @@ Status values: `Proposed` · `Accepted` · `Rejected` · `Superseded by ADR-xxx`
 
 ## ADR-012 — Tenants have many users; each account belongs to one tenant
 
-- **Status**: Proposed (clarified 2026-11-21)
+- **Status**: Accepted (clarified 2026-11-21)
 - **Context**: "One user, one tenant" was ambiguous. The intended model is **one tenant → many
   users**, each logging in and working independently. The restriction is the inverse: a user
   account is a member of exactly one tenant. Consultants and agencies, however, often need one
@@ -235,7 +235,7 @@ Status values: `Proposed` · `Accepted` · `Rejected` · `Superseded by ADR-xxx`
 
 ## ADR-015 — Billing is manual in MVP; Stripe arrives in Phase 3
 
-- **Status**: Proposed
+- **Status**: Accepted
 - **Context**: Plans and limits are in scope; payment processing is not part of the trust story.
 - **Decision**: The platform operator assigns a plan to a tenant via an operator endpoint/script.
   Plan limits are enforced. Stripe (subscriptions, seats, invoices, webhooks) is Phase 3.
@@ -273,7 +273,7 @@ Status values: `Proposed` · `Accepted` · `Rejected` · `Superseded by ADR-xxx`
 
 ## ADR-018 — Runtime language policy: Python services, Rust for CPU-bound components, TypeScript clients
 
-- **Status**: Proposed
+- **Status**: Accepted
 - **Context**: Question raised by Laksiri (2026-11-21): "why FastAPI over Next.js?" and "how about
   Rust for CPU-intensive work?" The platform is inherently polyglot (Next.js web, Tauri/Rust
   desktop), so the real question is where each runtime earns its place.
@@ -317,24 +317,24 @@ Status values: `Proposed` · `Accepted` · `Rejected` · `Superseded by ADR-xxx`
 
 | ADR | Title | Status | Milestone |
 | :--- | :--- | :--- | :--- |
-| 001 | Python + FastAPI | Proposed | M0 |
+| 001 | Python + FastAPI | Accepted | M0 |
 | 002 | DB per service on one cluster | Accepted | M0 |
 | 003 | Traefik gateway | Accepted | M0 |
 | 004 | UUIDv7 identifiers | Accepted | M0 |
-| 005 | KMS envelope encryption for screenshots | Proposed | M3 |
+| 005 | KMS envelope encryption for screenshots | Accepted | M3 |
 | 006 | Server-authoritative privacy window | Accepted | M3 |
 | 007 | Defence-in-depth JWT validation | Accepted | M1 |
 | 008 | Reporting projections | Accepted | M4 |
 | 009 | Outbox + Redis Streams | Accepted | M0 |
-| 010 | Device key-pair binding | Proposed | M3 |
+| 010 | Device key-pair binding | Accepted | M3 |
 | 011 | Chat/mobile in Phase 2 | Accepted | — |
-| 012 | Many users per tenant; account belongs to one tenant (global unique email) | Proposed | M1 |
+| 012 | Many users per tenant; account belongs to one tenant (global unique email) | Accepted | M1 |
 | 013 | Multi-repo + contracts | Accepted | M0 |
 | 014 | Next.js web stack | Accepted | M0 |
-| 015 | Manual billing in MVP | Proposed | M1 |
+| 015 | Manual billing in MVP | Accepted | M1 |
 | 016 | No screenshot backups | Accepted | M3 |
 | 017 | Monotonic time + server clamp | Accepted | M3 |
-| 018 | Runtime language policy (Python / Rust / TS) | Proposed | M3 |
+| 018 | Runtime language policy (Python / Rust / TS) | Accepted | M3 |
 
 ## Change Log
 

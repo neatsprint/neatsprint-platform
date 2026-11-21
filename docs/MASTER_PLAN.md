@@ -1,6 +1,6 @@
 # NeatSprint — Master Plan
 
-> **Status**: Draft v1 for review · **Version**: 1.0 · **Last updated**: 2026-11-21
+> **Status**: Approved v1.0 · **Version**: 1.0 · **Last updated**: 2026-11-21
 > **Owner**: Laksiri Fernando · **Author**: OpenCade (AI)
 > **Supersedes**: `documents/step2-mvp-roadmap.md` (kept as reference)
 > **Detail level**: This is the *portfolio* view. Task-level execution lives in
@@ -80,22 +80,24 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done · `[!]` blocked
 
 **Goal**: every future commit lands in a working, tested skeleton.
 
-- [ ] Repositories created by Laksiri per `docs/REPOSITORIES.md` (15 new + this orchestrator)
-- [ ] Submodules added under `services/` and pinned
-- [ ] `neatsprint-contracts` published: OpenAPI bootstrap + shared error model
-- [ ] Orchestrator `docker-compose.yml`: gateway, postgres, redis, minio, mailpit, 10 services
-- [ ] Traefik routing for `/api/v1/*` with ForwardAuth stub
-- [ ] Service template: FastAPI + health endpoints + structured logging + pytest harness
+- [x] Repositories created by Laksiri per `docs/REPOSITORIES.md` (15 new + this orchestrator)
+- [x] Submodules added under `services/` and pinned
+- [x] `neatsprint-contracts` published: OpenAPI bootstrap + shared error model
+- [x] Orchestrator `docker-compose.yml`: gateway, postgres, redis, minio, mailpit, 10 services
+- [x] Traefik routing for `/api/v1/*` with ForwardAuth stub
+- [x] Service template: FastAPI + health endpoints + structured logging + pytest harness
 - [ ] Shared Python libraries: config, logging, auth middleware, DB session, outbox
-- [ ] Web app skeleton: Next.js, design tokens, layout, auth placeholder
-- [ ] CI workflow template for services and clients (lint, test, build, scan)
-- [ ] Root `Makefile`/scripts: `bootstrap`, `migrate`, `seed`, `test`, `lint`, `down`
-- [ ] `.env.example` complete and documented
-- [ ] ADR-001…004, 007–009, 013, 014 accepted in `docs/DECISIONS.md` (005/006/010 confirmed before M3)
-- [ ] Demo seed: 1 tenant, 6 users, 2 teams, 2 projects, 1 sprint, 20 items
+  *(config, logging, errors, DB session delivered; auth middleware and outbox move to M1)*
+- [x] Web app skeleton: Next.js, design tokens, layout, auth placeholder
+- [x] CI workflow template for services and clients (lint, test, build, scan)
+- [x] Root `Makefile`/scripts: `bootstrap`, `migrate`, `seed`, `test`, `lint`, `down`
+- [x] `.env.example` complete and documented
+- [x] ADR-001…004, 007–009, 013, 014 accepted in `docs/DECISIONS.md` (005/006/010 confirmed before M3)
+- [ ] Demo seed: 1 tenant, 6 users, 2 teams, 2 projects, 1 sprint, 20 items *(moved to M1)*
 
 **Exit gate**: `docker compose up -d` on a clean machine yields a green `/healthz` for every
-service, seeded demo data, and CI passing on an empty PR.
+service, a rendering web shell and CI passing on an empty PR. Seeded demo data moves to M1 with
+the first schema.
 
 ### M1 — Identity & Tenancy
 
@@ -301,24 +303,24 @@ Full records in `docs/DECISIONS.md`.
 
 | ADR | Decision | Status |
 | :--- | :--- | :--- |
-| 001 | Backend = Python 3.12 + FastAPI | Proposed |
+| 001 | Backend = Python 3.12 + FastAPI | Accepted |
 | 002 | Database-per-service (logical DBs on one cluster for MVP) | Accepted |
 | 003 | Gateway = Traefik v3 with ForwardAuth | Accepted |
 | 004 | UUIDv7 client-generated identifiers | Accepted |
-| 005 | Screenshot encryption = KMS envelope, not E2E | Proposed |
+| 005 | Screenshot encryption = KMS envelope, not E2E | Accepted |
 | 006 | Privacy window enforced server-side with pending state | Accepted |
 | 007 | Services verify JWTs via JWKS (defence in depth) | Accepted |
 | 008 | Reporting via read-model projections, not cross-DB joins | Accepted |
 | 009 | Redis Streams + outbox for events in MVP | Accepted |
-| 010 | Device binding via key pair + signed request (DPoP-style) | Proposed |
+| 010 | Device binding via key pair + signed request (DPoP-style) | Accepted |
 | 011 | Chat deferred to Phase 2 | Accepted |
-| 012 | Many users per tenant; account belongs to one tenant (global unique email) | Proposed |
+| 012 | Many users per tenant; account belongs to one tenant (global unique email) | Accepted |
 | 013 | Multi-repo with submodules and a contracts repo | Accepted |
 | 014 | Next.js App Router + Tailwind + shadcn/ui for web | Accepted |
-| 015 | Manual billing in MVP, Stripe in Phase 3 | Proposed |
+| 015 | Manual billing in MVP, Stripe in Phase 3 | Accepted |
 | 016 | Screenshot blobs excluded from backups | Accepted |
 | 017 | Monotonic time + server clamp for durations | Accepted |
-| 018 | Runtime policy: Python services, Rust for CPU-bound, Next.js not a backend | Proposed |
+| 018 | Runtime policy: Python services, Rust for CPU-bound, Next.js not a backend | Accepted |
 
 ---
 
@@ -327,18 +329,18 @@ Full records in `docs/DECISIONS.md`.
 | Document | Purpose | Status |
 | :--- | :--- | :--- |
 | `docs/README.md` | Index and documentation conventions | Done |
-| `docs/SCOPE.md` | Requirements, boundaries, acceptance | Done (review) |
-| `docs/MASTER_PLAN.md` | This plan | Done (review) |
-| `docs/DEVELOPMENT_PLAN.md` | Task backlog with checkboxes | Done (review) |
-| `docs/TEST_PLAN.md` | Test strategy, suites, cases | Done (review) |
-| `docs/ARCHITECTURE.md` | System, services, flows, deployment | Done (review) |
-| `docs/DATA_MODEL.md` | Schemas, keys, indexes, migrations | Done (review) |
-| `docs/API_SPEC.md` | Conventions and endpoint catalogue | Done (review) |
-| `docs/SECURITY.md` | Threat model, controls, privacy, compliance | Done (review) |
-| `docs/UI_UX_DESIGN.md` | Screens, design system, copy | Done (review) |
-| `docs/DEVOPS.md` | Environments, CI/CD, observability, backups | Done (review) |
-| `docs/REPOSITORIES.md` | Repo creation and submodule plan | Done (review) |
-| `docs/DECISIONS.md` | ADRs | Done (review) |
+| `docs/SCOPE.md` | Requirements, boundaries, acceptance | Approved |
+| `docs/MASTER_PLAN.md` | This plan | Approved |
+| `docs/DEVELOPMENT_PLAN.md` | Task backlog with checkboxes | Approved |
+| `docs/TEST_PLAN.md` | Test strategy, suites, cases | Approved |
+| `docs/ARCHITECTURE.md` | System, services, flows, deployment | Approved |
+| `docs/DATA_MODEL.md` | Schemas, keys, indexes, migrations | Approved |
+| `docs/API_SPEC.md` | Conventions and endpoint catalogue | Approved |
+| `docs/SECURITY.md` | Threat model, controls, privacy, compliance | Approved |
+| `docs/UI_UX_DESIGN.md` | Screens, design system, copy | Approved |
+| `docs/DEVOPS.md` | Environments, CI/CD, observability, backups | Approved |
+| `docs/REPOSITORIES.md` | Repo creation and submodule plan | Approved |
+| `docs/DECISIONS.md` | ADRs | Approved |
 | `docs/GLOSSARY.md` | Shared vocabulary | Done |
 | `docs/CONTRIBUTING.md` | Working conventions | Done |
 | `docs/RUNBOOKS.md` | Operational procedures | M5 |

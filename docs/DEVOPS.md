@@ -1,6 +1,6 @@
 # NeatSprint — DevOps & Operations Plan
 
-> **Status**: Draft v1 for review · **Version**: 1.0 · **Last updated**: 2026-11-21
+> **Status**: Approved v1.0 · **Version**: 1.0 · **Last updated**: 2026-11-21
 > **Owner**: Laksiri Fernando · **Author**: OpenCade (AI)
 > **Supersedes**: `documents/step5-deployment-and-cicd-architecture.md`
 > **Related**: `REPOSITORIES.md`, `ARCHITECTURE.md` §13–14, `SECURITY.md` §13–14
@@ -22,7 +22,7 @@ Nothing is deployed to production by a human running commands on a server.
 ### 1.1 Local stack (Docker Compose)
 
 ```text
-traefik        :8000 (http), :8080 (dashboard)
+traefik        :8000 (http), :8089 (dashboard)
 web            :3000
 iam            :8001   core :8002   task :8003   team :8004
 worklog        :8005   monitor :8006   chat :8007   reports :8008   ai :8009

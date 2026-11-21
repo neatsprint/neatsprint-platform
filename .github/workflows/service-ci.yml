@@ -1,0 +1,51 @@
+name: service-ci
+
+on:
+  workflow_call:
+    inputs:
+      service:
+        description: Service slug (iam, core, task, ...)
+        required: true
+        type: string
+      python-version:
+        description: Python version
+        required: false
+        type: string
+        default: "3.12"
+
+jobs:
+  quality:
+    name: lint, types and tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+
+      - name: Set up Python
+        run: uv python install ${{ inputs.python-version }}
+
+      - name: Install dependencies
+        run: uv sync --all-extras
+
+      - name: Lint
+        run: uv run ruff check .
+
+      - name: Type-check
+        run: uv run mypy src
+
+      - name: Test
+        run: uv run pytest --junitxml=test-results/junit.xml
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ inputs.service }}
+          path: test-results/
+          if-no-files-found: ignore

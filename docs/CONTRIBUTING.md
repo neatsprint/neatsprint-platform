@@ -26,7 +26,7 @@ docker compose up -d --build
 
 - Web: <http://localhost:3000>
 - API: <http://localhost:8000/api/v1>
-- Traefik dashboard: <http://localhost:8080>
+- Traefik dashboard: <http://localhost:8089>
 - MinIO console: <http://localhost:9001>
 - Mailpit: <http://localhost:8025>
 - Grafana (observability profile): <http://localhost:3001>

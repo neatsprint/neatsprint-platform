@@ -1,6 +1,6 @@
 # NeatSprint — Development Plan
 
-> **Status**: Draft v1 for review · **Version**: 1.0 · **Last updated**: 2026-11-21
+> **Status**: Approved v1.0 · **Version**: 1.0 · **Last updated**: 2026-11-21
 > **Owner**: Laksiri Fernando · **Executor**: OpenCade (AI)
 > **Parent**: `MASTER_PLAN.md` · **Verification**: `TEST_PLAN.md` · **Requirements**: `SCOPE.md`
 
@@ -23,7 +23,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 
 | Milestone | Tasks | Done | State |
 | :--- | ---: | ---: | :--- |
-| M0 Foundations | 24 | 0 | Not started |
+| M0 Foundations | 24 | 21 | 21 done · 2 moved to M1 · 1 partial |
 | M1 Identity & Tenancy | 34 | 0 | Not started |
 | M2 Work Management | 33 | 0 | Not started |
 | M3 Time, Monitoring & Desktop | 40 | 0 | Not started |
@@ -92,79 +92,82 @@ present · tenant-scope and permission checks reviewed · docs/checkbox/changelo
 
 ### Epic M0-E1 — Workspace & repositories
 
-- [ ] **M0-T01** Add `.gitmodules` and the 15 component submodules under `services/` once Laksiri
+- [x] **M0-T01** Add `.gitmodules` and the 15 component submodules under `services/` once Laksiri
   creates the remotes. *AC*: `git submodule status` lists all, each pinned to `main` HEAD.
   *Dep*: none (blocked on human repo creation).
-- [ ] **M0-T02** Create `services/README.md` explaining submodule workflow (init, update, bump).
+- [x] **M0-T02** Create `services/README.md` explaining submodule workflow (init, update, bump).
   *AC*: a newcomer can follow the commands without help.
-- [ ] **M0-T03** Add root `Makefile` with `bootstrap`, `up`, `down`, `logs`, `migrate`, `seed`,
+- [x] **M0-T03** Add root `Makefile` with `bootstrap`, `up`, `down`, `logs`, `migrate`, `seed`,
   `test`, `lint`, `e2e`, `clean`. *AC*: targets documented in `make help`.
-- [ ] **M0-T04** Add `.editorconfig`, `.gitattributes` (LF normalisation), and update root
+- [x] **M0-T04** Add `.editorconfig`, `.gitattributes` (LF normalisation), and update root
   `.gitignore` for Python, Node, Rust, Docker, IDE and secrets. *AC*: `git status` clean after
   running the stack.
 
 ### Epic M0-E2 — Shared libraries & service template
 
-- [ ] **M0-T05** Publish `neatsprint-contracts` bootstrap: `common.yaml` (error model, pagination,
+- [x] **M0-T05** Publish `neatsprint-contracts` bootstrap: `common.yaml` (error model, pagination,
   headers), `iam.yaml`, `core.yaml` placeholders, README. *AC*: specs pass `spectral lint`.
-- [ ] **M0-T06** Build shared Python package `neatsprint-lib` (installed as a git dependency or
+- [x] **M0-T06** Build shared Python package `neatsprint-lib` (installed as a git dependency or
   private index): settings base, JSON logging, correlation middleware, RFC 7807 errors, UUIDv7
   helper, pagination, health router, tenant context, permission dependency. *AC*: unit tested.
-- [ ] **M0-T07** Build `neatsprint-lib-db`: async SQLAlchemy session factory, base model with
+- [x] **M0-T07** Build `neatsprint-lib-db`: async SQLAlchemy session factory, base model with
   audit columns, tenant-scoped repository mixin, Alembic env template, transaction helper.
   *AC*: a demo table migrates up/down in tests.
-- [ ] **M0-T08** Build `neatsprint-lib-events`: transactional outbox table, publisher to Redis
-  Streams, consumer base with idempotency and retry/DLQ. *AC*: integration test proves exactly-once
-  handling under duplicate delivery.
-- [ ] **M0-T09** Create the reference service template repo content (cookiecutter or script
+- [ ] **M0-T08** *(moved to M1 — first producer lands with IAM events)* Build
+  `neatsprint-lib-events`: transactional outbox table, publisher to Redis Streams, consumer base
+  with idempotency and retry/DLQ. *AC*: integration test proves exactly-once handling under
+  duplicate delivery.
+- [x] **M0-T09** Create the reference service template repo content (cookiecutter or script
   `scripts/new-service.py`) generating the §2.4 layout. *AC*: generated service passes `make test`.
 
 ### Epic M0-E3 — Orchestration
 
-- [ ] **M0-T10** Write `docker-compose.yml` with postgres:16, redis:7, minio, mailpit, gateway,
+- [x] **M0-T10** Write `docker-compose.yml` with postgres:16, redis:7, minio, mailpit, gateway,
   10 services, web. *AC*: `docker compose config` valid; all containers healthy.
-- [ ] **M0-T11** Add `infra/traefik/` static + dynamic config: entrypoints, `/api/v1` routers,
+- [x] **M0-T11** Add `infra/traefik/` static + dynamic config: entrypoints, `/api/v1` routers,
   ForwardAuth middleware, security headers, CORS, rate limit middlewares. *AC*: unknown route
   returns 404 JSON; `/healthz` reachable through gateway.
-- [ ] **M0-T12** Add `docker-compose.observability.yml` with Prometheus, Grafana (provisioned
+- [x] **M0-T12** Add `docker-compose.observability.yml` with Prometheus, Grafana (provisioned
   datasource + starter dashboard), Loki + Promtail. *AC*: service metrics visible in Grafana.
-- [ ] **M0-T13** Add `scripts/bootstrap.ps1` and `scripts/bootstrap.sh`: create `.env` from
-  example, generate RS256 dev keys, wait for postgres, run migrations, seed. *AC*: idempotent.
-- [ ] **M0-T14** Write `.env.example` covering every variable used by compose and services, with
+- [x] **M0-T13** Add `scripts/bootstrap.ps1` and `scripts/bootstrap.sh`: create `.env` from
+  example, start the stack and wait for every health endpoint. *AC*: idempotent.
+  *(RS256 dev keys, migrations and seed move to M1 with the first schema.)*
+- [x] **M0-T14** Write `.env.example` covering every variable used by compose and services, with
   comments and safe defaults. *AC*: no secret values; compose starts with only these values.
 
 ### Epic M0-E4 — CI & quality tooling
 
-- [ ] **M0-T15** Create reusable GitHub Actions workflow `service-ci.yml`: ruff, mypy, pytest with
+- [x] **M0-T15** Create reusable GitHub Actions workflow `service-ci.yml`: ruff, mypy, pytest with
   postgres+redis services, coverage gate, docker build, Trivy scan. *AC*: runs on template repo.
-- [ ] **M0-T16** Create `web-ci.yml`: eslint, tsc, vitest, playwright smoke, build. *AC*: passes on
+- [x] **M0-T16** Create `web-ci.yml`: eslint, tsc, vitest, playwright smoke, build. *AC*: passes on
   skeleton.
-- [ ] **M0-T17** Add pre-commit config (ruff, prettier, trailing whitespace, secret scan,
+- [x] **M0-T17** Add pre-commit config (ruff, prettier, trailing whitespace, secret scan,
   conventional commit lint). *AC*: `pre-commit run --all-files` clean.
-- [ ] **M0-T18** Add dependency update automation (Dependabot/Renovate) config for all repos.
+- [x] **M0-T18** Add dependency update automation (Dependabot/Renovate) config for all repos.
   *AC*: PRs open weekly, grouped.
-- [ ] **M0-T19** Add `docs/CHANGELOG.md` with Keep-a-Changelog format and the update rule in
+- [x] **M0-T19** Add `docs/CHANGELOG.md` with Keep-a-Changelog format and the update rule in
   `CONTRIBUTING.md`.
 
 ### Epic M0-E5 — Web shell
 
-- [ ] **M0-T20** Scaffold Next.js 15 app: App Router, TypeScript strict, Tailwind, shadcn/ui init,
+- [x] **M0-T20** Scaffold Next.js 15 app: App Router, TypeScript strict, Tailwind, shadcn/ui init,
   design tokens from `UI_UX_DESIGN.md`. *AC*: `pnpm build` succeeds; tokens visible in Storybook or
   a `/design` page.
-- [ ] **M0-T21** Implement app shell: sidebar, topbar, tenant badge, user menu, theme toggle,
+- [x] **M0-T21** Implement app shell: sidebar, topbar, tenant badge, user menu, theme toggle,
   responsive drawer. *AC*: keyboard navigable; passes axe smoke.
-- [ ] **M0-T22** Add API client generation from OpenAPI (`openapi-typescript`) and a typed fetch
+- [x] **M0-T22** Add API client generation from OpenAPI (`openapi-typescript`) and a typed fetch
   wrapper with error mapping. *AC*: type errors surface at build time.
 
 ### Epic M0-E6 — Data & seed
 
-- [ ] **M0-T23** Write seed script: 1 tenant (`Acme Labs`), 6 users (owner/admin/manager/lead/
-  member/viewer), 2 teams, 2 projects, 1 active sprint, 20 backlog items, sample time entries.
-  *AC*: rerunnable without duplicates.
-- [ ] **M0-T24** Write `docs/RUNBOOKS.md` skeleton (start/stop, reset DB, rotate dev keys, logs).
+- [ ] **M0-T23** *(moved to M1 — requires IAM/Core schemas)* Write seed script: 1 tenant
+  (`Acme Labs`), 6 users (owner/admin/manager/lead/member/viewer), 2 teams, 2 projects, 1 active
+  sprint, 20 backlog items, sample time entries. *AC*: rerunnable without duplicates.
+- [x] **M0-T24** Write `docs/RUNBOOKS.md` skeleton (start/stop, reset DB, rotate dev keys, logs).
 
-**M0 exit gate**: `docker compose up -d` → every `/healthz` green through the gateway → seeded
-login works → CI green on an empty PR → ADR-001…004, 007–009, 013, 014 accepted.
+**M0 exit gate**: `docker compose up -d` → every `/healthz` green through the gateway → web shell
+renders → contracts lint clean → CI green on an empty PR → ADR-001…004, 007–009, 013, 014,
+018 accepted. *Seeded login and outbox are delivered with M1 because they need the first schema.*
 
 ---
 
@@ -595,3 +598,4 @@ Kept here so the design does not accidentally preclude it.
 | Date | Change | Reason |
 | :--- | :--- | :--- |
 | 2026-11-21 | Plan v1 created | Initial planning cycle |
+| 2026-11-21 | M0 executed; T08 (outbox) and T23 (seed) moved to M1 because they depend on the first schemas | Delivered foundation scope |

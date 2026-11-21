@@ -1,0 +1,62 @@
+name: platform-ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  compose:
+    name: compose configuration
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Prepare environment
+        run: cp .env.example .env
+
+      - name: Validate compose
+        run: docker compose config --quiet
+
+  submodules:
+    name: submodules pinned and reachable
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify all submodules resolve
+        run: |
+          git submodule sync --recursive
+          git submodule update --init --recursive
+          test -z "$(git submodule status --recursive | grep '^-')"
+
+  docs:
+    name: documentation links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check local markdown links
+        run: |
+          python3 - <<'PY'
+          import re
+          import sys
+          from pathlib import Path
+
+          roots = [Path("README.md"), Path("AGENTS.md"), *Path("docs").glob("*.md")]
+          missing = []
+          for path in roots:
+              text = path.read_text(encoding="utf-8")
+              for match in re.finditer(r"\]\(([^)#]+\.md)(#[^)]*)?\)", text):
+                  target = match.group(1)
+                  if target.startswith(("http://", "https://")):
+                      continue
+                  if not (path.parent / target).exists():
+                      missing.append(f"{path} -> {target}")
+          if missing:
+              print("\n".join(sorted(set(missing))))
+              sys.exit(1)
+          print("all local links resolve")
+          PY

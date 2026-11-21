@@ -1,6 +1,6 @@
 # NeatSprint — UI/UX Design System & Screen Specification
 
-> **Status**: Draft v1 for review · **Version**: 1.0 · **Last updated**: 2026-11-21
+> **Status**: Approved v1.0 · **Version**: 1.0 · **Last updated**: 2026-11-21
 > **Owner/Designer**: OpenCade (AI, chief UI/UX) · **Reviewer**: Laksiri Fernando
 > **Scope**: Web app (MVP), Desktop agent (MVP), Mobile (Phase 2)
 > **Related**: `SCOPE.md` FR-WEB/FR-DSK, `ARCHITECTURE.md`, `TEST_PLAN.md` TS-07

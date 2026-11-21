@@ -1,0 +1,45 @@
+[submodule "services/neatsprint-contracts"]
+	path = services/neatsprint-contracts
+	url = https://github.com/neatsprint/neatsprint-contracts.git
+[submodule "services/neatsprint-lib"]
+	path = services/neatsprint-lib
+	url = https://github.com/neatsprint/neatsprint-lib.git
+[submodule "services/neatsprint-apigw"]
+	path = services/neatsprint-apigw
+	url = https://github.com/neatsprint/neatsprint-apigw.git
+[submodule "services/neatsprint-iam"]
+	path = services/neatsprint-iam
+	url = https://github.com/neatsprint/neatsprint-iam.git
+[submodule "services/neatsprint-core"]
+	path = services/neatsprint-core
+	url = https://github.com/neatsprint/neatsprint-core.git
+[submodule "services/neatsprint-task"]
+	path = services/neatsprint-task
+	url = https://github.com/neatsprint/neatsprint-task.git
+[submodule "services/neatsprint-team"]
+	path = services/neatsprint-team
+	url = https://github.com/neatsprint/neatsprint-team.git
+[submodule "services/neatsprint-worklog"]
+	path = services/neatsprint-worklog
+	url = https://github.com/neatsprint/neatsprint-worklog.git
+[submodule "services/neatsprint-monitoring"]
+	path = services/neatsprint-monitoring
+	url = https://github.com/neatsprint/neatsprint-monitoring.git
+[submodule "services/neatsprint-chat"]
+	path = services/neatsprint-chat
+	url = https://github.com/neatsprint/neatsprint-chat.git
+[submodule "services/neatsprint-reports"]
+	path = services/neatsprint-reports
+	url = https://github.com/neatsprint/neatsprint-reports.git
+[submodule "services/neatsprint-ai"]
+	path = services/neatsprint-ai
+	url = https://github.com/neatsprint/neatsprint-ai.git
+[submodule "services/neatsprint-web"]
+	path = services/neatsprint-web
+	url = https://github.com/neatsprint/neatsprint-web.git
+[submodule "services/neatsprint-desktop"]
+	path = services/neatsprint-desktop
+	url = https://github.com/neatsprint/neatsprint-desktop.git
+[submodule "services/neatsprint-mobile"]
+	path = services/neatsprint-mobile
+	url = https://github.com/neatsprint/neatsprint-mobile.git

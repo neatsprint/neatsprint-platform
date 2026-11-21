@@ -1,0 +1,12 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  ci:
+    uses: neatsprint/neatsprint-platform/.github/workflows/service-ci.yml@main
+    with:
+      service: __SERVICE__

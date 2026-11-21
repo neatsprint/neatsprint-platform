@@ -16,6 +16,24 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ## [Unreleased] — MVP development
 
+### Added
+
+- 2026-11-21 — **M0 foundations**: 15 component repositories created and registered as git
+  submodules; Docker Compose stack (Postgres, Redis, object storage, Mailpit, Traefik, 9 services,
+  web) verified end to end; Prometheus/Grafana profile with a platform dashboard.
+- 2026-11-21 — `neatsprint-contracts` v0.1.0: common OpenAPI components, IAM/Core contracts,
+  AsyncAPI event catalogue, Spectral lint.
+- 2026-11-21 — `neatsprint-lib` v0.1.1: settings, JSON logging, RFC 7807 errors, request context,
+  health/readiness/metrics, async SQLAlchemy primitives, UUIDv7 helpers, tenant-scoped repository.
+- 2026-11-21 — `neatsprint-apigw`: Traefik routing, security headers, CORS, rate limits,
+  ForwardAuth definition.
+- 2026-11-21 — Service template + nine service skeletons (FastAPI, health endpoints, tests,
+  Dockerfiles, per-repo CI calling the platform reusable workflow).
+- 2026-11-21 — `neatsprint-web`: Next.js 15 shell, design tokens, theme toggle, API client,
+  Vitest suite and standalone Docker build.
+- 2026-11-21 — Orchestrator automation: bootstrap scripts, Makefile, reusable CI workflows,
+  pre-commit, Dependabot, runbook skeleton.
+
 ### Docs
 
 - 2026-11-21 — Published the refined documentation set in `docs/`:

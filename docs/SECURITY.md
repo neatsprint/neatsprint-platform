@@ -1,6 +1,6 @@
 # NeatSprint — Security & Privacy Model
 
-> **Status**: Draft v1 for review · **Version**: 1.0 · **Last updated**: 2026-11-21
+> **Status**: Approved v1.0 · **Version**: 1.0 · **Last updated**: 2026-11-21
 > **Owner**: Laksiri Fernando (approval) · **Author**: OpenCade (AI)
 > **Supersedes**: `documents/step8-security-and-privacy-model.md`, `step9`, `step10`, `step11`, `step16`
 > **Related**: `ARCHITECTURE.md` §4/§6, `DATA_MODEL.md`, `TEST_PLAN.md`, `DECISIONS.md`

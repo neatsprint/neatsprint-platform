@@ -1,6 +1,6 @@
 # NeatSprint — Project Scope
 
-> **Status**: Draft v1 for review · **Version**: 1.0 · **Last updated**: 2026-11-21
+> **Status**: Approved v1.0 · **Version**: 1.0 · **Last updated**: 2026-11-21
 > **Owner**: Laksiri Fernando (Project Owner / Architect) · **Author**: OpenCade (AI)
 > **Supersedes**: `documents/scope.md` (kept as reference)
 > **Companion documents**: `MASTER_PLAN.md`, `ARCHITECTURE.md`, `SECURITY.md`, `DATA_MODEL.md`
@@ -444,23 +444,23 @@ The MVP may be released only when **all** are true:
 
 ---
 
-## 12. Open Questions for Laksiri
+## 12. Confirmed Decisions (2026-11-21)
 
-These do not block documentation work; answers shape M1–M3. Defaults in brackets are what the
-plan currently assumes.
+All questions were reviewed and **approved with the documented defaults** on 2026-11-21. No
+open questions remain for M0–M5.
 
-| # | Question | Default if unanswered |
+| # | Resolution | Recorded in |
 | :--- | :--- | :--- |
-| Q1 | Confirm **Python/FastAPI** for backend services (vs TypeScript/NestJS). | FastAPI |
-| Q2 | Screenshot encryption: server-side KMS envelope encryption (manager & AI can view) or true end-to-end (neither can)? | KMS envelope — required for manager gallery and AI summaries |
-| Q3 | Billing: manual plan assignment for MVP, Stripe in Phase 3 — acceptable? | Yes |
-| Q4 | **Clarified**: a tenant has many users (confirmed). One *account* belongs to one tenant, and emails are globally unique. Is that sufficient, or do consultants need one login across tenants (requires a workspace selector and identity redesign)? | One account per tenant |
-| Q5 | Should Google login auto-provision users by verified domain, or only via invitation? | Invitation-first; domain auto-join only if the tenant enables it |
-| Q6 | Primary MVP desktop platform: Windows only, or Windows + macOS at launch? | Windows first, macOS immediately after |
-| Q7 | Chat in Phase 2 as documented, or pull a minimal channel into MVP? | Phase 2 |
-| Q8 | Default screenshot interval and privacy window — propose 5–10 min random, 24 h deletion window. | As proposed |
-| Q9 | Repository names/org: `github.com/neatsprint/*` as listed in `REPOSITORIES.md`? | As listed |
-| Q10 | Do you want a public roadmap / issue tracker mirrored in GitHub Projects? | Yes, from M0 |
+| Q1 | **Python 3.12 + FastAPI** for domain services; Next.js is UI/BFF only; Rust for CPU-bound components | ADR-001, ADR-018 |
+| Q2 | **KMS envelope encryption** for screenshots (manager gallery + AI need authorised decryption) | ADR-005 |
+| Q3 | **Manual plan assignment** in MVP; Stripe in Phase 3 | ADR-015 |
+| Q4 | **Many users per tenant**; one account per tenant; globally unique email | ADR-012 |
+| Q5 | **Invitation-first** Google login; domain auto-join only when the tenant enables it | SECURITY §3.3 |
+| Q6 | **Windows first**, macOS immediately after; Linux best-effort | DEVELOPMENT_PLAN M3 |
+| Q7 | **Chat and mobile in Phase 2** | ADR-011 |
+| Q8 | **5–10 min random** screenshot interval, **24 h** default privacy window | SCOPE FR-MON, DATA_MODEL |
+| Q9 | **`github.com/neatsprint/*`**, 15 public component repositories + orchestrator | REPOSITORIES |
+| Q10 | **Public roadmap** via milestones/board from M0 | MASTER_PLAN |
 
 ---
 
