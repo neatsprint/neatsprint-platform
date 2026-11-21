@@ -337,3 +337,93 @@ will add the identity/membership model to M1 — it is a meaningful auth change,
 before scaffolding.
 
 — OpenCade
+
+# Human Message: 20261121202652
+
+Okay, I agree with the defaults from Q1 to Q10. Documents approved. Proceed
+
+# AI Message: 20261121202652
+
+Decisions recorded and **M0 (Foundations) delivered**. The stack runs end to end on this machine
+and every service answers through the gateway.
+
+## 1. Decisions confirmed
+
+All Q1–Q10 defaults approved. Recorded in `docs/SCOPE.md` §12 ("Confirmed Decisions") and
+ADR-001/005/010/012/015/018 are now **Accepted**. Documents carry `Approved v1.0` status.
+
+## 2. Repositories created
+
+With your approval I created the 15 repositories under `neatsprint/*` via `gh`, then registered
+them as submodules:
+
+`contracts`, `lib`, `apigw`, `iam`, `core`, `task`, `team`, `worklog`, `monitoring`, `chat`,
+`reports`, `ai`, `web`, `desktop`, `mobile`.
+
+All are public, AGPLv3, `main` branch, with a reusable CI workflow calling the platform templates.
+
+## 3. What now runs
+
+| Component | Evidence |
+| :--- | :--- |
+| Compose stack | Postgres 16, Redis 7, object storage, Mailpit, Traefik, 9 services, web — all up |
+| Gateway routing | **9/9** `/api/v1/{iam,core,tasks,teams,work,monitor,chat,reports,ai}/ping` return 200 |
+| Web | `http://localhost:3000` returns 200; shell + design page build |
+| Readiness | `/readyz` reports `database: ok`; logical databases `db_*` created |
+| Contracts | Spectral lint clean (`common`, `iam`, `core`); AsyncAPI event catalogue |
+| Shared lib | 10 tests, ruff + mypy strict clean, tagged **v0.1.1** |
+| Services | 9 skeletons, 5 tests each, all suites green locally |
+| Web | 7 Vitest tests, `tsc` clean, production build succeeds |
+
+URLs: web `:3000`, API `:8000`, Traefik `:8089` (8080 was taken by another app on this machine),
+object console `:9001`, Mailpit `:8025`.
+
+## 4. M0 task status
+
+21 of 24 tasks complete. Two were **moved to M1** because they need the first schemas:
+- `M0-T08` outbox/event library — first producer is IAM events.
+- `M0-T23` demo seed — needs `users`/`tenants` tables.
+
+One remains partial:
+- `M0-T13` bootstrap covers `.env`, build/start and health waits; RS256 dev keys and migrations
+  move to M1 with the first migration.
+
+M0 exit gate is met in its adjusted form: clean start, every health endpoint green through the
+gateway, web renders, contracts lint clean, CI workflows in place. Seed/login arrives with M1.
+
+## 5. Deviations recorded during delivery
+
+1. **Object storage image**: `minio/minio` and `quay.io/minio/*` are no longer pullable here
+   (Docker Hub removal / Quay 401). Local development uses `bitnamilegacy/minio` with a fixed
+   bucket init. Production must use a maintained S3 or a pinned MinIO digest. This is dev-only.
+2. **Service container names**: compose services are named `neatsprint-<service>` so Traefik's
+   upstream URLs match production naming. Commands use `docker compose up -d neatsprint-iam`.
+3. **Traefik dashboard port**: host 8089, container 8080 (host conflict with qBittorrent).
+4. **API prefixes** follow public routes (`tasks`, `teams`, `work`, `monitor`), not raw service
+   names; services read `api_prefix` from settings.
+5. **ESLint** for the web app is deferred to M1; M0 gates on `tsc`, Vitest and `next build`.
+
+## 6. Commits
+
+- Orchestrator: `ac6a53d` (M0 foundations), plus the documentation baseline commits.
+- Each component repo has its own M0 commit; submodule pins are pushed and recorded.
+- `services/neatsprint-lib` is tagged `v0.1.1`; `neatsprint-contracts` tagged `v0.1.0`.
+
+## 7. Next: M1 — Identity & Tenancy
+
+Order of work:
+1. IAM schema + migrations (global unique email, tenant scoping, audit table).
+2. Argon2id credentials, RS256 JWT issuance + JWKS, refresh rotation with reuse detection.
+3. Invitations (create/accept/revoke), Google OIDC, password reset.
+4. RBAC seed + permission enforcement dependency; privilege-escalation guard.
+5. Core tenancy: plans, settings, application registry, module toggles.
+6. Gateway ForwardAuth wiring + service-side JWKS validation.
+7. Web login, invite acceptance, admin users/roles/settings.
+8. Outbox library + seed (the two moved M0 tasks).
+9. RBAC matrix, isolation and auth E2E tests; M1 gate review.
+
+No blockers on my side. One thing to confirm before M1 schema work: whether to use the current
+local Postgres for development only, or whether you want a managed Postgres connection for staging
+now. Default: keep local until the MVP gate, then provision staging.
+
+— OpenCade
