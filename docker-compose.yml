@@ -109,8 +109,21 @@ services:
       JWKS_URL: http://neatsprint-iam:8000/api/v1/auth/.well-known/jwks.json
       JWT_ISSUER: ${JWT_ISSUER:-neatsprint-iam}
       JWT_AUDIENCE: ${JWT_AUDIENCE:-neatsprint}
+      JWT_PRIVATE_KEY_PATH: /keys/jwt-private.pem
+      JWT_PUBLIC_KEY_PATH: /keys/jwt-public.pem
+      ACCESS_TOKEN_MINUTES: "15"
+      REFRESH_TOKEN_DAYS: "7"
+      BOOTSTRAP_TOKEN: ${BOOTSTRAP_TOKEN:-dev-bootstrap-token-change-me}
+      RUN_MIGRATIONS: "true"
+      SMTP_HOST: mailpit
+      SMTP_PORT: "1025"
+      SMTP_FROM: "NeatSprint <no-reply@neatsprint.local>"
+      EMAIL_ENABLED: "true"
+      WEB_BASE_URL: http://localhost:${WEB_PORT:-3000}
     ports:
       - "${IAM_PORT:-8001}:8000"
+    volumes:
+      - ./infra/keys:/keys
     healthcheck: *healthcheck
 
   neatsprint-core:
@@ -128,6 +141,8 @@ services:
       JWKS_URL: http://neatsprint-iam:8000/api/v1/auth/.well-known/jwks.json
       JWT_ISSUER: ${JWT_ISSUER:-neatsprint-iam}
       JWT_AUDIENCE: ${JWT_AUDIENCE:-neatsprint}
+      BOOTSTRAP_TOKEN: ${BOOTSTRAP_TOKEN:-dev-bootstrap-token-change-me}
+      RUN_MIGRATIONS: "true"
     ports:
       - "${CORE_PORT:-8002}:8000"
     healthcheck: *healthcheck
@@ -277,6 +292,7 @@ services:
       context: ./services/neatsprint-web
     environment:
       NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-http://localhost:8000/api/v1}
+      API_INTERNAL_URL: http://gateway/api/v1
       NEXT_TELEMETRY_DISABLED: "1"
     ports:
       - "${WEB_PORT:-3000}:3000"

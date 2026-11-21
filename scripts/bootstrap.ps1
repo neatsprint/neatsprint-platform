@@ -9,6 +9,7 @@
 [CmdletBinding()]
 param(
     [switch]$NoBuild,
+    [switch]$NoSeed,
     [int]$TimeoutSeconds = 600
 )
 
@@ -92,4 +93,17 @@ Write-Host "  Grafana        http://localhost:3001   (docker compose --profile o
 if ($failed.Count -gt 0) {
     Write-Host "Unhealthy: $($failed -join ', '). Inspect with: docker compose logs <service>" -ForegroundColor Yellow
     exit 1
+}
+
+if (-not $NoSeed) {
+    if (Get-Command python -ErrorAction SilentlyContinue) {
+        Write-Step "Seeding the demo tenant"
+        python "scripts/seed.py"
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "Seed failed. Inspect: docker compose logs neatsprint-core neatsprint-iam" -ForegroundColor Yellow
+            exit 1
+        }
+    } else {
+        Write-Host "python not found; skip seeding (run scripts/seed.py manually)" -ForegroundColor Yellow
+    }
 }

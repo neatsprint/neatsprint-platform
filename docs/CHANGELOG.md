@@ -18,6 +18,18 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-21 — **M1 identity slice**: IAM schema + migrations, Argon2id credentials, RS256
+  access tokens with JWKS, rotating refresh tokens with reuse detection, append-only audit log,
+  system roles and the full permission catalogue, invitations with email delivery, and the
+  tenant provisioning/bootstrap endpoints.
+- 2026-11-21 — **Core tenancy**: tenant schema + migrations, plans, tenant settings, application
+  registry, module enablement and the operator provisioning endpoint.
+- 2026-11-21 — **Gateway auth**: ForwardAuth to IAM with public auth routes, protected API
+  routes and identity header injection.
+- 2026-11-21 — **Web auth**: httpOnly cookie BFF, login page, invitation acceptance, admin users
+  table with invite form and sign-out.
+- 2026-11-21 — `scripts/seed.py` demo tenant/users and `scripts/smoke-auth.py` end-to-end check.
+
 - 2026-11-21 — **M0 foundations**: 15 component repositories created and registered as git
   submodules; Docker Compose stack (Postgres, Redis, object storage, Mailpit, Traefik, 9 services,
   web) verified end to end; Prometheus/Grafana profile with a platform dashboard.

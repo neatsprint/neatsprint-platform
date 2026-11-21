@@ -10,9 +10,10 @@ NeatSprint is a multi-tenant, open-source (AGPLv3) platform for agile task manag
 transparent work tracking. It brings planning, a secure desktop agent, and honest monitoring into
 one product — and gives employees a real way to see and delete what was captured about them.
 
-> **Project status**: pre-alpha. Milestone **M0 (foundations)** is delivered: 15 component
-> repositories, a running local stack, contracts, the shared library and the web shell. Identity,
-> planning and tracking arrive in M1–M3. Nothing in this repository is production ready yet.
+> **Project status**: pre-alpha. **M0** is delivered and **M1 (identity & tenancy)** is live for the
+> core journey: seeded login, JWT/JWKS, refresh rotation, RBAC, invitations, tenant settings and an
+> admin users screen. Google OAuth, password reset and role/settings UI remain. Nothing here is
+> production ready yet.
 
 ---
 
@@ -113,7 +114,7 @@ in [`documents/`](documents) for reference.
 | Phase | Theme | State |
 | :--- | :--- | :--- |
 | **M0** | Foundations: repos, Compose, contracts, CI | Done — 21/24 tasks; outbox + seed moved to M1 |
-| **M1** | Identity, tenancy, RBAC | Next |
+| **M1** | Identity, tenancy, RBAC | In progress — core auth journey working |
 | **M2** | Projects, backlog, sprints, teams | Planned |
 | **M3** | Time tracking, monitoring, desktop agent | Planned |
 | **M4** | Reports, dashboards, console polish | Planned |

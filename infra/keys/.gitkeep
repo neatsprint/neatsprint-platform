@@ -1,0 +1,2 @@
+# Local development JWT signing keys are generated here on first IAM start.
+# Never commit key material.

@@ -55,3 +55,15 @@ if [ -n "$failed" ]; then
   echo "Unhealthy:$failed. Inspect with: docker compose logs <service>" >&2
   exit 1
 fi
+
+if [ "${NO_SEED:-0}" != "1" ]; then
+  if command -v python3 >/dev/null 2>&1; then
+    step "Seeding the demo tenant"
+    python3 scripts/seed.py
+  elif command -v python >/dev/null 2>&1; then
+    step "Seeding the demo tenant"
+    python scripts/seed.py
+  else
+    echo "python not found; skip seeding (run scripts/seed.py manually)" >&2
+  fi
+fi

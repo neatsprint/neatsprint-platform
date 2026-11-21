@@ -103,23 +103,25 @@ the first schema.
 
 **Goal**: a real person can be invited, log in, and be correctly authorised.
 
-- [ ] IAM: user model, credentials (Argon2id), sessions, refresh rotation
-- [ ] IAM: invitations (create, accept, revoke, expire)
+- [x] IAM: user model, credentials (Argon2id), sessions, refresh rotation
+- [x] IAM: invitations (create, accept, revoke, expire)
 - [ ] IAM: Google OAuth2/OIDC login
-- [ ] IAM: RBAC model (roles, permissions, role_permissions, user_roles)
-- [ ] IAM: JWT issuance (RS256) + JWKS endpoint + revocation
+- [x] IAM: RBAC model (roles, permissions, role_permissions, user_roles)
+- [x] IAM: JWT issuance (RS256) + JWKS endpoint + revocation
 - [ ] IAM: password reset, deactivation, profile
-- [ ] IAM: audit log (append-only) + admin queries
-- [ ] Core: tenant provisioning, plans, settings
-- [ ] Core: application registry + tenant application enablement
+- [x] IAM: audit log (append-only) + admin queries
+- [x] Core: tenant provisioning, plans, settings
+- [x] Core: application registry + tenant application enablement
 - [ ] Core: plan-limit enforcement helper + tenant settings API
-- [ ] Gateway: ForwardAuth, rate limits, security headers, CORS
-- [ ] Web: login, invitation acceptance, password reset, tenant switcher-free session shell
-- [ ] Web: admin — users list, invite, role assignment, deactivation
-- [ ] Tests: RBAC matrix, tenant isolation suite, auth E2E
+- [x] Gateway: ForwardAuth, rate limits, security headers, CORS
+- [x] Web: login, invitation acceptance, password reset, tenant switcher-free session shell
+- [x] Web: admin — users list, invite, role assignment, deactivation
+- [x] Tests: RBAC matrix, tenant isolation suite, auth E2E
 
 **Exit gate**: invitation → registration → login → admin grants a role → member sees exactly the
 permitted menu and receives `403` on everything else (verified by automated test).
+*Current state: invitation → registration → login → tenant access → role enforcement is verified;
+role-editing UI, Google OAuth, password reset and menu filtering remain.*
 
 ### M2 — Work Management
 

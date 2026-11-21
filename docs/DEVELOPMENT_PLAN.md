@@ -24,7 +24,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | Milestone | Tasks | Done | State |
 | :--- | ---: | ---: | :--- |
 | M0 Foundations | 24 | 21 | 21 done · 2 moved to M1 · 1 partial |
-| M1 Identity & Tenancy | 34 | 0 | Not started |
+| M1 Identity & Tenancy | 34 | 20 | 20 done · core auth/RBAC/tenancy live; OAuth, reset, settings UI remain |
 | M2 Work Management | 33 | 0 | Not started |
 | M3 Time, Monitoring & Desktop | 40 | 0 | Not started |
 | M4 Reports & Console | 26 | 0 | Not started |
@@ -177,27 +177,27 @@ renders → contracts lint clean → CI green on an empty PR → ADR-001…004, 
 
 ### Epic M1-E1 — IAM data & security core
 
-- [ ] **M1-T01** IAM schema + migration: `users`, `user_credentials`, `social_accounts`,
+- [x] **M1-T01** IAM schema + migration: `users`, `user_credentials`, `social_accounts`,
   `sessions`, `invitations`, `roles`, `permissions`, `role_permissions`, `user_roles`,
   `api_keys`, `audit_log`. *AC*: constraints, indexes, **globally unique `email`** (ADR-012),
   tenant index on every tenant-owned table.
-- [ ] **M1-T02** Seed system roles and the full permission catalogue from `SECURITY.md` §5.
+- [x] **M1-T02** Seed system roles and the full permission catalogue from `SECURITY.md` §5.
   *AC*: matrix test asserts every role's permission set.
-- [ ] **M1-T03** Implement Argon2id password hashing + policy (min length, breach list stub).
+- [x] **M1-T03** Implement Argon2id password hashing + policy (min length, breach list stub).
   *AC*: unit tests for hashing, verification, rehash-on-parameter-change.
 - [ ] **M1-T04** Implement tenant-scoped repositories and a guard that refuses queries without a
   tenant context. *AC*: attempting an unscoped query raises in tests.
-- [ ] **M1-T05** Implement append-only audit log writer (actor, action, target, before/after hash,
+- [x] **M1-T05** Implement append-only audit log writer (actor, action, target, before/after hash,
   request id, IP, user agent). *AC*: updates/deletes rejected by DB trigger.
 
 ### Epic M1-E2 — Authentication
 
-- [ ] **M1-T06** `POST /api/v1/auth/login` with device metadata, lockout after N failures, and
+- [x] **M1-T06** `POST /api/v1/auth/login` with device metadata, lockout after N failures, and
   generic error messages. *AC*: returns access+refresh; failures audited.
-- [ ] **M1-T07** RS256 JWT issuance with claims `sub`, `tid`, `roles`, `scope`, `jti`, `exp`,
+- [x] **M1-T07** RS256 JWT issuance with claims `sub`, `tid`, `roles`, `scope`, `jti`, `exp`,
   `device_id`; JWKS endpoint; key rotation support (two active kids). *AC*: verified by a third
   party library; rotation test passes.
-- [ ] **M1-T08** `POST /auth/refresh` with rotation + reuse detection (revoke family on reuse).
+- [x] **M1-T08** `POST /auth/refresh` with rotation + reuse detection (revoke family on reuse).
   *AC*: replaying an old refresh token revokes the session family.
 - [ ] **M1-T09** `POST /auth/logout`, `GET /auth/me`, session listing and revoke-all.
   *AC*: revoked tokens fail until expiry.
@@ -212,51 +212,51 @@ renders → contracts lint clean → CI green on an empty PR → ADR-001…004, 
 - [ ] **M1-T13** Create/list/revoke/resend invitations with hashed tokens and expiry; reject an
   email already held by another tenant with neutral `409 email_unavailable`. *AC*: duplicate
   pending invite collapses to one; no tenant disclosure.
-- [ ] **M1-T14** Accept invitation: validates token, creates user, assigns roles/teams, marks
+- [x] **M1-T14** Accept invitation: validates token, creates user, assigns roles/teams, marks
   accepted, logs audit. *AC*: idempotent on double submit.
-- [ ] **M1-T15** Email adapter (SMTP/Mailpit in dev, SES in prod) with templated invite/reset
+- [x] **M1-T15** Email adapter (SMTP/Mailpit in dev, SES in prod) with templated invite/reset
   emails, plain-text fallback. *AC*: rendered emails snapshot-tested.
 - [ ] **M1-T16** User profile CRUD (`/iam/users`), avatar upload to object storage (presigned),
   timezone/locale. *AC*: self vs admin field-level permissions enforced.
-- [ ] **M1-T17** Deactivate/reactivate user: revoke sessions, emit `user.deactivated` event.
+- [x] **M1-T17** Deactivate/reactivate user: revoke sessions, emit `user.deactivated` event.
   *AC*: deactivated user cannot authenticate or refresh.
-- [ ] **M1-T18** Role assignment endpoints with privilege-escalation guard. *AC*: manager cannot
+- [x] **M1-T18** Role assignment endpoints with privilege-escalation guard. *AC*: manager cannot
   grant `ADMIN`; owner can.
 - [ ] **M1-T19** Custom role CRUD (stored, returned by API), UI deferred to P3.
   *AC*: invalid permission string rejected.
 
 ### Epic M1-E4 — Core tenancy
 
-- [ ] **M1-T20** Core schema: `plans`, `tenants`, `tenant_settings`, `applications`,
+- [x] **M1-T20** Core schema: `plans`, `tenants`, `tenant_settings`, `applications`,
   `application_features`, `tenant_applications`. *AC*: seeded applications list.
-- [ ] **M1-T21** `GET/PATCH /core/tenants/current` including all settings from SCOPE FR-TEN-05.
+- [x] **M1-T21** `GET/PATCH /core/tenants/current` including all settings from SCOPE FR-TEN-05.
   *AC*: validation ranges enforced; changes audited.
-- [ ] **M1-T22** Application registry endpoints; enable/disable module with plan check.
+- [x] **M1-T22** Application registry endpoints; enable/disable module with plan check.
   *AC*: disabled module returns `403 module_disabled` from its own service.
 - [ ] **M1-T23** Plan limit resolver (users, projects, retention) with cached lookup in Redis and
   invalidation on change. *AC*: limits enforced on create paths.
-- [ ] **M1-T24** Tenant provisioning script/endpoint for operator use (create tenant + owner
+- [x] **M1-T24** Tenant provisioning script/endpoint for operator use (create tenant + owner
   invite). *AC*: produces a working login in one command.
 - [ ] **M1-T25** Emit `tenant.created`, `tenant.settings_changed`, `tenant.module_toggled`.
 
 ### Epic M1-E5 — Enforcement
 
-- [ ] **M1-T26** Implement `require_permission("task:item:create")` dependency and
+- [x] **M1-T26** Implement `require_permission("task:item:create")` dependency and
   `require_tenant` dependency in the shared lib; wire into IAM and Core first. *AC*: 403 body uses
   stable codes; unit tested.
-- [ ] **M1-T27** Gateway ForwardAuth integration: validate token, inject trusted headers, strip
+- [x] **M1-T27** Gateway ForwardAuth integration: validate token, inject trusted headers, strip
   inbound spoofed headers. *AC*: spoofed `X-User-ID` is discarded.
-- [ ] **M1-T28** Service-side JWKS validation middleware (defence in depth). *AC*: invalid
+- [x] **M1-T28** Service-side JWKS validation middleware (defence in depth). *AC*: invalid
   signature rejected even if the gateway is bypassed in tests.
 
 ### Epic M1-E6 — Web: authentication & admin
 
-- [ ] **M1-T29** Login page, Google button, error states, "remember me" semantics, accessible form.
+- [x] **M1-T29** Login page, Google button, error states, "remember me" semantics, accessible form.
   *AC*: matches `UI_UX_DESIGN.md` S-01; keyboard + screen-reader tested.
 - [ ] **M1-T30** Invitation acceptance and password reset pages. *AC*: expired/invalid token states.
 - [ ] **M1-T31** Session handling: httpOnly cookies via BFF route handlers, silent refresh,
   logout, route middleware protection. *AC*: no tokens in localStorage.
-- [ ] **M1-T32** Admin → Users: table, filters, invite dialog, role assignment, deactivate.
+- [x] **M1-T32** Admin → Users: table, filters, invite dialog, role assignment, deactivate.
   *AC*: controls hidden without permission and rejected by API.
 - [ ] **M1-T33** Admin → Roles: read-only system role matrix view. *AC*: matrix generated from API.
 - [ ] **M1-T34** Admin → Tenant settings: general, monitoring policy, retention, modules.
@@ -599,3 +599,4 @@ Kept here so the design does not accidentally preclude it.
 | :--- | :--- | :--- |
 | 2026-11-21 | Plan v1 created | Initial planning cycle |
 | 2026-11-21 | M0 executed; T08 (outbox) and T23 (seed) moved to M1 because they depend on the first schemas | Delivered foundation scope |
+| 2026-11-21 | M1 first slice delivered: IAM auth/RBAC/invitations/audit, Core tenancy/settings/modules, ForwardAuth, web login/admin, seed | Vertical auth slice verified end to end |
