@@ -100,6 +100,9 @@ Format: ID · scenario · expected result. Full automation maps to these IDs in 
 | TC-IAM-013 | Expired JWT | 401 `token_expired` |
 | TC-IAM-014 | JWT from another tenant, header spoofed | Denied; spoofed header stripped |
 | TC-IAM-015 | Admin deactivates user mid-session | Next call 401; desktop receives suspend event |
+| TC-IAM-016 | 20 users of one tenant log in and work concurrently | Each gets an independent session/token; no cross-user data |
+| TC-IAM-017 | Invite an email already active in another tenant | `409 email_unavailable`, neutral copy, no tenant name or existence leak |
+| TC-IAM-018 | Deactivate one of many users in a tenant | Only that user is blocked; all other sessions unaffected |
 
 ### 5.2 TS-02 Authorisation & Tenant Isolation (must pass on every PR)
 

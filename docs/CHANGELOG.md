@@ -29,6 +29,8 @@ All notable changes to NeatSprint are recorded here. Format follows
   `docs/REPOSITORIES.md`.
 - 2026-11-21 — Added ADR-018 (runtime language policy: Python services, Next.js as UI/BFF only,
   Rust for CPU-bound components) in response to the backend-runtime question.
+- 2026-11-21 — Clarified ADR-012: a tenant has many users; each account belongs to one tenant with a
+  globally unique email. Updated scope, data model, API, security, plans and tests accordingly.
 
 ### Changed
 

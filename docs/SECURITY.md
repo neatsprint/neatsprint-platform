@@ -69,6 +69,9 @@ Residual risks accepted for MVP:
 - Login responses are uniform ("Invalid email or password") with constant-time comparison.
 - Progressive lockout: 5 failures → 15 min per account+IP pair, audited; no account enumeration.
 - Password change invalidates all other sessions.
+- **Global email uniqueness (ADR-012)**: an email identifies exactly one account in one tenant, so
+  login needs no workspace selector. Inviting an email that already exists elsewhere returns a
+  neutral `409 email_unavailable`; the API never discloses which tenant holds it.
 
 ### 3.2 Tokens
 
@@ -251,6 +254,7 @@ deletion tombstone. No permission grants access to deleted pixels.
 | Logs | `tenant_id` included, PII excluded |
 | Reports | Every projection row carries `tenant_id`; aggregation cannot cross tenants |
 | Admin | No platform-wide data browser in MVP; operator actions are audited and break-glass |
+| Invitations | An email held by another tenant receives a neutral conflict; no tenant name, no ownership leak |
 
 A dedicated isolation test suite runs on every PR (`TEST_PLAN.md` §6.2). A new endpoint without an
 isolation test fails CI.

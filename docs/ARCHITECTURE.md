@@ -191,7 +191,9 @@ Internal service-to-service calls use `http://neatsprint-<service>:8000`.
 ### 4.1 Tenancy model
 
 - `tenant` is the billing and isolation boundary. Every tenant-owned table carries `tenant_id`.
-- `user` belongs to exactly one tenant (ADR-012 assumption; revisit only with a migration plan).
+  **A tenant has many users**; every user logs in and works independently (subject to seat limits).
+- `user` is an account that belongs to exactly **one** tenant (ADR-012). Email is globally unique,
+  so login is unambiguous; the same person in two workspaces needs two accounts in MVP.
 - `team` groups users inside a tenant. `project` can involve multiple teams.
 - `application` is global; `tenant_application` enables modules per tenant.
 

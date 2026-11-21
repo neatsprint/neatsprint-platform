@@ -275,3 +275,65 @@ ingest), not for the platform.
   the trade-off ADR if you want it explored.
 
 — OpenCade
+
+# Human Message: 20261121193838
+
+One more clarification regarding Q4. Multiple users should be able to login and work in one tenant. Right?
+
+# AI Message: 20261121193838
+
+Yes — absolutely. My Q4 wording was ambiguous, and I have corrected it across the documents.
+
+## The correct model
+
+| Relationship | Cardinality |
+| :--- | :--- |
+| Tenant → users | **One tenant has many users** (limited only by the plan's seat count) |
+| User account → tenant | **One account belongs to exactly one tenant** |
+| User → teams | Many teams within that tenant |
+| User → projects | Many projects within that tenant |
+| Session/device → user | Many devices per user, each with its own session |
+| Invitation → tenant | Each invitation is scoped to one tenant and one email |
+
+So: an admin invites 20 colleagues; all 20 accept, log in, and work concurrently in the same
+tenant with their own roles and permissions. There is no "one user per tenant" limitation anywhere.
+
+The only restriction is the inverse: a single **account** cannot span two tenants (no workspace
+switcher in MVP). A consultant who works for two client tenants needs two accounts with different
+email addresses. That is ADR-012, and it is what Q4 was actually asking.
+
+## One consequence I tightened while checking this
+
+Because login is `email + password` with no workspace selector, email must be **globally unique**,
+not merely unique per tenant. Otherwise the same email in two tenants would make login ambiguous and
+would also complicate Google/OIDC linking. So:
+
+- `users.email` is now globally unique (`UNIQUE(email)`), still carrying `tenant_id`.
+- Inviting an email that already belongs to another tenant returns a neutral
+  `409 email_unavailable` — never naming the other tenant (no existence leak).
+- The trade-off (consultants need a second email) is documented, with a future identity +
+  memberships + workspace-selector design noted as the upgrade path.
+
+## Documents updated
+
+- `SCOPE.md` — explicit tenancy cardinality, new FR-IAM-12, clarified Q4 and assumption #2.
+- `DECISIONS.md` — ADR-012 rewritten as "Tenants have many users; each account belongs to one
+  tenant" (global unique email).
+- `DATA_MODEL.md` — global unique email index and invariant.
+- `API_SPEC.md` — invitation conflict rule and `email_unavailable` error code.
+- `SECURITY.md` — tenant-isolation note for invitations.
+- `ARCHITECTURE.md`, `GLOSSARY.md`, `MASTER_PLAN.md` — wording aligned.
+- `DEVELOPMENT_PLAN.md` — M1-T01/M1-T13 acceptance criteria updated.
+- `TEST_PLAN.md` — added concurrent multi-user login, cross-tenant invite conflict, and single-user
+  deactivation cases (TC-IAM-016…018).
+
+Nothing here changes the milestone plan or estimates.
+
+## Still your call on Q4's deeper question
+
+Is the "second email for a second workspace" limitation acceptable for MVP, or do you want
+single-login multi-tenant access (workspace selector) before launch? If the latter, say so now and I
+will add the identity/membership model to M1 — it is a meaningful auth change, so better to decide
+before scaffolding.
+
+— OpenCade

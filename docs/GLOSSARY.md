@@ -11,12 +11,12 @@ Shared vocabulary for documents, code, API fields and UI copy. Where a term appe
 
 | Term | Definition | UI label |
 | :--- | :--- | :--- |
-| **Tenant** | An isolated organisation using NeatSprint. Billing and data-isolation boundary. | Workspace |
+| **Tenant** | An isolated organisation using NeatSprint. Billing and data-isolation boundary; contains many users. | Workspace |
 | **Tenant Owner** | Human accountable for the tenant and its subscription. | Owner |
 | **Application** | A module the platform can provide (e.g. Task Management, Monitoring). Global entity shared by tenants. | App |
 | **Tenant application** | The enablement record linking a tenant to an application. | Module |
 | **Plan** | Commercial tier that constrains users, projects and retention. | Plan |
-| **User** | A person with an account in exactly one tenant. | Person / Member |
+| **User** | A person with one account in one tenant. A tenant has many users; each logs in independently. | Person / Member |
 | **Role** | Named bundle of permissions, system or custom. | Role |
 | **Permission** | A single capability string `domain:resource:action`. | Permission |
 | **Invitation** | Time-limited token sent by email to join a tenant. | Invitation |

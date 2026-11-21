@@ -49,8 +49,12 @@ planning) without redesign.
 | **Stakeholder / Auditor** | Reads reports and audit trails, no mutation | `VIEWER` |
 | **AI Agent** (service) | Answers questions and drafts changes on behalf of a user | `AI_AGENT` (non-human) |
 
-> Users belong to **exactly one tenant**. Users may belong to **many teams** and work across
-> **many projects** within that tenant.
+> **Tenancy cardinality (important)**: a tenant has **many users**, each of whom logs in and works
+> independently. The restriction is the other direction: a **user account belongs to exactly one
+> tenant**. Within that tenant a user may join many teams and work across many projects. A person
+> who genuinely needs two workspaces needs two accounts with different email addresses in MVP
+> (ADR-012); single-login multi-tenant access is a later feature, not a constraint on how many
+> people can use a tenant.
 
 ---
 
@@ -124,6 +128,7 @@ Priority: **M** = must (MVP), **S** = should (MVP if time allows), **C** = could
 | FR-IAM-09 | Every user has a profile: full name, email, avatar, job title, timezone, locale, notification preferences. | M |
 | FR-IAM-10 | Multi-factor authentication (TOTP) for admin roles. | S |
 | FR-IAM-11 | SSO via SAML/OIDC for enterprise tenants. | C |
+| FR-IAM-12 | A tenant supports many users up to its plan seat limit; each user authenticates independently and can access the tenant concurrently. | M |
 
 ### 4.3 Roles & Permissions
 
@@ -360,8 +365,10 @@ Detailed columns, keys and indexes: `docs/DATA_MODEL.md`.
 ## 7. Assumptions
 
 1. Tenants are organisations; consumer/freelancer use is a tenant of one.
-2. A user account is bound to one tenant. Consultants needing two tenants use two accounts
-   (revisit only if demand appears — would require an identity/tenancy redesign).
+2. A tenant has unlimited users (subject to plan seats). A **user account** is bound to one tenant,
+   and email addresses are globally unique across the platform so login is unambiguous. A person
+   needing two workspaces uses two accounts/emails (revisit only if demand appears — would require
+   a workspace selector and an identity/tenancy redesign).
 3. Email delivery is available (SES/SMTP); Google OAuth credentials are provisioned by the owner.
 4. Screen capture is legal in the tenant's jurisdiction and disclosed in their employment terms;
    NeatSprint supplies the mechanism and transparency, not the legal basis.
@@ -447,7 +454,7 @@ plan currently assumes.
 | Q1 | Confirm **Python/FastAPI** for backend services (vs TypeScript/NestJS). | FastAPI |
 | Q2 | Screenshot encryption: server-side KMS envelope encryption (manager & AI can view) or true end-to-end (neither can)? | KMS envelope — required for manager gallery and AI summaries |
 | Q3 | Billing: manual plan assignment for MVP, Stripe in Phase 3 — acceptable? | Yes |
-| Q4 | Is "one user = one tenant" acceptable for MVP, or is consultant multi-tenant access required early? | One tenant per user |
+| Q4 | **Clarified**: a tenant has many users (confirmed). One *account* belongs to one tenant, and emails are globally unique. Is that sufficient, or do consultants need one login across tenants (requires a workspace selector and identity redesign)? | One account per tenant |
 | Q5 | Should Google login auto-provision users by verified domain, or only via invitation? | Invitation-first; domain auto-join only if the tenant enables it |
 | Q6 | Primary MVP desktop platform: Windows only, or Windows + macOS at launch? | Windows first, macOS immediately after |
 | Q7 | Chat in Phase 2 as documented, or pull a minimal channel into MVP? | Phase 2 |

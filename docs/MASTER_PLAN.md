@@ -312,7 +312,7 @@ Full records in `docs/DECISIONS.md`.
 | 009 | Redis Streams + outbox for events in MVP | Accepted |
 | 010 | Device binding via key pair + signed request (DPoP-style) | Proposed |
 | 011 | Chat deferred to Phase 2 | Accepted |
-| 012 | Billing manual in MVP, Stripe in Phase 3 | Proposed |
+| 012 | Many users per tenant; account belongs to one tenant (global unique email) | Proposed |
 | 013 | Multi-repo with submodules and a contracts repo | Accepted |
 | 014 | Next.js App Router + Tailwind + shadcn/ui for web | Accepted |
 | 015 | Manual billing in MVP, Stripe in Phase 3 | Proposed |

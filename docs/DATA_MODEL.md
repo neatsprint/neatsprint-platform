@@ -62,7 +62,7 @@ erDiagram
 
 | Table | Key columns | Notes |
 | :--- | :--- | :--- |
-| `users` | `tenant_id`, `email citext`, `full_name`, `avatar_url`, `job_title`, `timezone`, `locale`, `status` | `UNIQUE (tenant_id, email)`; status: `INVITED`, `ACTIVE`, `DISABLED` |
+| `users` | `tenant_id`, `email citext`, `full_name`, `avatar_url`, `job_title`, `timezone`, `locale`, `status` | **Globally unique `email`** (ADR-012) — one account per tenant; status: `INVITED`, `ACTIVE`, `DISABLED` |
 | `user_credentials` | `user_id` PK/FK, `password_hash`, `password_updated_at`, `must_change` | Argon2id; 1:1 |
 | `social_accounts` | `user_id`, `provider` (`google`, `github`, `microsoft`), `provider_subject`, `email_at_provider` | `UNIQUE (provider, provider_subject)` |
 | `sessions` | `user_id`, `device_id`, `refresh_token_hash`, `family_id`, `ip`, `user_agent`, `expires_at`, `revoked_at`, `revoke_reason` | rotation + reuse detection |
@@ -77,8 +77,8 @@ erDiagram
 ### 2.2 Constraints & indexes
 
 ```sql
--- users
-CREATE UNIQUE INDEX ux_users_tenant_email ON users (tenant_id, email) WHERE deleted_at IS NULL;
+-- users: email is globally unique so login is unambiguous (ADR-012)
+CREATE UNIQUE INDEX ux_users_email ON users (email) WHERE deleted_at IS NULL;
 CREATE INDEX ix_users_tenant_status ON users (tenant_id, status);
 
 -- sessions
@@ -360,7 +360,7 @@ Enforced in code **and** protected by constraints where possible:
 - At most one open work session per user.
 - `backlog_items.sprint_id` belongs to the same `project_id`.
 - `time_entries.duration_seconds > 0`.
-- `users.email` unique per tenant, case-insensitive.
+- `users.email` globally unique and case-insensitive (one account belongs to one tenant).
 - `screenshots.captured_at <= now()` and within the session window.
 - No `tenant_id` mismatch between a child row and its parent (composite FK where both live in the
   same DB).

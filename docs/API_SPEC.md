@@ -91,7 +91,7 @@ Rules:
 | 401 | Missing/invalid/expired token | `unauthenticated`, `token_expired`, `token_revoked` |
 | 403 | Authenticated but not allowed | `permission_denied`, `tenant_mismatch`, `module_disabled`, `window_closed`, `not_yet_visible` |
 | 404 | Not found **or not visible to this tenant** | `not_found` |
-| 409 | State conflict | `duplicate_key`, `active_sprint_exists`, `timer_already_running`, `version_conflict` |
+| 409 | State conflict | `duplicate_key`, `active_sprint_exists`, `timer_already_running`, `version_conflict`, `email_unavailable` |
 | 410 | Gone permanently | `invitation_expired` |
 | 413 | Payload too large | `payload_too_large` |
 | 415 | Unsupported media | `unsupported_media_type` |
@@ -176,6 +176,11 @@ Legend: **P** = permission required. All endpoints require authentication unless
 | PATCH | `/iam/roles/{id}` | Update role | `core:role:manage` |
 | GET | `/iam/permissions` | Permission catalogue | `core:role:read` |
 | GET | `/iam/audit` | Audit log query | `report:audit:view` |
+
+> **Tenancy note (ADR-012)**: a tenant has many users, and each user logs in independently. Email
+> addresses are globally unique, so an invitation for an email that already belongs to another
+> tenant returns `409 email_unavailable` with neutral copy (never naming the other tenant). A
+> tenant admin can invite, deactivate and re-role any number of users within their seat limit.
 
 ### 2.3 Core — `/api/v1/core`
 

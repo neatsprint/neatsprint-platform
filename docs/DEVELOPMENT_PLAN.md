@@ -176,7 +176,8 @@ login works → CI green on an empty PR → ADR-001…004, 007–009, 013, 014 a
 
 - [ ] **M1-T01** IAM schema + migration: `users`, `user_credentials`, `social_accounts`,
   `sessions`, `invitations`, `roles`, `permissions`, `role_permissions`, `user_roles`,
-  `api_keys`, `audit_log`. *AC*: constraints, indexes, unique `(tenant_id, lower(email))`.
+  `api_keys`, `audit_log`. *AC*: constraints, indexes, **globally unique `email`** (ADR-012),
+  tenant index on every tenant-owned table.
 - [ ] **M1-T02** Seed system roles and the full permission catalogue from `SECURITY.md` §5.
   *AC*: matrix test asserts every role's permission set.
 - [ ] **M1-T03** Implement Argon2id password hashing + policy (min length, breach list stub).
@@ -205,8 +206,9 @@ login works → CI green on an empty PR → ADR-001…004, 007–009, 013, 014 a
 
 ### Epic M1-E3 — Invitations & users
 
-- [ ] **M1-T13** Create/list/revoke/resend invitations with hashed tokens and expiry.
-  *AC*: duplicate pending invite collapses to one.
+- [ ] **M1-T13** Create/list/revoke/resend invitations with hashed tokens and expiry; reject an
+  email already held by another tenant with neutral `409 email_unavailable`. *AC*: duplicate
+  pending invite collapses to one; no tenant disclosure.
 - [ ] **M1-T14** Accept invitation: validates token, creates user, assigns roles/teams, marks
   accepted, logs audit. *AC*: idempotent on double submit.
 - [ ] **M1-T15** Email adapter (SMTP/Mailpit in dev, SES in prod) with templated invite/reset

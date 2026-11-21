@@ -178,15 +178,30 @@ Status values: `Proposed` · `Accepted` · `Rejected` · `Superseded by ADR-xxx`
 
 ---
 
-## ADR-012 — One user belongs to one tenant
+## ADR-012 — Tenants have many users; each account belongs to one tenant
 
-- **Status**: Proposed
-- **Context**: The scope states strict one-user-one-tenant, but consultants and agencies often need
-  multiple workspaces.
-- **Decision**: MVP enforces one tenant per user account. A person needing two tenants uses two
-  accounts (or an alias email). Revisit only with a proper identity/tenancy migration.
-- **Consequences**: Simpler token, scoping and UX; a known limitation to document.
-- **Alternatives**: Multi-tenant users (tenant switcher, per-tenant roles, more complex tokens).
+- **Status**: Proposed (clarified 2026-11-21)
+- **Context**: "One user, one tenant" was ambiguous. The intended model is **one tenant → many
+  users**, each logging in and working independently. The restriction is the inverse: a user
+  account is a member of exactly one tenant. Consultants and agencies, however, often need one
+  person in several workspaces.
+- **Decision**:
+  1. A tenant has many users (seats limited by plan).
+  2. A user account has exactly one `tenant_id`; tokens carry a single `tid`.
+  3. **Email addresses are globally unique** across the platform (`UNIQUE(email)`), so login and
+     Google/OIDC linking are unambiguous. The same email cannot be invited into a second tenant.
+  4. A person needing two workspaces uses two accounts with distinct emails in MVP.
+  5. Inviting an email that already belongs to another tenant returns a neutral `409
+     email_unavailable`; it must never reveal the other tenant's name or existence.
+  6. Single-login multi-tenant access (identity + memberships + workspace selector) is a later
+     feature requiring its own ADR and migration.
+- **Consequences**: Simple login (`email + password`), simple tokens, simple scoping; a documented
+  limitation for consultants; support process needed for account/tenant moves. Global email
+  uniqueness slightly reduces signup flexibility but removes a whole class of ambiguity.
+- **Alternatives**: Per-tenant email uniqueness with a workspace selector at login (better for
+  consultants, more auth complexity and enumeration surface); subdomain-per-tenant (clean but adds
+  TLS/routing/cookie complexity); full identity + many memberships (correct long-term model, larger
+  MVP).
 
 ---
 
@@ -313,7 +328,7 @@ Status values: `Proposed` · `Accepted` · `Rejected` · `Superseded by ADR-xxx`
 | 009 | Outbox + Redis Streams | Accepted | M0 |
 | 010 | Device key-pair binding | Proposed | M3 |
 | 011 | Chat/mobile in Phase 2 | Accepted | — |
-| 012 | One user, one tenant | Proposed | M1 |
+| 012 | Many users per tenant; account belongs to one tenant (global unique email) | Proposed | M1 |
 | 013 | Multi-repo + contracts | Accepted | M0 |
 | 014 | Next.js web stack | Accepted | M0 |
 | 015 | Manual billing in MVP | Proposed | M1 |
