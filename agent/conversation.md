@@ -468,3 +468,116 @@ CHANGELOG and DEVOPS note).
 No impact on M1. Proceeding with identity and tenancy next.
 
 — OpenCade
+
+# Human Message: 20261121194500
+
+Proceed with M1
+
+# AI Message: 20261121211818
+
+**M1 is live for the core journey.** I delivered a vertical slice rather than stubs: a seeded user
+can log in through the gateway, receive a signed session, read their tenant, and be denied by RBAC
+when they should be. The web app can log in and manage users. This is 20 of 34 M1 tasks; the
+remaining items are listed below, not hidden.
+
+## What works (verified)
+
+`scripts/smoke-auth.py` — **17/17 PASS**:
+
+| Check | Result |
+| :--- | :--- |
+| Owner login (email + password) | PASS |
+| OWNER role and `core:tenant:update` in token scope | PASS |
+| Tenant read through the gateway + ForwardAuth | PASS |
+| Unauthenticated request | 401 PASS |
+| Viewer attempts to invite | 403 PASS |
+| Refresh token rotation | PASS |
+| Old refresh token reuse → session family revoked | PASS |
+| Roles listed for the tenant | PASS |
+| Invitation created, accepted, invitee can log in | PASS |
+
+Web (cookie BFF, tested with a real session):
+
+- `POST /api/session/login` sets `ns_access` + `ns_refresh` as httpOnly cookies.
+- `/admin/users` renders the seeded users; unauthenticated requests redirect to `/login`.
+- Invite form posts through the BFF to IAM and shows the local dev invitation link.
+- Login and invitation acceptance pages build and render.
+
+## Backend delivered
+
+**IAM**
+- Alembic migration: `users`, `user_credentials`, `sessions`, `refresh_tokens`, `roles`,
+  `permissions`, `role_permissions`, `user_roles`, `invitations`, `audit_log` (append-only trigger).
+- Argon2id hashing (m=64 MB, t=3, p=4) with policy checks and rehash-on-login.
+- RS256 access tokens (15 min) with JWKS; dev key pair auto-generated under `infra/keys` and
+  mounted into the container.
+- Rotating refresh tokens (7 days) with reuse detection and family revocation.
+- System roles + the full permission catalogue; additive multi-role permissions.
+- Invitations: create/list/revoke/accept, email via Mailpit, single-use hashed token, 7-day expiry.
+- Audit log writes for login, failed login, refresh reuse, logout, invitations and role changes.
+- Internal bootstrap endpoints for demo seeding (token-guarded, off when unset in production).
+- 15 unit tests (passwords, tokens/JWKS, permission matrix).
+
+**Core**
+- Alembic migration for `plans`, `tenants`, `tenant_settings`, `applications`,
+  `application_features`, `tenant_applications`.
+- Tenant read/update, settings read/update (validated ranges), module registry and enable/disable.
+- Operator provisioning endpoint + slug lookup; catalogue seeded idempotently (4 plans, 5 modules).
+- 5 tests.
+
+**Gateways and shared library**
+- Traefik ForwardAuth to `IAM /internal/auth/verify`; public auth routes bypass it; all API routers
+  are protected and receive identity headers.
+- Services validate JWTs themselves via JWKS (ADR-007). `neatsprint-lib v0.2.1` adds
+  `TokenVerifier`, `Principal`, `require_permission` and timezone-aware audit columns.
+
+## Demo data
+
+`scripts/seed.py` creates **Acme Labs** and six users. Password for all: `NeatSprint!2026`.
+
+`owner@acme-labs.com`, `admin@acme-labs.com`, `manager@acme-labs.com`, `lead@acme-labs.com`,
+`member@acme-labs.com`, `viewer@acme-labs.com`.
+
+Login at <http://localhost:3000/login>; the admin table is at `/admin/users`.
+
+## Deviations recorded
+
+1. **Demo emails** use `@acme-labs.com`: `email-validator` correctly rejects `.test` as a
+   special-use TLD. (Good validation, wrong fixture.)
+2. **`ai:use` is a two-part permission**; catalogue parsing now tolerates two or three segments
+   instead of assuming three.
+3. **Migrations run at container start** in development (`RUN_MIGRATIONS=true`). Production will use
+   a pre-deploy job as documented in `DEVOPS.md`.
+4. **JWT rotation** currently issues a single `kid`. Dual-kid rotation is scheduled for M5; the
+   verifier already supports key lookup by `kid`.
+5. **Session invalidation** is immediate for refresh/logout/deactivation; access tokens remain valid
+   until expiry (15 min), which is the documented stateless trade-off.
+
+## Remaining in M1 (14 tasks)
+
+- Google OAuth2/OIDC login.
+- Password reset (request + confirm) and email templates for both flows.
+- Session list / revoke-all, and silent access-token refresh in the BFF.
+- Duplicate-invitation collapse and resend.
+- Role-editing UI and the read-only role matrix screen.
+- Tenant settings + modules admin screens.
+- Plan-limit enforcement (seats/projects).
+- Transactional outbox + event publishing (moved from M0).
+- Formal tenant-scoped repository guard (queries are scoped today, but the guard is not yet
+  mandatory at the library level).
+- M1 isolation suite and browser E2E in CI.
+
+## Commits
+
+- Orchestrator: `6dd7346` (M1 slice), plus docs/plan updates.
+- `neatsprint-lib` `v0.2.1`, and M1 commits in `iam`, `core`, `apigw`, `web`; other services bumped
+  to the new library pin.
+- Plans updated: M1 shows 20/34; M0 remains 21/24.
+
+## Suggested next step
+
+Finish the remaining M1 items in this order: plan limits + outbox (backend foundations), Google
+OAuth + password reset, then the admin role/settings screens. After that, M1 gate sign-off and M2
+(projects, backlog, sprints, teams).
+
+— OpenCade
