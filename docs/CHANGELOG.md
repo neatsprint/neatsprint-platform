@@ -18,6 +18,10 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-21 — **M1 completion slice**: transactional outbox + Redis relay (IAM and Core),
+  seat-limit enforcement against the tenant plan, password reset with single-use tokens, session
+  list/revoke/logout-all, roles matrix and tenant settings/modules admin screens, and silent token
+  refresh in the web middleware.
 - 2026-11-21 — **M1 identity slice**: IAM schema + migrations, Argon2id credentials, RS256
   access tokens with JWKS, rotating refresh tokens with reuse detection, append-only audit log,
   system roles and the full permission catalogue, invitations with email delivery, and the

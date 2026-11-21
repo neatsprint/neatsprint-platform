@@ -8,7 +8,7 @@ license = { text = "AGPL-3.0-or-later" }
 dependencies = [
     "fastapi>=0.115.0,<1.0",
     "uvicorn[standard]>=0.32.0,<1.0",
-    "neatsprint-lib @ git+https://github.com/neatsprint/neatsprint-lib@v0.2.1",
+    "neatsprint-lib @ git+https://github.com/neatsprint/neatsprint-lib@v0.3.0",
 ]
 
 [dependency-groups]

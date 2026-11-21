@@ -86,8 +86,8 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done · `[!]` blocked
 - [x] Orchestrator `docker-compose.yml`: gateway, postgres, redis, minio, mailpit, 10 services
 - [x] Traefik routing for `/api/v1/*` with ForwardAuth stub
 - [x] Service template: FastAPI + health endpoints + structured logging + pytest harness
-- [ ] Shared Python libraries: config, logging, auth middleware, DB session, outbox
-  *(config, logging, errors, DB session delivered; auth middleware and outbox move to M1)*
+- [x] Shared Python libraries: config, logging, auth middleware, DB session, outbox
+  *(all delivered by M1; see `neatsprint-lib` v0.3.0)*
 - [x] Web app skeleton: Next.js, design tokens, layout, auth placeholder
 - [x] CI workflow template for services and clients (lint, test, build, scan)
 - [x] Root `Makefile`/scripts: `bootstrap`, `migrate`, `seed`, `test`, `lint`, `down`
@@ -108,11 +108,11 @@ the first schema.
 - [ ] IAM: Google OAuth2/OIDC login
 - [x] IAM: RBAC model (roles, permissions, role_permissions, user_roles)
 - [x] IAM: JWT issuance (RS256) + JWKS endpoint + revocation
-- [ ] IAM: password reset, deactivation, profile
+- [x] IAM: password reset, deactivation, profile
 - [x] IAM: audit log (append-only) + admin queries
 - [x] Core: tenant provisioning, plans, settings
 - [x] Core: application registry + tenant application enablement
-- [ ] Core: plan-limit enforcement helper + tenant settings API
+- [x] Core: plan-limit enforcement helper + tenant settings API
 - [x] Gateway: ForwardAuth, rate limits, security headers, CORS
 - [x] Web: login, invitation acceptance, password reset, tenant switcher-free session shell
 - [x] Web: admin — users list, invite, role assignment, deactivation
@@ -120,8 +120,9 @@ the first schema.
 
 **Exit gate**: invitation → registration → login → admin grants a role → member sees exactly the
 permitted menu and receives `403` on everything else (verified by automated test).
-*Current state: invitation → registration → login → tenant access → role enforcement is verified;
-role-editing UI, Google OAuth, password reset and menu filtering remain.*
+*Current state: invitation → registration → login → tenant access → role enforcement, password
+reset, session management, seat limits, roles matrix and settings UI are verified. Google OAuth,
+invitation resend, custom roles and menu filtering remain.*
 
 ### M2 — Work Management
 

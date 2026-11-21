@@ -10,6 +10,7 @@ import json
 import sys
 import urllib.error
 import urllib.request
+import uuid
 
 BASE = "http://localhost:8000/api/v1"
 PASSWORD = "NeatSprint!2026"
@@ -66,6 +67,12 @@ def main() -> int:
         ok &= check("tenant name", body["data"]["name"] == "Acme Labs")
         ok &= check("privacy window", body["data"]["settings"]["privacy_window_hours"] == 24)
 
+    status, body = call("GET", "/auth/sessions", token=owner)
+    ok &= check("sessions listed", status == 200 and len(body.get("data", [])) >= 1,
+                f"{status} {body}")
+    if status == 200:
+        ok &= check("current session flagged", any(item["current"] for item in body["data"]))
+
     status, body = call("GET", "/core/tenants/current")
     ok &= check("unauthenticated request denied", status == 401, f"{status} {body}")
 
@@ -101,7 +108,7 @@ def main() -> int:
     member_role = next((role for role in roles if role["code"] == "MEMBER"), None)
     ok &= check("MEMBER role present", member_role is not None)
 
-    invite_email = "new.hire@acme-labs.com"
+    invite_email = f"new.hire.{uuid.uuid4().hex[:8]}@acme-labs.com"
     status, body = call(
         "POST",
         "/iam/invitations",

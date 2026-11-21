@@ -24,7 +24,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | Milestone | Tasks | Done | State |
 | :--- | ---: | ---: | :--- |
 | M0 Foundations | 24 | 21 | 21 done · 2 moved to M1 · 1 partial |
-| M1 Identity & Tenancy | 34 | 20 | 20 done · core auth/RBAC/tenancy live; OAuth, reset, settings UI remain |
+| M1 Identity & Tenancy | 34 | 28 | 28 done · OAuth, resend, custom roles and guard remain |
 | M2 Work Management | 33 | 0 | Not started |
 | M3 Time, Monitoring & Desktop | 40 | 0 | Not started |
 | M4 Reports & Console | 26 | 0 | Not started |
@@ -199,11 +199,11 @@ renders → contracts lint clean → CI green on an empty PR → ADR-001…004, 
   party library; rotation test passes.
 - [x] **M1-T08** `POST /auth/refresh` with rotation + reuse detection (revoke family on reuse).
   *AC*: replaying an old refresh token revokes the session family.
-- [ ] **M1-T09** `POST /auth/logout`, `GET /auth/me`, session listing and revoke-all.
+- [x] **M1-T09** `POST /auth/logout`, `GET /auth/me`, session listing and revoke-all.
   *AC*: revoked tokens fail until expiry.
 - [ ] **M1-T10** Google OAuth2/OIDC login: state/nonce/PKCE, ID-token verification, account
   linking rules, domain-based auto-join toggle. *AC*: covered by a mocked IdP integration test.
-- [ ] **M1-T11** Password reset request + confirm with single-use token (30 min).
+- [x] **M1-T11** Password reset request + confirm with single-use token (30 min).
   *AC*: token reuse rejected; old sessions invalidated.
 - [ ] **M1-T12** Rate limiting and CAPTCHA hook on auth endpoints. *AC*: 429 after threshold.
 
@@ -233,11 +233,11 @@ renders → contracts lint clean → CI green on an empty PR → ADR-001…004, 
   *AC*: validation ranges enforced; changes audited.
 - [x] **M1-T22** Application registry endpoints; enable/disable module with plan check.
   *AC*: disabled module returns `403 module_disabled` from its own service.
-- [ ] **M1-T23** Plan limit resolver (users, projects, retention) with cached lookup in Redis and
+- [x] **M1-T23** Plan limit resolver (users, projects, retention) with cached lookup in Redis and
   invalidation on change. *AC*: limits enforced on create paths.
 - [x] **M1-T24** Tenant provisioning script/endpoint for operator use (create tenant + owner
   invite). *AC*: produces a working login in one command.
-- [ ] **M1-T25** Emit `tenant.created`, `tenant.settings_changed`, `tenant.module_toggled`.
+- [x] **M1-T25** Emit `tenant.created`, `tenant.settings_changed`, `tenant.module_toggled`.
 
 ### Epic M1-E5 — Enforcement
 
@@ -253,13 +253,13 @@ renders → contracts lint clean → CI green on an empty PR → ADR-001…004, 
 
 - [x] **M1-T29** Login page, Google button, error states, "remember me" semantics, accessible form.
   *AC*: matches `UI_UX_DESIGN.md` S-01; keyboard + screen-reader tested.
-- [ ] **M1-T30** Invitation acceptance and password reset pages. *AC*: expired/invalid token states.
-- [ ] **M1-T31** Session handling: httpOnly cookies via BFF route handlers, silent refresh,
+- [x] **M1-T30** Invitation acceptance and password reset pages. *AC*: expired/invalid token states.
+- [x] **M1-T31** Session handling: httpOnly cookies via BFF route handlers, silent refresh,
   logout, route middleware protection. *AC*: no tokens in localStorage.
 - [x] **M1-T32** Admin → Users: table, filters, invite dialog, role assignment, deactivate.
   *AC*: controls hidden without permission and rejected by API.
-- [ ] **M1-T33** Admin → Roles: read-only system role matrix view. *AC*: matrix generated from API.
-- [ ] **M1-T34** Admin → Tenant settings: general, monitoring policy, retention, modules.
+- [x] **M1-T33** Admin → Roles: read-only system role matrix view. *AC*: matrix generated from API.
+- [x] **M1-T34** Admin → Tenant settings: general, monitoring policy, retention, modules.
   *AC*: saves and reloads; validation messages inline.
 
 **M1 exit gate**: fresh tenant → invite → accept → login as each of the six roles → permission
@@ -600,3 +600,4 @@ Kept here so the design does not accidentally preclude it.
 | 2026-11-21 | Plan v1 created | Initial planning cycle |
 | 2026-11-21 | M0 executed; T08 (outbox) and T23 (seed) moved to M1 because they depend on the first schemas | Delivered foundation scope |
 | 2026-11-21 | M1 first slice delivered: IAM auth/RBAC/invitations/audit, Core tenancy/settings/modules, ForwardAuth, web login/admin, seed | Vertical auth slice verified end to end |
+| 2026-11-21 | M1 second slice: outbox/Redis, seat limits, password reset, session management, roles matrix, settings/modules UI, silent refresh | 28/34 tasks done |
