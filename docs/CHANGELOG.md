@@ -52,6 +52,8 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Changed
 
+- 2026-11-21 — Removed the `minio-init` container; the object-storage image now creates the
+  default bucket on first start (`MINIO_DEFAULT_BUCKETS`). One fewer one-shot container.
 - 2026-11-21 — Reset the reference roadmap's misleading pre-ticked MVP items; progress now lives
   in `docs/MASTER_PLAN.md` and `docs/DEVELOPMENT_PLAN.md`.
 

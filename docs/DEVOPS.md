@@ -37,6 +37,8 @@ Optional profile `chaos`: toxiproxy for latency/failure testing.
 
 Rules:
 
+- The object-storage bucket (`neatsprint`) is created automatically by the MinIO image on first
+  start via `MINIO_DEFAULT_BUCKETS`; there is no init container.
 - `docker compose up -d` must work on a clean machine with only `.env` from `.env.example`.
 - Services wait on `depends_on` healthchecks; migrations run via a one-shot `migrate` service.
 - Volumes are named and resettable with `make clean`.

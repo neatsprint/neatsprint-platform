@@ -59,40 +59,20 @@ services:
     image: bitnamilegacy/minio:latest
     restart: unless-stopped
     networks: [neatsprint]
-    entrypoint: ["/opt/bitnami/minio/bin/minio"]
-    command: ["server", "/data", "--console-address", ":9001"]
     # Local development only: the named volume is root-owned; production uses a
     # properly owned PVC and a non-root security context.
     user: "0:0"
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER:-neatsprint}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-neatsprint-dev-secret}
+      # The image creates this bucket on first start (private by default), so no
+      # separate init container is needed.
+      MINIO_DEFAULT_BUCKETS: ${MINIO_BUCKET:-neatsprint}
     ports:
       - "${MINIO_API_PORT:-9000}:9000"
       - "${MINIO_CONSOLE_PORT:-9001}:9001"
     volumes:
       - miniodata:/data
-
-  minio-init:
-    image: bitnamilegacy/minio:latest
-    networks: [neatsprint]
-    depends_on:
-      - minio
-    entrypoint:
-      - /bin/sh
-      - -c
-      - |
-        until mc alias set local http://minio:9000 "$${MINIO_ROOT_USER}" "$${MINIO_ROOT_PASSWORD}"; do
-          echo "waiting for minio"; sleep 2;
-        done
-        mc mb --ignore-existing "local/$${MINIO_BUCKET}"
-        mc anonymous set none "local/$${MINIO_BUCKET}"
-        echo "minio ready"
-    environment:
-      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-neatsprint}
-      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-neatsprint-dev-secret}
-      MINIO_BUCKET: ${MINIO_BUCKET:-neatsprint}
-    restart: "no"
 
   mailpit:
     image: axllent/mailpit:latest

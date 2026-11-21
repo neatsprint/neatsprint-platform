@@ -427,3 +427,44 @@ local Postgres for development only, or whether you want a managed Postgres conn
 now. Default: keep local until the MVP gate, then provision staging.
 
 — OpenCade
+
+# Human Message: 20261121204757
+
+I reviewed what you have done. It's all good. We can proceed.
+
+One thing, I think you don't need the container 'Minio-init-1' (80cca5369eccb9b3c4b10899d9435b62abcb89dc0acae2cfdf08e0154ee328bd). I think you are using only 'Minio-1' (420a12322007c597fd46a3ea93e691496060771fd34fbf561b2285f8b386c924).
+
+# AI Message: 20261121204757
+
+Correct observation. `minio-init` was a **one-shot** container (exit 0 immediately) that waited for
+MinIO and created the `neatsprint` bucket. It was doing real work on first boot, but it is
+avoidable — and you are right that the running stack only needs `minio`.
+
+## Change made
+
+- Removed the `minio-init` service from `docker-compose.yml`.
+- Set `MINIO_DEFAULT_BUCKETS=${MINIO_BUCKET:-neatsprint}` on the MinIO service. The image now
+  creates the bucket itself on first start, private by default.
+- Removed the entrypoint override so the image's own initialisation runs; kept the root user
+  override only because the local named volume is root-owned.
+- Added a note to `docs/DEVOPS.md` and `docs/CHANGELOG.md`.
+
+## Verification (fresh volume, not just a restart)
+
+1. Deleted the local `neatsprint_miniodata` volume.
+2. Recreated only MinIO.
+3. `mc ls local` shows `neatsprint/` — created by the server, no init container.
+4. `docker ps -a | grep minio` now returns **only** `neatsprint-minio-1`.
+5. All other services are still healthy and the gateway routes remain 200.
+
+The bucket was empty, so deleting the volume lost nothing. On an existing installation the volume
+is kept and the container simply starts normally.
+
+## Commit
+
+Orchestrator commit `chore(compose): drop minio-init, auto-create bucket` (pushed with the
+CHANGELOG and DEVOPS note).
+
+No impact on M1. Proceeding with identity and tenancy next.
+
+— OpenCade
