@@ -1,0 +1,223 @@
+{
+  "main": {
+    "id": "dc61f8fa99c3fa89",
+    "type": "split",
+    "children": [
+      {
+        "id": "8e6fb2ec15f5f081",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2bb1fc75093a8764",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "agent/conversation.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "conversation"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "473c5a4f503d10c7",
+    "type": "split",
+    "children": [
+      {
+        "id": "d6ec842ef417305d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a987943c7659712b",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "9fb40627260653fc",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "13417cc57d3dff6e",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "8fa654623c3be802",
+    "type": "split",
+    "children": [
+      {
+        "id": "b35c342e86bb165a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c77ae380344e7107",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "agent/conversation.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "a773d50b679cec69",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "agent/conversation.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "144f6b8526da75ff",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "0ad4bdcf013ec2aa",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "6cb53c37cfd8d0de",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "agent/conversation.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "2bb1fc75093a8764",
+  "lastOpenFiles": [
+    "documents/tech-design.md",
+    "documents/step9-authorization-enforcement-flow.md",
+    "documents/step8-security-and-privacy-model.md",
+    "documents/step7-neatsprint-database-schemas.md",
+    "documents/step6-er-diagrams.md",
+    "documents/step5-deployment-and-cicd-architecture.md",
+    "documents/step4-api-gateway-architecture.md",
+    "documents/step3-microservice-boundaries-and-responsibilities.md",
+    "documents/step22-ai-functional-specs.md",
+    "documents/step21-ai-architecture.md",
+    "documents/step20-reports-functional-specs.md",
+    "documents/step2-mvp-roadmap.md",
+    "documents/step19-reports-architecture.md",
+    "documents/step18-web-app-architecture.md",
+    "documents/step17-mobile-app-architecture.md",
+    "documents/step16-desktop-agent-security-and-offline-design.md",
+    "documents/step15-desktop-app-architecture.md",
+    "documents/step14-end-to-end-flows.md",
+    "documents/step13-detailed-api-spec.md",
+    "documents/step12-api-contracts.md",
+    "documents/step10-rbac-definitions.md",
+    "documents/step11-data-retention-policy.md",
+    "documents/step1-neatsprint-full-architecture-diagram.md",
+    "documents/scope.md",
+    "documents",
+    "agent/conversation.md",
+    "reference",
+    "docs",
+    "agent"
+  ]
+}
