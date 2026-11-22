@@ -149,8 +149,7 @@ Legend: **P** = permission required. All endpoints require authentication unless
 | POST | `/auth/logout-all` | Revoke every session | — |
 | POST | `/auth/forgot-password` | Start reset | public |
 | POST | `/auth/reset-password` | Complete reset | public (token) |
-| GET | `/auth/social/{provider}/start` | Begin OAuth | public |
-| GET | `/auth/social/{provider}/callback` | OAuth callback | public |
+| POST | `/auth/social/google` | Sign in with a Google ID token (GIS) | public |
 | GET | `/auth/me` | Current user + permissions | — |
 | GET | `/auth/sessions` | My sessions | — |
 | DELETE | `/auth/sessions/{id}` | Revoke a session | — |
@@ -166,14 +165,18 @@ Legend: **P** = permission required. All endpoints require authentication unless
 | PATCH | `/iam/users/{id}` | Update profile/status | `core:user:update` or self (limited) |
 | POST | `/iam/users/{id}/roles` | Assign roles | `core:role:manage` |
 | DELETE | `/iam/users/{id}/roles/{roleId}` | Remove role | `core:role:manage` |
-| POST | `/iam/invitations` | Invite | `core:user:invite` |
+| POST | `/iam/users/{id}/avatar/presign` | Prepare an avatar upload | self or `core:user:update` |
+| POST | `/iam/users/{id}/avatar/confirm` | Confirm the uploaded avatar | self or `core:user:update` |
+| GET | `/iam/users/{id}/avatar` | Read the avatar | `core:user:read` or self |
+| POST | `/iam/invitations` | Invite (collapses duplicate pending invite) | `core:user:invite` |
 | GET | `/iam/invitations` | List invitations | `core:user:invite` |
 | DELETE | `/iam/invitations/{id}` | Revoke | `core:user:invite` |
-| POST | `/iam/invitations/resend/{id}` | Resend | `core:user:invite` |
+| POST | `/iam/invitations/{id}/resend` | Rotate the token and resend | `core:user:invite` |
 | POST | `/iam/invitations/accept` | Accept invite | public (token) |
 | GET | `/iam/roles` | List roles | `core:role:read` |
 | POST | `/iam/roles` | Create custom role | `core:role:manage` |
-| PATCH | `/iam/roles/{id}` | Update role | `core:role:manage` |
+| PATCH | `/iam/roles/{id}` | Update custom role | `core:role:manage` |
+| DELETE | `/iam/roles/{id}` | Delete custom role | `core:role:manage` |
 | GET | `/iam/permissions` | Permission catalogue | `core:role:read` |
 | GET | `/iam/audit` | Audit log query | `report:audit:view` |
 

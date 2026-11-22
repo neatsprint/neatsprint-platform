@@ -10,10 +10,11 @@ NeatSprint is a multi-tenant, open-source (AGPLv3) platform for agile task manag
 transparent work tracking. It brings planning, a secure desktop agent, and honest monitoring into
 one product — and gives employees a real way to see and delete what was captured about them.
 
-> **Project status**: pre-alpha. **M0** is delivered and **M1 (identity & tenancy)** is nearly
-> complete: login, JWT/JWKS, refresh rotation and silent refresh, RBAC, invitations, password reset,
-> sessions, seat limits, event outbox, roles matrix and tenant settings. Google OAuth, invitation
-> resend and custom roles remain. Nothing here is production ready yet.
+> **Project status**: pre-alpha. **M0** is delivered and **M1 (identity & tenancy)** is complete
+> except the database-level tenant guard, which moves to M2 with PostgreSQL RLS. Login, Google
+> ID-token sign-in, JWT/JWKS, refresh and silent refresh, RBAC, invitations (with resend), password
+> reset, sessions, seat limits, outbox, custom roles and tenant settings all work. Nothing here is
+> production ready yet.
 
 ---
 
@@ -105,6 +106,7 @@ in [`documents/`](documents) for reference.
 | [DECISIONS](docs/DECISIONS.md) | ADRs |
 | [GLOSSARY](docs/GLOSSARY.md) | Shared vocabulary |
 | [CONTRIBUTING](docs/CONTRIBUTING.md) | How to work in this codebase |
+| [SETUP GUIDE](docs/SETUP_GUIDE.md) | Operator checklist: local setup, Google, GitHub |
 | [AGENTS.md](AGENTS.md) | Process guide for AI agents |
 
 ---
@@ -114,7 +116,7 @@ in [`documents/`](documents) for reference.
 | Phase | Theme | State |
 | :--- | :--- | :--- |
 | **M0** | Foundations: repos, Compose, contracts, CI | Done — 21/24 tasks; outbox + seed moved to M1 |
-| **M1** | Identity, tenancy, RBAC | In progress — 28/34 tasks; core journey working |
+| **M1** | Identity, tenancy, RBAC | Done — 33/34; T04 guard moved to M2 |
 | **M2** | Projects, backlog, sprints, teams | Planned |
 | **M3** | Time tracking, monitoring, desktop agent | Planned |
 | **M4** | Reports, dashboards, console polish | Planned |

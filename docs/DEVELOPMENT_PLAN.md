@@ -24,7 +24,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | Milestone | Tasks | Done | State |
 | :--- | ---: | ---: | :--- |
 | M0 Foundations | 24 | 21 | 21 done · 2 moved to M1 · 1 partial |
-| M1 Identity & Tenancy | 34 | 28 | 28 done · OAuth, resend, custom roles and guard remain |
+| M1 Identity & Tenancy | 34 | 33 | 33 done · T04 (RLS guard) moved to M2 |
 | M2 Work Management | 33 | 0 | Not started |
 | M3 Time, Monitoring & Desktop | 40 | 0 | Not started |
 | M4 Reports & Console | 26 | 0 | Not started |
@@ -185,8 +185,9 @@ renders → contracts lint clean → CI green on an empty PR → ADR-001…004, 
   *AC*: matrix test asserts every role's permission set.
 - [x] **M1-T03** Implement Argon2id password hashing + policy (min length, breach list stub).
   *AC*: unit tests for hashing, verification, rehash-on-parameter-change.
-- [ ] **M1-T04** Implement tenant-scoped repositories and a guard that refuses queries without a
-  tenant context. *AC*: attempting an unscoped query raises in tests.
+- [ ] **M1-T04** *(moved to M2)* Enforce tenant scoping at the database with PostgreSQL RLS,
+  applied alongside the first high-volume tenant tables. Repository-level scoping and
+  cross-tenant API tests are already in place. *AC*: an unscoped query returns no rows.
 - [x] **M1-T05** Implement append-only audit log writer (actor, action, target, before/after hash,
   request id, IP, user agent). *AC*: updates/deletes rejected by DB trigger.
 
@@ -201,28 +202,29 @@ renders → contracts lint clean → CI green on an empty PR → ADR-001…004, 
   *AC*: replaying an old refresh token revokes the session family.
 - [x] **M1-T09** `POST /auth/logout`, `GET /auth/me`, session listing and revoke-all.
   *AC*: revoked tokens fail until expiry.
-- [ ] **M1-T10** Google OAuth2/OIDC login: state/nonce/PKCE, ID-token verification, account
-  linking rules, domain-based auto-join toggle. *AC*: covered by a mocked IdP integration test.
+- [x] **M1-T10** Google sign-in via Identity Services ID tokens: signature/audience/issuer
+  verification, invitation-first provisioning, account linking. *AC*: mocked-token verification
+  tests. *(Domain auto-join is a tenant setting but enrolment stays invitation-first for MVP.)*
 - [x] **M1-T11** Password reset request + confirm with single-use token (30 min).
   *AC*: token reuse rejected; old sessions invalidated.
-- [ ] **M1-T12** Rate limiting and CAPTCHA hook on auth endpoints. *AC*: 429 after threshold.
+- [x] **M1-T12** Rate limiting and CAPTCHA hook on auth endpoints. *AC*: 429 after threshold.
 
 ### Epic M1-E3 — Invitations & users
 
-- [ ] **M1-T13** Create/list/revoke/resend invitations with hashed tokens and expiry; reject an
+- [x] **M1-T13** Create/list/revoke/resend invitations with hashed tokens and expiry; reject an
   email already held by another tenant with neutral `409 email_unavailable`. *AC*: duplicate
   pending invite collapses to one; no tenant disclosure.
 - [x] **M1-T14** Accept invitation: validates token, creates user, assigns roles/teams, marks
   accepted, logs audit. *AC*: idempotent on double submit.
 - [x] **M1-T15** Email adapter (SMTP/Mailpit in dev, SES in prod) with templated invite/reset
   emails, plain-text fallback. *AC*: rendered emails snapshot-tested.
-- [ ] **M1-T16** User profile CRUD (`/iam/users`), avatar upload to object storage (presigned),
+- [x] **M1-T16** User profile CRUD (`/iam/users`), avatar upload to object storage (presigned),
   timezone/locale. *AC*: self vs admin field-level permissions enforced.
 - [x] **M1-T17** Deactivate/reactivate user: revoke sessions, emit `user.deactivated` event.
   *AC*: deactivated user cannot authenticate or refresh.
 - [x] **M1-T18** Role assignment endpoints with privilege-escalation guard. *AC*: manager cannot
   grant `ADMIN`; owner can.
-- [ ] **M1-T19** Custom role CRUD (stored, returned by API), UI deferred to P3.
+- [x] **M1-T19** Custom role CRUD (stored, returned by API), UI deferred to P3.
   *AC*: invalid permission string rejected.
 
 ### Epic M1-E4 — Core tenancy
@@ -601,3 +603,4 @@ Kept here so the design does not accidentally preclude it.
 | 2026-11-21 | M0 executed; T08 (outbox) and T23 (seed) moved to M1 because they depend on the first schemas | Delivered foundation scope |
 | 2026-11-21 | M1 first slice delivered: IAM auth/RBAC/invitations/audit, Core tenancy/settings/modules, ForwardAuth, web login/admin, seed | Vertical auth slice verified end to end |
 | 2026-11-21 | M1 second slice: outbox/Redis, seat limits, password reset, session management, roles matrix, settings/modules UI, silent refresh | 28/34 tasks done |
+| 2026-11-22 | M1 final slice: Google ID-token login, invitation collapse/resend, CAPTCHA hook, avatar presign/confirm, custom role CRUD. T04 moved to M2 for RLS | 33/34 tasks done |

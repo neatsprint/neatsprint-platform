@@ -47,6 +47,7 @@ repository root is the original input architecture and is kept as read-only refe
 | [`DECISIONS.md`](DECISIONS.md) | ADR-001…017 | Laksiri (approve) | Living |
 | [`GLOSSARY.md`](GLOSSARY.md) | Shared vocabulary and naming conventions | OpenCade | Living |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Branching, standards, PR checklist, rules | OpenCade | Living |
+| [`SETUP_GUIDE.md`](SETUP_GUIDE.md) | Operator checklist: local setup, Google, CAPTCHA, GitHub | Laksiri | Approved |
 | `CHANGELOG.md` | Delivered changes | OpenCade | Living |
 | `RUNBOOKS.md` | Operational procedures | OpenCade | Created at M0, completed M5 |
 | `RELEASE_NOTES.md` | Version history | OpenCade | Created at M5 |

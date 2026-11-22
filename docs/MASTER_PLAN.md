@@ -105,7 +105,7 @@ the first schema.
 
 - [x] IAM: user model, credentials (Argon2id), sessions, refresh rotation
 - [x] IAM: invitations (create, accept, revoke, expire)
-- [ ] IAM: Google OAuth2/OIDC login
+- [x] IAM: Google OAuth2/OIDC login
 - [x] IAM: RBAC model (roles, permissions, role_permissions, user_roles)
 - [x] IAM: JWT issuance (RS256) + JWKS endpoint + revocation
 - [x] IAM: password reset, deactivation, profile
@@ -121,8 +121,9 @@ the first schema.
 **Exit gate**: invitation → registration → login → admin grants a role → member sees exactly the
 permitted menu and receives `403` on everything else (verified by automated test).
 *Current state: invitation → registration → login → tenant access → role enforcement, password
-reset, session management, seat limits, roles matrix and settings UI are verified. Google OAuth,
-invitation resend, custom roles and menu filtering remain.*
+reset, sessions, seat limits, outbox, Google ID-token login, invitation resend, custom roles and
+admin settings are verified. The only open item is the database-level tenant guard (T04, moved
+to M2 for PostgreSQL RLS).*
 
 ### M2 — Work Management
 
@@ -346,6 +347,7 @@ Full records in `docs/DECISIONS.md`.
 | `docs/DECISIONS.md` | ADRs | Approved |
 | `docs/GLOSSARY.md` | Shared vocabulary | Done |
 | `docs/CONTRIBUTING.md` | Working conventions | Done |
+| `docs/SETUP_GUIDE.md` | Operator setup: local, Google, CAPTCHA, GitHub | Done |
 | `docs/RUNBOOKS.md` | Operational procedures | M5 |
 | `docs/CHANGELOG.md` | Delivered changes | Living |
 | `docs/RELEASE_NOTES.md` | Version history | M5 |

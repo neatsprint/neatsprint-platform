@@ -18,6 +18,10 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-22 — Added `docs/SETUP_GUIDE.md` (local setup, Google sign-in, CAPTCHA, GitHub settings).
+- 2026-11-22 — **M1 final slice**: Google Identity Services ID-token login with invitation-first
+  provisioning, invitation duplicate-collapse and resend, optional Turnstile CAPTCHA on auth,
+  avatar presign/confirm/read through object storage, and custom role CRUD.
 - 2026-11-21 — **M1 completion slice**: transactional outbox + Redis relay (IAM and Core),
   seat-limit enforcement against the tenant plan, password reset with single-use tokens, session
   list/revoke/logout-all, roles matrix and tenant settings/modules admin screens, and silent token
