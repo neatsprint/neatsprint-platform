@@ -758,3 +758,70 @@ If you skip this, the current setup is correct and complete.
 - `docs/REPOSITORIES.md` checklist — replaced the "AI account" item with the optional note.
 
 — OpenCade
+
+# Human Message: 20261123193000
+
+See below response
+1. Verified local platform - everything okay
+2. Google sign-in done and .env file updated
+3. Did nothing related to CAPTCHA
+4. Github settings: Did only for one repo except 5. creating project board. Will do the rest later
+5. Did no change related shared deployment. I think we can do this later. Let me know if it is required now
+6.1 .env file updated with GOOGLE_CLIENT_ID
+6.2 CAPTCHA: M2 widget or later: what do you recommend?
+6.3 Staging database now, or at M5: what do you recommend
+6.4 M2 scope approved. Start M2
+
+# AI Message: 20261123194611
+
+## Recommendations
+
+- **CAPTCHA**: keep it off for now. The backend hook is ready; a login widget adds friction before
+  you have external users. Add the widget and secret during M3/M4 hardening, or before any public
+  sign-up. Do not set `CAPTCHA_SECRET` until the widget exists, or browser logins will be blocked.
+- **Staging database**: not now. Local Docker is enough until you have external testers or a demo
+  environment. Provision staging at M5 (launch hardening) or at the first external pilot.
+- **Shared deployment**: not required now. The production checklist in `SETUP_GUIDE.md` §8 is for
+  the launch gate.
+
+Google configuration is in place on both sides (`.env`, IAM, web runtime config); the full sign-in
+can only be exercised with a real Google account, which you can test by inviting your address and
+clicking the button.
+
+## M2 started — Team service delivered
+
+The first M2 slice is live:
+
+- `neatsprint-team` schema and migration (`teams`, `team_members`, tenant-scoped).
+- Endpoints: list/create/read/update teams; list/add/remove members; lead auto-membership.
+- RBAC: `team:team:view`, `team:team:manage`, `team:member:manage`; team leads can manage their own
+  team without tenant-wide rights.
+- Internal `GET /internal/teams/{id}/members` for the Task service's assignee eligibility check.
+- Tests, ruff, mypy strict; image builds and runs; compose wiring updated.
+
+**Verified against the running stack:**
+
+```
+login 200
+users 200
+create team 201 Backend Squad
+list teams 200 (1)
+add member 201
+members 200 (2: lead + member)
+viewer create denied 403
+```
+
+## Status
+
+- M2: **2/33 tasks** (T14, T15).
+- Next: Task service — projects, backlog items, ranking, status transitions, sprints, comments,
+  board/backlog endpoints — then the RLS tenant guard (M1-T04) and the web board.
+
+## Notes
+
+- The local stack had no database volume when I resumed, so I rebuilt it and re-seeded. Your demo
+  accounts are unchanged.
+- Dependency alerts remain tracked (Next 15 postcss, dev-only web packages); no production
+  deployment yet.
+
+— OpenCade
