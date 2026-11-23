@@ -84,6 +84,27 @@ def get_json(url: str, token: str) -> tuple[int, dict]:
             return exc.code, {"raw": body.decode(errors="replace")}
 
 
+def auth_call(
+    method: str, url: str, token: str, payload: dict | None = None
+) -> tuple[int, dict]:
+    headers = {"Accept": "application/json", "Authorization": f"Bearer {token}"}
+    data = None
+    if payload is not None:
+        data = json.dumps(payload).encode()
+        headers["Content-Type"] = "application/json"
+    request = urllib.request.Request(url, data=data, method=method, headers=headers)
+    try:
+        with urllib.request.urlopen(request, timeout=10) as response:
+            body = response.read()
+            return response.status, json.loads(body) if body else {}
+    except urllib.error.HTTPError as exc:
+        body = exc.read()
+        try:
+            return exc.code, json.loads(body) if body else {}
+        except json.JSONDecodeError:
+            return exc.code, {"raw": body.decode(errors="replace")}
+
+
 def main() -> int:
     env = load_env()
     token = env.get("BOOTSTRAP_TOKEN", "")
@@ -149,6 +170,117 @@ def main() -> int:
     print(f"  password: {PASSWORD}")
     for email, _, roles in USERS:
         print(f"  {email:24} {roles[0]}")
+
+    # ---- planning demo: team, project, backlog and sprint ----
+    status, body = post(
+        f"{env.get('GATEWAY_URL', 'http://localhost:8000')}/api/v1/auth/login",
+        {"email": "owner@acme-labs.com", "password": PASSWORD},
+        token,
+    )
+    if status != 200:
+        print(f"planning seed skipped: owner login {status}", file=sys.stderr)
+        return 0
+    token = body["data"]["access_token"]
+    gateway = env.get("GATEWAY_URL", "http://localhost:8000")
+
+    status, teams = auth_call("GET", f"{gateway}/api/v1/teams", token)
+    team = next((item for item in teams.get("data", []) if item["name"] == "Backend Squad"), None)
+    if team is None:
+        status, created = auth_call(
+            "POST",
+            f"{gateway}/api/v1/teams",
+            token,
+            {"name": "Backend Squad", "description": "Core services and platform"},
+        )
+        team = created.get("data")
+        print(f"team: Backend Squad ({status})")
+
+    status, users = auth_call("GET", f"{gateway}/api/v1/iam/users", token)
+    member = next(
+        (item for item in users.get("data", []) if item["email"].startswith("member@")), None
+    )
+    if team and member:
+        auth_call(
+            "POST",
+            f"{gateway}/api/v1/teams/{team['id']}/members",
+            token,
+            {"user_id": member["id"], "role_in_team": "MEMBER"},
+        )
+
+    status, projects = auth_call("GET", f"{gateway}/api/v1/tasks/projects", token)
+    project = next((item for item in projects.get("data", []) if item["key"] == "AUTH"), None)
+    if project is None:
+        status, created = auth_call(
+            "POST",
+            f"{gateway}/api/v1/tasks/projects",
+            token,
+            {
+                "name": "Authentication",
+                "key": "AUTH",
+                "description": "Login, sessions and device binding",
+            },
+        )
+        project = created.get("data")
+        print(f"project: AUTH ({status})")
+    project_id = project["id"]
+
+    status, backlog = auth_call(
+        "GET", f"{gateway}/api/v1/tasks/projects/{project_id}/backlog", token
+    )
+    if len(backlog.get("data", [])) < 5:
+        demo_items = [
+            ("Implement device-bound sessions", "HIGH", 5),
+            ("Refresh-token rotation", "HIGH", 3),
+            ("Google sign-in", "MEDIUM", 5),
+            ("Password reset flow", "MEDIUM", 3),
+            ("Audit log viewer", "LOW", 2),
+        ]
+        for title, priority, points in demo_items:
+            auth_call(
+                "POST",
+                f"{gateway}/api/v1/tasks/backlog",
+                token,
+                {
+                    "project_id": project_id,
+                    "type": "TASK",
+                    "title": title,
+                    "priority": priority,
+                    "estimate_points": points,
+                },
+            )
+        print(f"backlog: {len(demo_items)} items")
+
+    status, sprints = auth_call(
+        "GET", f"{gateway}/api/v1/tasks/sprints?project_id={project_id}", token
+    )
+    if not any(item["state"] == "ACTIVE" for item in sprints.get("data", [])):
+        sprint_name = f"Sprint {len(sprints.get('data', [])) + 1}"
+        status, sprint = auth_call(
+            "POST",
+            f"{gateway}/api/v1/tasks/sprints",
+            token,
+            {"project_id": project_id, "name": sprint_name, "goal": "Ship identity"},
+        )
+        if status == 201:
+            _, items = auth_call(
+                "GET", f"{gateway}/api/v1/tasks/projects/{project_id}/backlog", token
+            )
+            item_ids = [item["id"] for item in items.get("data", [])][:3]
+            if item_ids:
+                auth_call(
+                    "POST",
+                    f"{gateway}/api/v1/tasks/sprints/{sprint['data']['id']}/items",
+                    token,
+                    {"item_ids": item_ids},
+                )
+                auth_call(
+                    "POST",
+                    f"{gateway}/api/v1/tasks/sprints/{sprint['data']['id']}/start",
+                    token,
+                    {},
+                )
+            print(f"sprint: {sprint_name} (active)")
+
     return 0
 
 
