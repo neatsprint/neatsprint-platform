@@ -1007,3 +1007,35 @@ RLS tenant guard (M1-T04) and the remaining Task/Team integration checks, then a
 and analytics/report hand-off.
 
 — OpenCade
+
+# Human Message: 20261123203400
+
+continue
+
+# AI Message: 20261123203855
+
+Backlog usability improved. The board, planning and teams pages remain live.
+
+## Delivered
+
+- **Backlog search and status filter** (client-side, instant).
+- **Inline priority editing** with optimistic update and rollback via `PATCH /api/session/items/{id}`.
+- Counts show `visible of total`.
+- Empty state now explains when filters exclude everything.
+- `PATCH` BFF route keeps tokens server-side.
+
+Verified: `/projects/{id}/backlog` 200 with the search box, status filter and inline priority
+controls; typecheck and production build clean.
+
+## Status
+
+- M2 remains **18/33** because T23 also requires bulk actions, grouping, sprint assignment and
+  keyboard navigation, which are still open.
+- Remaining: project settings, sprint completion dialog, attachments, project-team access checks,
+  RLS guard, event emission, saved views.
+
+## Next
+
+I recommend the RLS tenant guard next (M1-T04), then project settings and attachments.
+
+— OpenCade
