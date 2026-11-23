@@ -24,7 +24,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | Milestone | Tasks | Done | State |
 | :--- | ---: | ---: | :--- |
 | M0 Foundations | 24 | 21 | 21 done · 2 moved to M1 · 1 partial |
-| M1 Identity & Tenancy | 34 | 33 | 33 done · T04 (RLS guard) moved to M2 |
+| M1 Identity & Tenancy | 34 | 34 | Complete |
 | M2 Work Management | 33 | 18 | 18 done · planning + teams admin live |
 | M3 Time, Monitoring & Desktop | 40 | 0 | Not started |
 | M4 Reports & Console | 26 | 0 | Not started |
@@ -185,9 +185,9 @@ renders → contracts lint clean → CI green on an empty PR → ADR-001…004, 
   *AC*: matrix test asserts every role's permission set.
 - [x] **M1-T03** Implement Argon2id password hashing + policy (min length, breach list stub).
   *AC*: unit tests for hashing, verification, rehash-on-parameter-change.
-- [ ] **M1-T04** *(moved to M2)* Enforce tenant scoping at the database with PostgreSQL RLS,
-  applied alongside the first high-volume tenant tables. Repository-level scoping and
-  cross-tenant API tests are already in place. *AC*: an unscoped query returns no rows.
+- [x] **M1-T04** Enforce tenant scoping at the database with PostgreSQL RLS on Task and Team
+  tables (owner role `neatsprint_app`, `app.tenant_id` set per transaction). *AC*: an unscoped
+  query returns no rows; API access still works.
 - [x] **M1-T05** Implement append-only audit log writer (actor, action, target, before/after hash,
   request id, IP, user agent). *AC*: updates/deletes rejected by DB trigger.
 
@@ -609,3 +609,4 @@ Kept here so the design does not accidentally preclude it.
 | 2026-11-23 | Web projects list/create, read-only board and backlog, planning seed | 14/33 tasks done |
 | 2026-11-23 | Board drag-and-drop transitions with optimistic rollback, item drawer with comments and status moves | 16/33 tasks done |
 | 2026-11-23 | Sprint planning UI and teams admin | 18/33 tasks done |
+| 2026-11-23 | RLS tenant isolation on Task/Team tables; M1 complete 34/34 | M1 gate closed |

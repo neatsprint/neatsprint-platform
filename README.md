@@ -116,7 +116,7 @@ in [`documents/`](documents) for reference.
 | Phase | Theme | State |
 | :--- | :--- | :--- |
 | **M0** | Foundations: repos, Compose, contracts, CI | Done — 21/24 tasks; outbox + seed moved to M1 |
-| **M1** | Identity, tenancy, RBAC | Done — 33/34; T04 guard moved to M2 |
+| **M1** | Identity, tenancy, RBAC | Complete — 34/34 |
 | **M2** | Projects, backlog, sprints, teams | In progress — APIs + project/board/backlog views live |
 | **M3** | Time tracking, monitoring, desktop agent | Planned |
 | **M4** | Reports, dashboards, console polish | Planned |

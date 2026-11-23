@@ -18,6 +18,8 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-23 — **Tenant isolation at the database**: PostgreSQL RLS on Task/Team tables with
+  a tenant-bound session role and per-transaction `app.tenant_id`; M1 is now 34/34.
 - 2026-11-23 — **Backlog filters and inline priority editing** with optimistic rollback.
 - 2026-11-23 — **Sprint planning and teams admin**: create a sprint, move items between
   backlog and sprint scope, start the sprint, and create/list teams with member counts.
