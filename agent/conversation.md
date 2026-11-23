@@ -1171,3 +1171,21 @@ keyboard navigation and sprint analytics.
 Commits: `neatsprint-team` `7e1f885`; orchestrator `9a03bbf`.
 
 — OpenCade
+
+# Human Message: 20261123212400
+
+continue
+
+# AI Message: 20261123212700
+
+M2 is now **23 of 33 tasks**. Attachments work end to end.
+
+- Presigned S3/MinIO upload (`notes.txt` → PUT 200 → confirm → list → download link).
+- MIME allow-list and 25 MB size validation.
+- Attachment metadata table + migration.
+- Download links are time-limited presigned URLs.
+- The drawer attachment UI is still pending; the API is complete.
+
+Commits: `neatsprint-task` `eea845a`; orchestrator `cfd4c8f`.
+
+— OpenCade
