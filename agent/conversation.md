@@ -1039,3 +1039,53 @@ controls; typecheck and production build clean.
 I recommend the RLS tenant guard next (M1-T04), then project settings and attachments.
 
 — OpenCade
+
+# Human Message: 20261123204200
+
+continue
+
+# AI Message: 20261123204623
+
+**M1 is now complete — 34/34.** The tenant guard is enforced at the database.
+
+## Delivered
+
+- PostgreSQL **RLS** on Task/Team tables: `projects`, `project_teams`, `backlog_items`, `sprints`,
+  `sprint_items`, `item_comments`, `item_history`, `teams`, `team_members`.
+- Dedicated runtime role **`neatsprint_app`**; tables owned by it with `FORCE ROW LEVEL SECURITY`.
+- Per-transaction `app.tenant_id` set by a SQLAlchemy `after_begin` hook, so it survives commits
+  and never leaks across pooled connections.
+- `get_tenant_session` dependency for user requests; `bind_tenant` for internal service calls.
+- Fresh-volume init script creates the role and grants ownership.
+
+## Evidence
+
+```
+psql as neatsprint_app, no tenant setting:
+  SELECT count(*) FROM projects;  -> 0
+with app.tenant_id set:
+  -> rows visible
+API (owner):
+  login 200
+  projects 200 (AUTH)
+  board 200 (TODO 7, IN_PROGRESS 1, …)
+  create item 201 AUTH-9
+  transition 200 IN_PROGRESS
+```
+
+So an orphaned query returns nothing, while authorised requests work normally.
+
+## Status
+
+- **M1: 34/34 complete.**
+- M2: **18/33** (RLS was an M1 carry-over; it does not change the M2 count).
+- Remaining M2: project settings, sprint completion dialog, attachments, project-team access checks,
+  event emission, bulk backlog actions, saved views.
+
+## Commits
+
+- `neatsprint-lib` **v0.4.0**.
+- `neatsprint-task` `834cf14`, `neatsprint-team` `ae431b0`.
+- Orchestrator `4dd4ad3`.
+
+— OpenCade
