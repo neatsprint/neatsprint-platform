@@ -25,7 +25,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | :--- | ---: | ---: | :--- |
 | M0 Foundations | 24 | 21 | 21 done · 2 moved to M1 · 1 partial |
 | M1 Identity & Tenancy | 34 | 33 | 33 done · T04 (RLS guard) moved to M2 |
-| M2 Work Management | 33 | 14 | 14 done · Team + Task core, projects/board/backlog views, seed |
+| M2 Work Management | 33 | 16 | 16 done · board drag/drop + item drawer live |
 | M3 Time, Monitoring & Desktop | 40 | 0 | Not started |
 | M4 Reports & Console | 26 | 0 | Not started |
 | M5 Hardening & Launch | 28 | 0 | Not started |
@@ -328,9 +328,9 @@ matrix verified by automation → audit entries present for invite, login, role 
 - [ ] **M2-T22** Project settings: name, key, dates, teams, archive.
 - [ ] **M2-T23** Backlog view: grouped table, inline edit, bulk select, priority chips, sprint
   assignment, keyboard navigation.
-- [ ] **M2-T24** Board view: columns by status, drag-and-drop with optimistic update and rollback,
+- [x] **M2-T24** Board view: columns by status, drag-and-drop with optimistic update and rollback,
   swimlane by assignee (optional), WIP indicator.
-- [ ] **M2-T25** Item detail drawer: description editor, comments, history timeline, attachments,
+- [x] **M2-T25** Item detail drawer: description editor, comments, history timeline, attachments,
   time summary placeholder (populated in M3).
 - [ ] **M2-T26** Sprint planning view: backlog on the left, sprint on the right, capacity bar.
 - [ ] **M2-T27** Sprint board header: dates, progress, complete-sprint dialog with carry-over.
@@ -607,3 +607,4 @@ Kept here so the design does not accidentally preclude it.
 | 2026-11-23 | M2 started: Team service (schema, migration, CRUD, membership, internal lookup, RBAC) | 2/33 tasks done |
 | 2026-11-23 | Task service: projects, backlog items, ranking, transitions/history, comments, sprints/start/complete | 12/33 tasks done |
 | 2026-11-23 | Web projects list/create, read-only board and backlog, planning seed | 14/33 tasks done |
+| 2026-11-23 | Board drag-and-drop transitions with optimistic rollback, item drawer with comments and status moves | 16/33 tasks done |

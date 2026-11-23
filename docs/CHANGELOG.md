@@ -18,6 +18,8 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-23 — **Interactive board**: HTML5 drag-and-drop between statuses with optimistic
+  updates and rollback, plus an item drawer with description, status moves and comments.
 - 2026-11-23 — **Web planning views**: projects list with create, sprint board (read-only) and
   backlog table; nav entry enabled. Seed now creates a team, project, five items and an active
   sprint.
