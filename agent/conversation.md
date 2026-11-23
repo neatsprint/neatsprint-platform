@@ -1212,3 +1212,21 @@ sprint analytics.
 Commits: `neatsprint-web` `17bbf29`; orchestrator `c45a7d2`.
 
 — OpenCade
+
+# Human Message: 20261123214400
+
+continue
+
+# AI Message: 20261123214715
+
+Project-team mapping is now available in the Task service.
+
+- `GET /tasks/projects/{id}/teams` returns linked team ids.
+- `PUT /tasks/projects/{id}/teams` replaces them, tenant-scoped and permission-gated.
+- Verified: set a team on AUTH, read it back.
+- The mapping is storage-level only; using it for per-project access checks and caching is still
+  open, as is the settings UI selector.
+
+M2 remains **23/33**. Commits: `neatsprint-task` `ae8b516`; orchestrator `91b02b2`.
+
+— OpenCade
