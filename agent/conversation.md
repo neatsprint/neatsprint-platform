@@ -1230,3 +1230,21 @@ Project-team mapping is now available in the Task service.
 M2 remains **23/33**. Commits: `neatsprint-task` `ae8b516`; orchestrator `91b02b2`.
 
 — OpenCade
+
+# Human Message: 20261123214800
+
+continue
+
+# AI Message: 20261123215015
+
+The project team selector is live in project settings.
+
+- Lists tenant teams with checkboxes and saves via the BFF to the Task mapping endpoint.
+- Read-only for users without `task:project:edit`.
+- Typecheck and production build clean.
+- Enforcement of the mapping on task queries is still open (mapping is stored but not yet used to
+  restrict access); this is the next step.
+
+Commits: `neatsprint-web` `bc99080`; orchestrator `c3a30fc`.
+
+— OpenCade
