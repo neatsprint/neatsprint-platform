@@ -825,3 +825,58 @@ viewer create denied 403
   deployment yet.
 
 — OpenCade
+
+# Human Message: 20261123195000
+
+continue
+
+# AI Message: 20261123200201
+
+M2 is now **12 of 33 tasks**. The Task service core is live and verified end to end through the
+gateway.
+
+## Delivered
+
+**Task service** (`neatsprint-task`):
+
+- Schema + migration: `projects`, `project_teams`, `backlog_items`, `sprints`, `sprint_items`,
+  `item_comments`, `item_history`; one-active-sprint partial unique index.
+- Projects: list/create/read/update/archive, tenant-scoped project keys.
+- Backlog items: create with per-project key allocation (`AUTH-1`), update, soft delete (schema),
+  status transitions with a validated graph and history, assign/unassign with history.
+- Ranking: integer ranks with gap allocation and a rebalance path when neighbours are too close.
+- Comments: list/add.
+- Sprints: list/create, add/remove items, start (single active + committed points), complete with
+  carry-over to the backlog.
+- Board/backlog endpoints: `/projects/{id}/board`, `/projects/{id}/backlog`.
+- Internal item lookup for the Worklog service (M3).
+- RBAC on every endpoint; health/readiness/metrics; 2 tests + ruff + mypy strict.
+
+**Verified on the running stack:**
+
+```
+login 200
+project 201 AUTH
+items 201 AUTH-1, AUTH-2, AUTH-3
+transition 200 IN_PROGRESS
+comment 201
+sprint 201 Sprint 1
+add items 200 (3)
+start sprint 200 ACTIVE
+board 200 (5 columns)
+complete 200 (3 carried over)
+```
+
+## Status
+
+- M2: **12/33** — Team service (2) + Task core (10).
+- Next: web projects/backlog/board, seed teams/projects/sprint, RLS tenant guard (M1-T04),
+  attachments, project-team access checks, event emission.
+
+## Notes
+
+- The stack was rebuilt because the local database volume was missing; it was re-seeded and your
+  demo accounts are unchanged.
+- The test project `AUTH` and its items/sprint exist only in the local database.
+
+— OpenCade
