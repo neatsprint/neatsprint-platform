@@ -1152,3 +1152,22 @@ M2 is now **21 of 33 tasks**. Task events are flowing.
   saved views, sprint analytics.
 
 — OpenCade
+
+# Human Message: 20261123212000
+
+continue
+
+# AI Message: 20261123212258
+
+M2 is now **22 of 33 tasks**. Team events are live.
+
+- `team.created`, `team.member_added`, `team.member_removed` written through the outbox.
+- Team outbox migration added and applied.
+- Verified: creating **Event Squad** produced `team.created` on `neatsprint.events`.
+
+Remaining: attachments, project-team access checks, bulk backlog actions, saved views,
+keyboard navigation and sprint analytics.
+
+Commits: `neatsprint-team` `7e1f885`; orchestrator `9a03bbf`.
+
+— OpenCade
