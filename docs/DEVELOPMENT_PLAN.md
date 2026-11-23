@@ -25,7 +25,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | :--- | ---: | ---: | :--- |
 | M0 Foundations | 24 | 21 | 21 done · 2 moved to M1 · 1 partial |
 | M1 Identity & Tenancy | 34 | 33 | 33 done · T04 (RLS guard) moved to M2 |
-| M2 Work Management | 33 | 16 | 16 done · board drag/drop + item drawer live |
+| M2 Work Management | 33 | 18 | 18 done · planning + teams admin live |
 | M3 Time, Monitoring & Desktop | 40 | 0 | Not started |
 | M4 Reports & Console | 26 | 0 | Not started |
 | M5 Hardening & Launch | 28 | 0 | Not started |
@@ -332,9 +332,9 @@ matrix verified by automation → audit entries present for invite, login, role 
   swimlane by assignee (optional), WIP indicator.
 - [x] **M2-T25** Item detail drawer: description editor, comments, history timeline, attachments,
   time summary placeholder (populated in M3).
-- [ ] **M2-T26** Sprint planning view: backlog on the left, sprint on the right, capacity bar.
+- [x] **M2-T26** Sprint planning view: backlog on the left, sprint on the right, capacity bar.
 - [ ] **M2-T27** Sprint board header: dates, progress, complete-sprint dialog with carry-over.
-- [ ] **M2-T28** Teams admin: list, create, members, lead assignment.
+- [x] **M2-T28** Teams admin: list, create, members, lead assignment.
 - [ ] **M2-T29** Empty, loading, error and permission-denied states for every M2 screen.
 - [ ] **M2-T30** Component library additions: DataTable, Drawer, KanbanColumn, PriorityBadge,
   UserPill, EmptyState. *AC*: documented in the design page.
@@ -608,3 +608,4 @@ Kept here so the design does not accidentally preclude it.
 | 2026-11-23 | Task service: projects, backlog items, ranking, transitions/history, comments, sprints/start/complete | 12/33 tasks done |
 | 2026-11-23 | Web projects list/create, read-only board and backlog, planning seed | 14/33 tasks done |
 | 2026-11-23 | Board drag-and-drop transitions with optimistic rollback, item drawer with comments and status moves | 16/33 tasks done |
+| 2026-11-23 | Sprint planning UI and teams admin | 18/33 tasks done |
