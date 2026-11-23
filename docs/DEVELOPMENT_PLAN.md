@@ -25,7 +25,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | :--- | ---: | ---: | :--- |
 | M0 Foundations | 24 | 21 | 21 done · 2 moved to M1 · 1 partial |
 | M1 Identity & Tenancy | 34 | 34 | Complete |
-| M2 Work Management | 33 | 18 | 18 done · planning + teams admin live |
+| M2 Work Management | 33 | 20 | 20 done · settings + sprint completion live |
 | M3 Time, Monitoring & Desktop | 40 | 0 | Not started |
 | M4 Reports & Console | 26 | 0 | Not started |
 | M5 Hardening & Launch | 28 | 0 | Not started |
@@ -325,7 +325,7 @@ matrix verified by automation → audit entries present for invite, login, role 
 ### Epic M2-E5 — Web: planning surfaces
 
 - [x] **M2-T21** Projects list: cards/table, search, filter, archived toggle, create dialog.
-- [ ] **M2-T22** Project settings: name, key, dates, teams, archive.
+- [x] **M2-T22** Project settings: name, key, dates, teams, archive.
 - [ ] **M2-T23** Backlog view: grouped table, inline edit, bulk select, priority chips, sprint
   assignment, keyboard navigation.
 - [x] **M2-T24** Board view: columns by status, drag-and-drop with optimistic update and rollback,
@@ -333,7 +333,7 @@ matrix verified by automation → audit entries present for invite, login, role 
 - [x] **M2-T25** Item detail drawer: description editor, comments, history timeline, attachments,
   time summary placeholder (populated in M3).
 - [x] **M2-T26** Sprint planning view: backlog on the left, sprint on the right, capacity bar.
-- [ ] **M2-T27** Sprint board header: dates, progress, complete-sprint dialog with carry-over.
+- [x] **M2-T27** Sprint board header: dates, progress, complete-sprint dialog with carry-over.
 - [x] **M2-T28** Teams admin: list, create, members, lead assignment.
 - [ ] **M2-T29** Empty, loading, error and permission-denied states for every M2 screen.
 - [ ] **M2-T30** Component library additions: DataTable, Drawer, KanbanColumn, PriorityBadge,
