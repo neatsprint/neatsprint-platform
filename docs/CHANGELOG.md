@@ -18,6 +18,8 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-23 — **Task attachments**: presigned S3/MinIO upload, confirmation,
+  listing and time-limited download links, with MIME and size validation.
 - 2026-11-23 — **Team events**: `team.created`, `team.member_added` and
   `team.member_removed` published through the outbox.
 - 2026-11-23 — **Task events**: project/item/sprint events written through the outbox and

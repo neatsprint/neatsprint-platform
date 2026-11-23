@@ -25,7 +25,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | :--- | ---: | ---: | :--- |
 | M0 Foundations | 24 | 21 | 21 done · 2 moved to M1 · 1 partial |
 | M1 Identity & Tenancy | 34 | 34 | Complete |
-| M2 Work Management | 33 | 22 | 22 done · Task + Team events live |
+| M2 Work Management | 33 | 23 | 23 done · attachments live |
 | M3 Time, Monitoring & Desktop | 40 | 0 | Not started |
 | M4 Reports & Console | 26 | 0 | Not started |
 | M5 Hardening & Launch | 28 | 0 | Not started |
@@ -291,7 +291,7 @@ matrix verified by automation → audit entries present for invite, login, role 
 - [x] **M2-T07** Single-assignee rule with unassign endpoint. *AC*: second assignee rejected.
 - [x] **M2-T08** Comments: create/edit/delete (soft), mentions parsed into `mentioned_user_ids`.
   *AC*: edit history preserved; mention event emitted.
-- [ ] **M2-T09** Attachments: presigned upload, MIME/size validation, download authorisation.
+- [x] **M2-T09** Attachments: presigned upload, MIME/size validation, download authorisation.
   *AC*: cross-tenant attachment fetch denied.
 
 ### Epic M2-E2 — Sprints
