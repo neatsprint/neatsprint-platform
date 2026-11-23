@@ -25,7 +25,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | :--- | ---: | ---: | :--- |
 | M0 Foundations | 24 | 21 | 21 done · 2 moved to M1 · 1 partial |
 | M1 Identity & Tenancy | 34 | 34 | Complete |
-| M2 Work Management | 33 | 20 | 20 done · settings + sprint completion live |
+| M2 Work Management | 33 | 21 | 21 done · Task events live |
 | M3 Time, Monitoring & Desktop | 40 | 0 | Not started |
 | M4 Reports & Console | 26 | 0 | Not started |
 | M5 Hardening & Launch | 28 | 0 | Not started |
@@ -302,7 +302,7 @@ matrix verified by automation → audit entries present for invite, login, role 
   *AC*: snapshot immutable after start.
 - [x] **M2-T12** Complete sprint: close, record velocity inputs, carry-over dialog data
   (done/moved/backlog). *AC*: idempotent completion.
-- [ ] **M2-T13** Emit `project.created`, `item.created/updated/transitioned`, `sprint.started/
+- [x] **M2-T13** Emit `project.created`, `item.created/updated/transitioned`, `sprint.started/
   completed` to the outbox.
 
 ### Epic M2-E3 — Team service

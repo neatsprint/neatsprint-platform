@@ -18,6 +18,8 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-23 — **Task events**: project/item/sprint events written through the outbox and
+  published to Redis Streams; verified `item.created` on the stream.
 - 2026-11-23 — **Project settings and sprint completion**: edit name/dates/description,
   archive a project, and complete an active sprint with carry-over.
 - 2026-11-23 — **Tenant isolation at the database**: PostgreSQL RLS on Task/Team tables with
