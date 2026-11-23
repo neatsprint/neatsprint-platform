@@ -18,6 +18,8 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-23 — **Team events**: `team.created`, `team.member_added` and
+  `team.member_removed` published through the outbox.
 - 2026-11-23 — **Task events**: project/item/sprint events written through the outbox and
   published to Redis Streams; verified `item.created` on the stream.
 - 2026-11-23 — **Project settings and sprint completion**: edit name/dates/description,
