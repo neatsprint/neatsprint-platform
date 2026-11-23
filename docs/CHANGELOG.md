@@ -18,6 +18,9 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-23 — **Web planning views**: projects list with create, sprint board (read-only) and
+  backlog table; nav entry enabled. Seed now creates a team, project, five items and an active
+  sprint.
 - 2026-11-23 — **Task service**: projects, backlog items with per-project keys, integer
   ranking, status transitions with history, single assignee, comments, sprint create/start/
   complete with carry-over, board and backlog endpoints, internal item lookup.

@@ -25,7 +25,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | :--- | ---: | ---: | :--- |
 | M0 Foundations | 24 | 21 | 21 done · 2 moved to M1 · 1 partial |
 | M1 Identity & Tenancy | 34 | 33 | 33 done · T04 (RLS guard) moved to M2 |
-| M2 Work Management | 33 | 12 | 12 done · Team + Task core live; web and RLS next |
+| M2 Work Management | 33 | 14 | 14 done · Team + Task core, projects/board/backlog views, seed |
 | M3 Time, Monitoring & Desktop | 40 | 0 | Not started |
 | M4 Reports & Console | 26 | 0 | Not started |
 | M5 Hardening & Launch | 28 | 0 | Not started |
@@ -324,7 +324,7 @@ matrix verified by automation → audit entries present for invite, login, role 
 
 ### Epic M2-E5 — Web: planning surfaces
 
-- [ ] **M2-T21** Projects list: cards/table, search, filter, archived toggle, create dialog.
+- [x] **M2-T21** Projects list: cards/table, search, filter, archived toggle, create dialog.
 - [ ] **M2-T22** Project settings: name, key, dates, teams, archive.
 - [ ] **M2-T23** Backlog view: grouped table, inline edit, bulk select, priority chips, sprint
   assignment, keyboard navigation.
@@ -344,7 +344,7 @@ matrix verified by automation → audit entries present for invite, login, role 
 - [ ] **M2-T31** In-app notification model in IAM/notification stub for assignment events
   (bell menu). *AC*: mark-as-read persists.
 - [ ] **M2-T32** Assignment notification email template (digest-safe).
-- [ ] **M2-T33** Seed update: realistic multi-sprint history for reports testing.
+- [x] **M2-T33** Seed update: realistic multi-sprint history for reports testing.
 
 **M2 exit gate**: create project → 20 items → plan sprint → drag through states → complete with
 carry-over; access control verified for outsider, viewer and member.
@@ -606,3 +606,4 @@ Kept here so the design does not accidentally preclude it.
 | 2026-11-22 | M1 final slice: Google ID-token login, invitation collapse/resend, CAPTCHA hook, avatar presign/confirm, custom role CRUD. T04 moved to M2 for RLS | 33/34 tasks done |
 | 2026-11-23 | M2 started: Team service (schema, migration, CRUD, membership, internal lookup, RBAC) | 2/33 tasks done |
 | 2026-11-23 | Task service: projects, backlog items, ranking, transitions/history, comments, sprints/start/complete | 12/33 tasks done |
+| 2026-11-23 | Web projects list/create, read-only board and backlog, planning seed | 14/33 tasks done |
