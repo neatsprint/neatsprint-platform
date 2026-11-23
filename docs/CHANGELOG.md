@@ -18,6 +18,7 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-23 — **Backlog filters and inline priority editing** with optimistic rollback.
 - 2026-11-23 — **Sprint planning and teams admin**: create a sprint, move items between
   backlog and sprint scope, start the sprint, and create/list teams with member counts.
 - 2026-11-23 — **Interactive board**: HTML5 drag-and-drop between statuses with optimistic
