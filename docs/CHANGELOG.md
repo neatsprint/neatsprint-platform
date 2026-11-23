@@ -18,6 +18,8 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-23 — **Team membership events** invalidate the Task access cache; membership changes
+  apply in seconds instead of waiting for the 60 s TTL.
 - 2026-11-23 — **Project access enforcement**: projects with linked teams are visible only to
   members of those teams; managers/admins keep access; denied requests return `404`. Team
   membership is cached for 60 s, project mappings apply immediately.

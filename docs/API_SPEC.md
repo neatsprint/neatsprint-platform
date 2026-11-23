@@ -240,7 +240,8 @@ Legend: **P** = permission required. All endpoints require authentication unless
 teams are linked, only members of a linked team may list or open it; holders of
 `task:project:create` (manager, admin, owner) always retain access. Denied requests return `404`
 so project existence is not disclosed. Team membership is resolved through the Team internal API
-and cached for 60 s per process; project-to-team mapping is read on every request, so mapping
+and cached for 60 s per process; `team.member_added` / `team.member_removed` events invalidate the
+affected entry immediately. Project-to-team mapping is read on every request, so mapping
 changes take effect immediately.
 
 ### 2.5 Team — `/api/v1/teams`

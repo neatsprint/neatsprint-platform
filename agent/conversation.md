@@ -1323,3 +1323,42 @@ Project-team access enforcement is implemented and verified end to end. M2 is no
 Commits: `neatsprint-task` `b9326d7`; `neatsprint-web` `21045f2`.
 
 - OpenCade
+
+# Human Message: 20261123221900
+
+continue
+
+# AI Message: 20261123222019
+
+Team membership changes now invalidate the access cache immediately.
+
+## What changed
+
+- Task runs a Redis Streams consumer for `team.member_added` and `team.member_removed`.
+- It drops the cached membership set for the affected tenant/team, so the next request
+  re-reads membership from the Team service.
+- The consumer starts with the service, retries if Redis is not ready, survives transient read
+  failures, and shuts down with the app.
+- The 60 s TTL remains as a backstop. The consumer group is shared by replicas, so with more than
+  one Task replica the others converge on TTL expiry; the MVP runs one replica.
+
+## Verification
+
+- Live: lead was denied, added to Backend Squad, then allowed after 1.6 s; removed from the
+  team, then denied after 2.1 s — both well inside the 60 s TTL, with cache-clear log entries.
+- Unit tests: member events clear the entry; unrelated and malformed events leave it intact.
+- Task lint, mypy and 17 tests pass.
+- Seed state restored: lead is not a member of Backend Squad.
+
+`M2-T17` is now genuinely complete (the emit half was already ticked). M2 stays **25 of 33**
+because T17 was already counted.
+
+## Next
+
+- `M2-T18/19/20`: IAM client with timeout/cache, assignee-membership guard, contract tests.
+- `M2-T23/29/30`: backlog bulk/grouping/keyboard, empty/error states, component library.
+- `M2-T31/32`: assignment notifications.
+
+Commits: `neatsprint-task` `3e80da1`.
+
+- OpenCade
