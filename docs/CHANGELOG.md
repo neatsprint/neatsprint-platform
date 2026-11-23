@@ -18,6 +18,10 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-23 — **Backlog interactions**: grouping by status/priority/sprint, inline title,
+  priority, estimate, assignee and sprint edits, bulk selection with priority/sprint/assignee/
+  delete actions, and keyboard navigation (arrows, space, E).
+- 2026-11-23 — **Soft delete** endpoint for backlog items (`DELETE /tasks/backlog/{id}`).
 - 2026-11-23 — **Assignee validation**: assignments require an active IAM user and, for
   team-scoped projects, membership in a linked team; outsiders get
   `422 assignee_not_eligible`.

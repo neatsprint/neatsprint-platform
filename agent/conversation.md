@@ -1407,3 +1407,48 @@ not merge. I removed only that stale entry, keeping the PR requirement and the r
 Commits: `neatsprint-iam` `fe0fedd` (PR #3); `neatsprint-task` `8599a21`.
 
 - OpenCade
+
+# Human Message: 20261123224500
+
+continue
+
+# AI Message: 20261123225402
+
+The backlog is now a working planning surface. `M2-T23` is complete and M2 is **29 of 33**.
+
+## What changed
+
+- Grouped table by status, priority, sprint or none, with per-group item and point totals.
+- Toolbar filters: search, type, priority, assignee and grouping.
+- Inline edits: title (double-click or `E`), status (transition rules enforced), priority chip,
+  estimate, assignee and sprint.
+- Bulk selection: row or group checkboxes, select all visible, then set priority, move to a sprint,
+  assign, or delete.
+- Keyboard: `↑`/`↓` move row focus, `Space` selects, `E` edits the title.
+- Read-only rendering when the user lacks edit, transition, assign or delete permissions.
+- Empty and no-results states use the documented copy.
+- New soft-delete endpoint `DELETE /tasks/backlog/{id}` and a backlog reload BFF route.
+
+## Verification
+
+- Live: created `AUTH-11`, deleted it (`204`), confirmed it left the backlog and `GET` returns `404`.
+- Backlog BFF returns `200`; the rendered page contains the filters and group controls.
+- Five component tests cover grouping, keyboard selection/focus, bulk priority, inline title edit
+  and the empty state. Web has 12 tests total, typecheck and production build pass.
+- Task lint, mypy and 31 tests pass.
+
+## Notes
+
+- `Enter` currently opens the inline title editor because the item drawer is board-local; a
+  deep-linkable drawer remains for a later pass.
+- `M2-T29` (complete states for every screen) and `M2-T30` (shared component library) are still
+  open; the backlog covers its own states.
+
+## Next
+
+- `M2-T29/30`: screen states and shared components.
+- `M2-T31/32`: assignment notifications.
+
+Commits: `neatsprint-task` `26d0466`; `neatsprint-web` `ba757ec`.
+
+- OpenCade

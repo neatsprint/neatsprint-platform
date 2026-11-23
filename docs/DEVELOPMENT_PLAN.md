@@ -25,7 +25,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | :--- | ---: | ---: | :--- |
 | M0 Foundations | 24 | 21 | 21 done · 2 moved to M1 · 1 partial |
 | M1 Identity & Tenancy | 34 | 34 | Complete |
-| M2 Work Management | 33 | 28 | 28 done · cross-service validation live |
+| M2 Work Management | 33 | 29 | 29 done · backlog interactions live |
 | M3 Time, Monitoring & Desktop | 40 | 0 | Not started |
 | M4 Reports & Console | 26 | 0 | Not started |
 | M5 Hardening & Launch | 28 | 0 | Not started |
@@ -326,7 +326,7 @@ matrix verified by automation → audit entries present for invite, login, role 
 
 - [x] **M2-T21** Projects list: cards/table, search, filter, archived toggle, create dialog.
 - [x] **M2-T22** Project settings: name, key, dates, teams, archive.
-- [ ] **M2-T23** Backlog view: grouped table, inline edit, bulk select, priority chips, sprint
+- [x] **M2-T23** Backlog view: grouped table, inline edit, bulk select, priority chips, sprint
   assignment, keyboard navigation.
 - [x] **M2-T24** Board view: columns by status, drag-and-drop with optimistic update and rollback,
   swimlane by assignee (optional), WIP indicator.
