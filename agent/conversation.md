@@ -1128,3 +1128,27 @@ Typecheck and production build clean.
 Attachments and project-team access checks, then event emission from Task/Team.
 
 — OpenCade
+
+# Human Message: 20261123211500
+
+continue
+
+# AI Message: 20261123211837
+
+M2 is now **21 of 33 tasks**. Task events are flowing.
+
+## Delivered
+
+- Outbox events from the Task service: `project.created`, `item.created`, `item.transitioned`,
+  `sprint.started`, `sprint.completed`.
+- Background relay publishes to `neatsprint.events`; Docker wiring unchanged.
+- Added the outbox migration and restored the one-active-sprint index (autogenerate had flagged it).
+- Verified: creating `AUTH-10` produced an `item.created` message on the stream.
+
+## Status
+
+- M2: **21/33**.
+- Remaining: attachments, project-team access checks, team events, bulk backlog actions,
+  saved views, sprint analytics.
+
+— OpenCade
