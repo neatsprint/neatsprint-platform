@@ -18,6 +18,8 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-23 — **M2 started**: Team service with teams, membership, lead management,
+  internal membership lookup for the Task service, RBAC and migrations.
 - 2026-11-22 — Added `docs/SETUP_GUIDE.md` (local setup, Google sign-in, CAPTCHA, GitHub settings).
 - 2026-11-22 — **M1 final slice**: Google Identity Services ID-token login with invitation-first
   provisioning, invitation duplicate-collapse and resend, optional Turnstile CAPTCHA on auth,

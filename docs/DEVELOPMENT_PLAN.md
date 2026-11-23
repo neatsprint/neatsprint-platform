@@ -25,7 +25,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | :--- | ---: | ---: | :--- |
 | M0 Foundations | 24 | 21 | 21 done · 2 moved to M1 · 1 partial |
 | M1 Identity & Tenancy | 34 | 33 | 33 done · T04 (RLS guard) moved to M2 |
-| M2 Work Management | 33 | 0 | Not started |
+| M2 Work Management | 33 | 2 | 2 done · Team service live; Task service next |
 | M3 Time, Monitoring & Desktop | 40 | 0 | Not started |
 | M4 Reports & Console | 26 | 0 | Not started |
 | M5 Hardening & Launch | 28 | 0 | Not started |
@@ -307,8 +307,8 @@ matrix verified by automation → audit entries present for invite, login, role 
 
 ### Epic M2-E3 — Team service
 
-- [ ] **M2-T14** Team schema (`teams`, `team_members`) with lead flag. *AC*: unique membership.
-- [ ] **M2-T15** Team CRUD + membership endpoints with lead-vs-admin permissions.
+- [x] **M2-T14** Team schema (`teams`, `team_members`) with lead flag. *AC*: unique membership.
+- [x] **M2-T15** Team CRUD + membership endpoints with lead-vs-admin permissions.
   *AC*: removing the last lead is blocked or reassigns.
 - [ ] **M2-T16** Project ↔ team mapping API consumed by Task service (cached). *AC*: project team
   change invalidates task access cache.
@@ -604,3 +604,4 @@ Kept here so the design does not accidentally preclude it.
 | 2026-11-21 | M1 first slice delivered: IAM auth/RBAC/invitations/audit, Core tenancy/settings/modules, ForwardAuth, web login/admin, seed | Vertical auth slice verified end to end |
 | 2026-11-21 | M1 second slice: outbox/Redis, seat limits, password reset, session management, roles matrix, settings/modules UI, silent refresh | 28/34 tasks done |
 | 2026-11-22 | M1 final slice: Google ID-token login, invitation collapse/resend, CAPTCHA hook, avatar presign/confirm, custom role CRUD. T04 moved to M2 for RLS | 33/34 tasks done |
+| 2026-11-23 | M2 started: Team service (schema, migration, CRUD, membership, internal lookup, RBAC) | 2/33 tasks done |

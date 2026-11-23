@@ -132,7 +132,7 @@ to M2 for PostgreSQL RLS).*
 - [ ] Task service: projects, project teams, backlog items, ranking, history, comments
 - [ ] Task service: sprint lifecycle (plan/start/complete), carry-over
 - [ ] Task service: attachments to object storage (presigned)
-- [ ] Team service: teams, members, leads, project mapping
+- [x] Team service: teams, members, leads, project mapping
 - [ ] Cross-service validation: user existence, team membership, project access
 - [ ] Web: projects list/create/settings
 - [ ] Web: backlog table with inline edit, filters, bulk actions
@@ -248,17 +248,17 @@ Rules:
 Indicative, in AI-agent working sessions (≈ 1 session = a focused delivery block). Human review
 time is separate.
 
-| Milestone | Sessions (low) | Sessions (high) | Confidence |
-| :--- | ---: | ---: | :--- |
-| M0 Foundations | 4 | 6 | High |
-| M1 Identity & Tenancy | 8 | 12 | Medium |
-| M2 Work Management | 8 | 12 | Medium |
-| M3 Time & Monitoring | 12 | 18 | Low (desktop + crypto) |
-| M4 Reports & Console | 7 | 10 | Medium |
-| M5 Hardening & Launch | 6 | 9 | Medium |
-| **MVP total** | **45** | **67** | |
-| P2 Collaboration | 14 | 20 | Low |
-| P3 Intelligence | 12 | 18 | Low |
+| Milestone             | Sessions (low) | Sessions (high) | Confidence             |
+| :-------------------- | -------------: | --------------: | :--------------------- |
+| M0 Foundations        |              4 |               6 | High                   |
+| M1 Identity & Tenancy |              8 |              12 | Medium                 |
+| M2 Work Management    |              8 |              12 | Medium                 |
+| M3 Time & Monitoring  |             12 |              18 | Low (desktop + crypto) |
+| M4 Reports & Console  |              7 |              10 | Medium                 |
+| M5 Hardening & Launch |              6 |               9 | Medium                 |
+| **MVP total**         |         **45** |          **67** |                        |
+| P2 Collaboration      |             14 |              20 | Low                    |
+| P3 Intelligence       |             12 |              18 | Low                    |
 
 The widest uncertainty is M3 (desktop capture, encryption, offline sync) — it is scheduled early
 enough to absorb surprises without moving the launch gate.
