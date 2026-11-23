@@ -129,8 +129,8 @@ to M2 for PostgreSQL RLS).*
 
 **Goal**: a team can plan, run and close a sprint.
 
-- [ ] Task service: projects, project teams, backlog items, ranking, history, comments
-- [ ] Task service: sprint lifecycle (plan/start/complete), carry-over
+- [x] Task service: projects, project teams, backlog items, ranking, history, comments
+- [x] Task service: sprint lifecycle (plan/start/complete), carry-over
 - [ ] Task service: attachments to object storage (presigned)
 - [x] Team service: teams, members, leads, project mapping
 - [ ] Cross-service validation: user existence, team membership, project access

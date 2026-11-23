@@ -18,6 +18,9 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-23 — **Task service**: projects, backlog items with per-project keys, integer
+  ranking, status transitions with history, single assignee, comments, sprint create/start/
+  complete with carry-over, board and backlog endpoints, internal item lookup.
 - 2026-11-23 — **M2 started**: Team service with teams, membership, lead management,
   internal membership lookup for the Task service, RBAC and migrations.
 - 2026-11-22 — Added `docs/SETUP_GUIDE.md` (local setup, Google sign-in, CAPTCHA, GitHub settings).

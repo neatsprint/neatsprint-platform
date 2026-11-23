@@ -25,7 +25,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | :--- | ---: | ---: | :--- |
 | M0 Foundations | 24 | 21 | 21 done · 2 moved to M1 · 1 partial |
 | M1 Identity & Tenancy | 34 | 33 | 33 done · T04 (RLS guard) moved to M2 |
-| M2 Work Management | 33 | 2 | 2 done · Team service live; Task service next |
+| M2 Work Management | 33 | 12 | 12 done · Team + Task core live; web and RLS next |
 | M3 Time, Monitoring & Desktop | 40 | 0 | Not started |
 | M4 Reports & Console | 26 | 0 | Not started |
 | M5 Hardening & Launch | 28 | 0 | Not started |
@@ -275,32 +275,32 @@ matrix verified by automation → audit entries present for invite, login, role 
 
 ### Epic M2-E1 — Task service foundation
 
-- [ ] **M2-T01** Task schema: `projects`, `project_teams`, `backlog_items`, `item_comments`,
+- [x] **M2-T01** Task schema: `projects`, `project_teams`, `backlog_items`, `item_comments`,
   `item_history`, `sprints`, `sprint_items`, `item_attachments`. *AC*: FKs within service only;
   logical refs for `user_id`/`team_id`.
-- [ ] **M2-T02** Project CRUD with key generation (unique per tenant), archive semantics.
+- [x] **M2-T02** Project CRUD with key generation (unique per tenant), archive semantics.
   *AC*: archived project read-only; key immutable.
 - [ ] **M2-T03** Project access resolver (project teams ∪ project members ∪ tenant-wide perms),
   cached per request. *AC*: used by every list/detail endpoint.
-- [ ] **M2-T04** Backlog item CRUD with type/status/priority validation and item key
+- [x] **M2-T04** Backlog item CRUD with type/status/priority validation and item key
   (`PRJ-123`). *AC*: sequence per project is concurrency-safe.
-- [ ] **M2-T05** Ranking service using lexicographic keys; reorder endpoint. *AC*: 100 concurrent
+- [x] **M2-T05** Ranking service using lexicographic keys; reorder endpoint. *AC*: 100 concurrent
   reorders produce no duplicate ranks (property test).
-- [ ] **M2-T06** Status transition machine + `item_history` entries with actor and timestamp.
+- [x] **M2-T06** Status transition machine + `item_history` entries with actor and timestamp.
   *AC*: illegal transition returns 422 with code.
-- [ ] **M2-T07** Single-assignee rule with unassign endpoint. *AC*: second assignee rejected.
-- [ ] **M2-T08** Comments: create/edit/delete (soft), mentions parsed into `mentioned_user_ids`.
+- [x] **M2-T07** Single-assignee rule with unassign endpoint. *AC*: second assignee rejected.
+- [x] **M2-T08** Comments: create/edit/delete (soft), mentions parsed into `mentioned_user_ids`.
   *AC*: edit history preserved; mention event emitted.
 - [ ] **M2-T09** Attachments: presigned upload, MIME/size validation, download authorisation.
   *AC*: cross-tenant attachment fetch denied.
 
 ### Epic M2-E2 — Sprints
 
-- [ ] **M2-T10** Sprint CRUD + state machine (`PLANNED → ACTIVE → COMPLETED`), one active per
+- [x] **M2-T10** Sprint CRUD + state machine (`PLANNED → ACTIVE → COMPLETED`), one active per
   project enforced by partial unique index. *AC*: starting a second returns 409.
-- [ ] **M2-T11** Sprint planning: add/remove items, commit snapshot (points/hours at start).
+- [x] **M2-T11** Sprint planning: add/remove items, commit snapshot (points/hours at start).
   *AC*: snapshot immutable after start.
-- [ ] **M2-T12** Complete sprint: close, record velocity inputs, carry-over dialog data
+- [x] **M2-T12** Complete sprint: close, record velocity inputs, carry-over dialog data
   (done/moved/backlog). *AC*: idempotent completion.
 - [ ] **M2-T13** Emit `project.created`, `item.created/updated/transitioned`, `sprint.started/
   completed` to the outbox.
@@ -605,3 +605,4 @@ Kept here so the design does not accidentally preclude it.
 | 2026-11-21 | M1 second slice: outbox/Redis, seat limits, password reset, session management, roles matrix, settings/modules UI, silent refresh | 28/34 tasks done |
 | 2026-11-22 | M1 final slice: Google ID-token login, invitation collapse/resend, CAPTCHA hook, avatar presign/confirm, custom role CRUD. T04 moved to M2 for RLS | 33/34 tasks done |
 | 2026-11-23 | M2 started: Team service (schema, migration, CRUD, membership, internal lookup, RBAC) | 2/33 tasks done |
+| 2026-11-23 | Task service: projects, backlog items, ranking, transitions/history, comments, sprints/start/complete | 12/33 tasks done |

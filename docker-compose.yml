@@ -173,6 +173,8 @@ services:
       JWKS_URL: http://neatsprint-iam:8000/api/v1/auth/.well-known/jwks.json
       JWT_ISSUER: ${JWT_ISSUER:-neatsprint-iam}
       JWT_AUDIENCE: ${JWT_AUDIENCE:-neatsprint}
+      BOOTSTRAP_TOKEN: ${BOOTSTRAP_TOKEN:-dev-bootstrap-token-change-me}
+      RUN_MIGRATIONS: "true"
     ports:
       - "${TASK_PORT:-8003}:8000"
     healthcheck: *healthcheck
