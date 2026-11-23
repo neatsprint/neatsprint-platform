@@ -194,7 +194,32 @@ with `gh`):
    `production`.
 4. **Settings → Secrets and variables → Actions** (when we add deployments):
    - `GHCR_TOKEN`, cloud credentials, `STAGING_URL`, `PRODUCTION_URL`.
-5. **Organization → People**: keep the AI account as a collaborator with write access.
+5. **Organization → People**: no separate "AI account" is required. The agent commits and pushes
+   through the authenticated `gh` session on this workstation (currently your account,
+   `laksiri-fernando`). Nothing to add unless you want audit separation — see §5.1.
+
+### 5.1 Optional: a dedicated machine account for the agent
+
+If you want the agent's pushes clearly separated from your own:
+
+1. Create a normal GitHub account (e.g. `neatsprint-agent`) with its own email and 2FA.
+2. **Organization → People → Invite member** (role: Member) and accept the invitation.
+3. Give it write access either through a `developers` team with write permission on all repos, or
+   per repository under **Settings → Collaborators and teams**.
+4. On the workstation, sign the CLI in as that account:
+
+```powershell
+gh auth logout
+gh auth login          # choose GitHub.com -> HTTPS -> browser/token -> neatsprint-agent
+gh auth status         # confirm the active account
+```
+
+5. Re-run a small commit/push to confirm. Commit authors can still read `OpenCade`; the pusher will
+   be the machine account.
+
+Without step 1–5, the current setup is correct and complete: your account is the pusher, and the
+commit author is `OpenCade`. Do **not** look for an AI account in People — it does not exist unless
+you create it.
 6. **Projects**: create a board from the milestones in `docs/MASTER_PLAN.md` (optional, Q10).
 
 The reusable workflows live in `neatsprint-platform/.github/workflows/`; component repositories call

@@ -722,3 +722,39 @@ UI, plus the tenant guard at the DB layer. I will start after your review of the
 the M2 plan.
 
 — OpenCade
+
+# Human Message: 20261123142856
+
+In NeatSprint GitHub Organization, in People, I couldn't find "AI account"
+
+# AI Message: 20261123142856
+
+Correct — there is no AI account. That line in the setup guide was wrong, and I have fixed it.
+
+## Reality
+
+- `gh auth status` shows the CLI is authenticated as **`laksiri-fernando`** on this machine.
+- Every commit and push I made used that session. The commit **author** is `OpenCade`
+  (`opencade@neatsprint.local`), but the **pusher** is your account.
+- Nothing needs to be added to the organization. You will not find an AI account because one was
+  never created.
+
+## If you want separation (optional)
+
+1. Create a normal GitHub account, e.g. `neatsprint-agent`, with its own email and 2FA.
+2. **Organization → People → Invite member** (role: Member), then accept the invite.
+3. Give it write access via a `developers` team with write permission, or per repo under
+   **Settings → Collaborators and teams**.
+4. On this machine: `gh auth logout` → `gh auth login` → sign in as that account →
+   `gh auth status` confirms it.
+5. Run a test commit/push; the pusher becomes the machine account.
+
+If you skip this, the current setup is correct and complete.
+
+## Documents updated
+
+- `docs/SETUP_GUIDE.md` §5 — no AI account required; added §5.1 with the optional machine-account
+  procedure.
+- `docs/REPOSITORIES.md` checklist — replaced the "AI account" item with the optional note.
+
+— OpenCade

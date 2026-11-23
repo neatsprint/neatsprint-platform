@@ -283,7 +283,8 @@ releases.
 - [ ] Enable branch protection per §7
 - [ ] Create GitHub Environments `staging` and `production`
 - [ ] Create a registry credential for `ghcr.io` if packages are private
-- [ ] Add the AI's GitHub account/app as a collaborator with push rights (or provide a token)
+- [ ] **(Optional)** create a dedicated machine account for the agent; otherwise the owner's `gh`
+  session is used (no AI account exists by default)
 - [ ] Tell the AI "repositories created" in `agent/conversation.md`
 - [ ] AI runs M0-T01 and records the pins
 
