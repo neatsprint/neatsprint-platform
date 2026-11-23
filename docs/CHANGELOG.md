@@ -18,6 +18,11 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-23 — **Assignee validation**: assignments require an active IAM user and, for
+  team-scoped projects, membership in a linked team; outsiders get
+  `422 assignee_not_eligible`.
+- 2026-11-23 — **IAM user lookup** (`POST /internal/users/lookup`): batch, tenant-scoped
+  summaries for service-to-service validation.
 - 2026-11-23 — **Team membership events** invalidate the Task access cache; membership changes
   apply in seconds instead of waiting for the 60 s TTL.
 - 2026-11-23 — **Project access enforcement**: projects with linked teams are visible only to

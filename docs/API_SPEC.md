@@ -244,6 +244,11 @@ and cached for 60 s per process; `team.member_added` / `team.member_removed` eve
 affected entry immediately. Project-to-team mapping is read on every request, so mapping
 changes take effect immediately.
 
+**Assignees.** Creating, editing or assigning an item validates the assignee with IAM: the user
+must exist, be `ACTIVE`, and — when the project has linked teams — belong to at least one of them.
+Outsiders return `422 assignee_not_eligible`; an unreachable IAM returns
+`503 dependency_unavailable`.
+
 ### 2.5 Team — `/api/v1/teams`
 
 | Method | Path | Purpose | P |
@@ -509,8 +514,8 @@ Service-to-service calls are authenticated with a service token (`aud=service:<n
 
 | Caller | Callee | Endpoint | Purpose |
 | :--- | :--- | :--- | :--- |
-| Task | IAM | `GET /internal/users?ids=` | Validate assignees |
-| Team | IAM | `GET /internal/users?ids=` | Membership validation |
+| Task | IAM | `POST /internal/users/lookup` | Validate assignees (batch, tenant-scoped) |
+| Team | IAM | `POST /internal/users/lookup` | Membership validation |
 | Task / Worklog | Team | `GET /internal/teams/{id}/members` | Access scope |
 | Worklog | Task | `GET /internal/items/{id}` | Item/project existence |
 | Monitoring | Worklog | `GET /internal/sessions/{id}` | Session validity |

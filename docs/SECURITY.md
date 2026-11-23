@@ -129,6 +129,8 @@ Access = f( permission in token, tenant match, resource scope, module enabled )
     linked team is required (`task:project:create` holders bypass).
   - Team: membership or tenant-wide permission.
   - Worklog/Monitoring: own / team / tenant scope.
+- **Assignment scope.** An assignee must be an active tenant user and, for team-scoped projects,
+  a member of a linked team; IAM is the source of truth, cached 60 s.
 - Permission checks are centralised in a dependency/decorator, never copy-pasted.
 
 ### 4.2 Roles

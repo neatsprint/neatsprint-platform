@@ -25,7 +25,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | :--- | ---: | ---: | :--- |
 | M0 Foundations | 24 | 21 | 21 done · 2 moved to M1 · 1 partial |
 | M1 Identity & Tenancy | 34 | 34 | Complete |
-| M2 Work Management | 33 | 25 | 25 done · access cache invalidated by events |
+| M2 Work Management | 33 | 28 | 28 done · cross-service validation live |
 | M3 Time, Monitoring & Desktop | 40 | 0 | Not started |
 | M4 Reports & Console | 26 | 0 | Not started |
 | M5 Hardening & Launch | 28 | 0 | Not started |
@@ -316,11 +316,11 @@ matrix verified by automation → audit entries present for invite, login, role 
 
 ### Epic M2-E4 — Cross-service integrity
 
-- [ ] **M2-T18** IAM client library: validate user ids, fetch minimal user summaries in batch.
+- [x] **M2-T18** IAM client library: validate user ids, fetch minimal user summaries in batch.
   *AC*: circuit breaker + timeout; cached 60 s.
-- [ ] **M2-T19** Authorisation guard for "assignee must be an active member of a project team".
+- [x] **M2-T19** Authorisation guard for "assignee must be an active member of a project team".
   *AC*: assigning an outsider returns 422.
-- [ ] **M2-T20** Contract tests for Task ↔ Team ↔ IAM client interactions.
+- [x] **M2-T20** Contract tests for Task ↔ Team ↔ IAM client interactions.
 
 ### Epic M2-E5 — Web: planning surfaces
 

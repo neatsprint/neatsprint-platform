@@ -175,6 +175,7 @@ services:
       JWT_AUDIENCE: ${JWT_AUDIENCE:-neatsprint}
       BOOTSTRAP_TOKEN: ${BOOTSTRAP_TOKEN:-dev-bootstrap-token-change-me}
       TEAM_INTERNAL_URL: http://neatsprint-team:8000
+      IAM_INTERNAL_URL: http://neatsprint-iam:8000
       RUN_MIGRATIONS: "true"
       S3_ENDPOINT: http://minio:9000
       S3_PUBLIC_ENDPOINT: http://localhost:${MINIO_API_PORT:-9000}
