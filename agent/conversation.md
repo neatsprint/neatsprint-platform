@@ -880,3 +880,49 @@ complete 200 (3 carried over)
 - The test project `AUTH` and its items/sprint exist only in the local database.
 
 — OpenCade
+
+# Human Message: 20261123200800
+
+continue
+
+# AI Message: 20261123201413
+
+M2 is now **14 of 33 tasks**. The planning surfaces are usable in the browser.
+
+## Delivered
+
+### Seed
+`scripts/seed.py` now also creates, idempotently:
+- **Backend Squad** team with the member account added;
+- **AUTH — Authentication** project;
+- five backlog items with estimates and priorities;
+- an **active sprint** (Sprint 2 on the existing local data) with three committed items.
+
+### Web
+- **`/projects`** — project cards with key, status, description; create form posting through the BFF.
+- **`/projects/{id}/board`** — five columns from the sprint board endpoint, item cards with key,
+  priority, assignee state and estimate.
+- **`/projects/{id}/backlog`** — table of all items with type, status, priority, estimate and sprint.
+- **Projects** enabled in the sidebar.
+- All pages are session-protected and use the httpOnly cookie BFF.
+
+### Verified
+
+```
+/projects 200 (AUTH, Authentication)
+/projects/{id}/board 200 (columns, Sprint 2)
+/projects/{id}/backlog 200 (seed items present)
+```
+
+## Status
+
+- **M2: 14/33**.
+- Remaining high-value items: inline editing, drag-and-drop transitions, item drawer, sprint
+  planning UI, teams admin, attachments, project-team access checks, RLS guard, event emission.
+
+## Notes
+
+- The board is read-only for now; moving items and editing must still be done through the API.
+- T23/T24 remain open because they require inline edit and drag-and-drop respectively.
+
+— OpenCade
