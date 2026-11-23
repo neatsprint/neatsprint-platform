@@ -1189,3 +1189,26 @@ M2 is now **23 of 33 tasks**. Attachments work end to end.
 Commits: `neatsprint-task` `eea845a`; orchestrator `cfd4c8f`.
 
 — OpenCade
+
+# Human Message: 20261123213000
+
+continue
+
+# AI Message: 20261123214141
+
+The attachment UI is now in the item drawer.
+
+- Lists attachments for the selected item.
+- **Add attachment** uses presign → direct PUT to MinIO → confirm, then refreshes the list.
+- **Download** opens a time-limited presigned URL.
+- Three BFF routes keep the session cookie server-side.
+- Typecheck and production build clean; the drawer is client-rendered, so the UI appears when an
+  item is opened.
+
+M2 remains **23/33** (the drawer is part of T09, which was already ticked for the API). Remaining:
+project-team access checks, bulk backlog actions, grouping/keyboard navigation, saved views,
+sprint analytics.
+
+Commits: `neatsprint-web` `17bbf29`; orchestrator `c45a7d2`.
+
+— OpenCade
