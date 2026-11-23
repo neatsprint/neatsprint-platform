@@ -926,3 +926,37 @@ M2 is now **14 of 33 tasks**. The planning surfaces are usable in the browser.
 - T23/T24 remain open because they require inline edit and drag-and-drop respectively.
 
 — OpenCade
+
+# Human Message: 20261123201800
+
+continue
+
+# AI Message: 20261123202131
+
+M2 is now **16 of 33 tasks**. The board is interactive.
+
+## Delivered
+
+- **Drag-and-drop board**: move cards between status columns; optimistic update with rollback and
+  an error toast if the transition is invalid. The server remains the authority.
+- **Item drawer**: click any card to open a right-hand drawer with key, type, priority, estimate,
+  description, allowed status moves, and comments.
+- **Comments through the BFF**: list and post comments without exposing tokens to the browser.
+- **BFF routes**: `POST /api/session/items/{id}/transition`, `GET/POST .../comments`.
+- **Permissions**: drag/drop only renders for `task:item:transition`; the comment form only for
+  `task:item:comment`. The API enforces both regardless.
+
+Verified: board renders `AUTH-1…3`, `draggable` attributes present, page 200; typecheck and
+production build clean.
+
+## Status
+
+- **M2: 16/33**
+- Remaining: sprint planning UI, teams admin, attachment upload, backlog inline edit, project-team
+  access checks, RLS guard, events, and the task-level polish items.
+
+## Next
+
+Sprint planning (backlog ↔ sprint, start/complete), teams admin, then the RLS tenant guard.
+
+— OpenCade
