@@ -236,6 +236,13 @@ Legend: **P** = permission required. All endpoints require authentication unless
 | DELETE | `/tasks/sprints/{id}/items/{itemId}` | Remove item | `task:sprint:manage` |
 | GET | `/tasks/sync?since=` | Delta for desktop | `task:item:view` |
 
+**Project visibility.** A project with no linked teams is visible to every tenant member. When
+teams are linked, only members of a linked team may list or open it; holders of
+`task:project:create` (manager, admin, owner) always retain access. Denied requests return `404`
+so project existence is not disclosed. Team membership is resolved through the Team internal API
+and cached for 60 s per process; project-to-team mapping is read on every request, so mapping
+changes take effect immediately.
+
 ### 2.5 Team — `/api/v1/teams`
 
 | Method | Path | Purpose | P |

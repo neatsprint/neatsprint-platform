@@ -25,7 +25,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | :--- | ---: | ---: | :--- |
 | M0 Foundations | 24 | 21 | 21 done · 2 moved to M1 · 1 partial |
 | M1 Identity & Tenancy | 34 | 34 | Complete |
-| M2 Work Management | 33 | 23 | 23 done · attachments live |
+| M2 Work Management | 33 | 25 | 25 done · project access enforced |
 | M3 Time, Monitoring & Desktop | 40 | 0 | Not started |
 | M4 Reports & Console | 26 | 0 | Not started |
 | M5 Hardening & Launch | 28 | 0 | Not started |
@@ -280,7 +280,7 @@ matrix verified by automation → audit entries present for invite, login, role 
   logical refs for `user_id`/`team_id`.
 - [x] **M2-T02** Project CRUD with key generation (unique per tenant), archive semantics.
   *AC*: archived project read-only; key immutable.
-- [ ] **M2-T03** Project access resolver (project teams ∪ project members ∪ tenant-wide perms),
+- [x] **M2-T03** Project access resolver (project teams ∪ project members ∪ tenant-wide perms),
   cached per request. *AC*: used by every list/detail endpoint.
 - [x] **M2-T04** Backlog item CRUD with type/status/priority validation and item key
   (`PRJ-123`). *AC*: sequence per project is concurrency-safe.
@@ -310,7 +310,7 @@ matrix verified by automation → audit entries present for invite, login, role 
 - [x] **M2-T14** Team schema (`teams`, `team_members`) with lead flag. *AC*: unique membership.
 - [x] **M2-T15** Team CRUD + membership endpoints with lead-vs-admin permissions.
   *AC*: removing the last lead is blocked or reassigns.
-- [ ] **M2-T16** Project ↔ team mapping API consumed by Task service (cached). *AC*: project team
+- [x] **M2-T16** Project ↔ team mapping API consumed by Task service (cached). *AC*: project team
   change invalidates task access cache.
 - [x] **M2-T17** Emit `team.member_added/removed` events; consume in Task cache invalidation.
 

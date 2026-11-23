@@ -1276,3 +1276,50 @@ The mapping is stored and editable; enforcement remains the next focused task.
 No code or commits were made in this step.
 
 — OpenCade
+# Human Message: 20261123221300
+
+continue
+
+# AI Message: 20261123221418
+
+Project-team access enforcement is implemented and verified end to end. M2 is now **25 of 33**.
+
+## What changed
+
+- Task now has a project access resolver. A project with no linked teams is open to the tenant.
+  When teams are linked, only members of a linked team may access it; `task:project:create`
+  holders (manager, admin, owner) always keep access.
+- Denied requests return `404` so project existence is not disclosed.
+- Enforcement covers every project-scoped endpoint: project list/detail/update/archive, mapping,
+  backlog, board, items, ranking, comments, sprints, planning and attachments (including download
+  links).
+- Team membership is read through the Team internal API with the service token and cached for 60 s
+  per process. Project-to-team mapping is read on every request, so mapping changes apply
+  immediately.
+- If the Team service is unavailable, linked projects fail closed for non-managers; unlinked
+  projects stay visible.
+- Web project cards, board and settings use the filtered backend responses. Project settings now
+  explains that an empty team list means workspace-wide visibility.
+
+## Verification
+
+- Unit tests: access decision matrix, cache hit, cache expiry, and failures are not cached.
+- Live matrix with AUTH linked to Backend Squad:
+  - member: list/read/board/item `200`
+  - lead (not a member, no create permission): list `[]`, read/board/item/comments/attachments `404`
+  - viewer: list `[]`, read `404`
+  - manager: list/read/board `200`
+  - unlinking teams makes the project visible to viewer immediately; relinking denies again.
+- Task lint, mypy and pytest pass; web typecheck and production build pass.
+
+## Still open
+
+- `M2-T17`: invalidation driven by `team.member_added/removed` events. Membership changes can take
+  up to 60 s to apply; mapping changes are immediate.
+- `M2-T18/19/20`: IAM client, assignee membership guard, contract tests.
+- `M2-T23/29/30`: backlog bulk/grouping/keyboard, complete empty/error states, component library.
+- `M2-T31/32`: in-app and email assignment notifications.
+
+Commits: `neatsprint-task` `b9326d7`; `neatsprint-web` `21045f2`.
+
+- OpenCade

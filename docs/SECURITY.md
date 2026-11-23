@@ -125,7 +125,8 @@ Access = f( permission in token, tenant match, resource scope, module enabled )
   route-registration test.
 - **Two gates**: gateway (signature, expiry, coarse check) and service (JWKS, permission, scope).
 - **Resource scope** is resolved in the owning service:
-  - Task: project membership via `project_teams` or `project:item:view_all`.
+  - Task: a project with no linked teams is open to the tenant; otherwise membership in a
+    linked team is required (`task:project:create` holders bypass).
   - Team: membership or tenant-wide permission.
   - Worklog/Monitoring: own / team / tenant scope.
 - Permission checks are centralised in a dependency/decorator, never copy-pasted.

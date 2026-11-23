@@ -18,6 +18,9 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-23 — **Project access enforcement**: projects with linked teams are visible only to
+  members of those teams; managers/admins keep access; denied requests return `404`. Team
+  membership is cached for 60 s, project mappings apply immediately.
 - 2026-11-23 — **Project team selector** in project settings; saves the task-service mapping.
 - 2026-11-23 — **Project-team mapping**: `GET/PUT /tasks/projects/{id}/teams`, verified end to end.
 - 2026-11-23 — **Attachment UI**: item drawer lists attachments, uploads via presigned PUT and opens
