@@ -18,6 +18,11 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-23 — **Shared component library**: DataTable, Drawer, KanbanColumn, StatusBadge,
+  PriorityBadge, UserPill and EmptyState, documented with live examples on `/design`.
+- 2026-11-23 — **Screen states**: route-level loading skeletons and error boundaries for projects,
+  project surfaces and teams; permission-aware "project not available" pages and inline alerts for
+  partial data failures.
 - 2026-11-23 — **Backlog interactions**: grouping by status/priority/sprint, inline title,
   priority, estimate, assignee and sprint edits, bulk selection with priority/sprint/assignee/
   delete actions, and keyboard navigation (arrows, space, E).

@@ -1452,3 +1452,48 @@ The backlog is now a working planning surface. `M2-T23` is complete and M2 is **
 Commits: `neatsprint-task` `26d0466`; `neatsprint-web` `ba757ec`.
 
 - OpenCade
+
+# Human Message: 20261123225500
+
+continue
+
+# AI Message: 20261123230913
+
+The shared component library and M2 screen states are complete. M2 is **31 of 33**.
+
+## Components
+
+- `DataTable` — headered, token-styled table shell; the backlog now uses it.
+- `Drawer` — right-side modal with Escape/backdrop close; the item drawer now uses it.
+- `KanbanColumn` — board column with count, empty placeholder and drop target.
+- `StatusBadge` and `PriorityBadge` — chips shared by board, backlog, planning and the drawer.
+- `UserPill` — initials avatar with name and an explicit unassigned state.
+- `EmptyState` — consistent empty, no-results and access messaging.
+- All six are listed with live examples on `/design`.
+
+## States
+
+- Loading skeletons for `/projects`, `/projects/[id]` and `/teams`.
+- Error boundaries with retry for the same segments.
+- Denied or missing projects now show "Project not available" instead of redirecting, on board,
+  backlog, planning and settings.
+- Inline alerts when partial data fails to load on projects, teams, board, backlog, planning and
+  settings.
+- Empty states on projects, teams, backlog, planning and kanban columns.
+
+## Verification
+
+- Viewer opening AUTH board/backlog/planning/settings gets `200` with the access message; owner and
+  member get the real screens.
+- `/design` lists all six components and renders their examples.
+- Board columns, backlog toolbar and team cards still render.
+- 18 web tests, typecheck and production build pass.
+
+## Remaining M2 (2)
+
+- `M2-T31` — in-app notification model and bell; mark-as-read persists.
+- `M2-T32` — assignment notification email template.
+
+Commits: `neatsprint-web` `02b05b7`.
+
+- OpenCade

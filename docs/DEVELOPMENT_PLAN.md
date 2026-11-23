@@ -25,7 +25,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | :--- | ---: | ---: | :--- |
 | M0 Foundations | 24 | 21 | 21 done · 2 moved to M1 · 1 partial |
 | M1 Identity & Tenancy | 34 | 34 | Complete |
-| M2 Work Management | 33 | 29 | 29 done · backlog interactions live |
+| M2 Work Management | 33 | 31 | 31 done · states and component library |
 | M3 Time, Monitoring & Desktop | 40 | 0 | Not started |
 | M4 Reports & Console | 26 | 0 | Not started |
 | M5 Hardening & Launch | 28 | 0 | Not started |
@@ -335,8 +335,8 @@ matrix verified by automation → audit entries present for invite, login, role 
 - [x] **M2-T26** Sprint planning view: backlog on the left, sprint on the right, capacity bar.
 - [x] **M2-T27** Sprint board header: dates, progress, complete-sprint dialog with carry-over.
 - [x] **M2-T28** Teams admin: list, create, members, lead assignment.
-- [ ] **M2-T29** Empty, loading, error and permission-denied states for every M2 screen.
-- [ ] **M2-T30** Component library additions: DataTable, Drawer, KanbanColumn, PriorityBadge,
+- [x] **M2-T29** Empty, loading, error and permission-denied states for every M2 screen.
+- [x] **M2-T30** Component library additions: DataTable, Drawer, KanbanColumn, PriorityBadge,
   UserPill, EmptyState. *AC*: documented in the design page.
 
 ### Epic M2-E6 — Notifications stub
