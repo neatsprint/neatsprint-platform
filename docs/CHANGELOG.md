@@ -18,6 +18,8 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-23 — **Attachment UI**: item drawer lists attachments, uploads via presigned PUT and opens
+  time-limited download links.
 - 2026-11-23 — **Task attachments**: presigned S3/MinIO upload, confirmation,
   listing and time-limited download links, with MIME and size validation.
 - 2026-11-23 — **Team events**: `team.created`, `team.member_added` and
