@@ -25,7 +25,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | :--- | ---: | ---: | :--- |
 | M0 Foundations | 24 | 21 | 21 done · 2 moved to M1 · 1 partial |
 | M1 Identity & Tenancy | 34 | 34 | Complete |
-| M2 Work Management | 33 | 31 | 31 done · states and component library |
+| M2 Work Management | 33 | 33 | 33 done · M2 complete |
 | M3 Time, Monitoring & Desktop | 40 | 0 | Not started |
 | M4 Reports & Console | 26 | 0 | Not started |
 | M5 Hardening & Launch | 28 | 0 | Not started |
@@ -341,9 +341,9 @@ matrix verified by automation → audit entries present for invite, login, role 
 
 ### Epic M2-E6 — Notifications stub
 
-- [ ] **M2-T31** In-app notification model in IAM/notification stub for assignment events
+- [x] **M2-T31** In-app notification model in IAM/notification stub for assignment events
   (bell menu). *AC*: mark-as-read persists.
-- [ ] **M2-T32** Assignment notification email template (digest-safe).
+- [x] **M2-T32** Assignment notification email template (digest-safe).
 - [x] **M2-T33** Seed update: realistic multi-sprint history for reports testing.
 
 **M2 exit gate**: create project → 20 items → plan sprint → drag through states → complete with

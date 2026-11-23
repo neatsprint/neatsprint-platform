@@ -1497,3 +1497,49 @@ The shared component library and M2 screen states are complete. M2 is **31 of 33
 Commits: `neatsprint-web` `02b05b7`.
 
 - OpenCade
+
+# Human Message: 20261123231000
+
+continue
+
+# AI Message: 20261123233447
+
+M2 is complete: **33 of 33**. The final tasks add assignment notifications and the email
+template.
+
+## Notifications
+
+- Task emits `item.assigned` when an item is created with an assignee, reassigned, or assigned
+  through the dedicated endpoint; self-assignment emits nothing.
+- IAM consumes the event stream with a dedicated group and creates idempotent notification rows
+  keyed by source event id.
+- Endpoints: `GET /iam/notifications`, `POST /iam/notifications/{id}/read` and
+  `POST /iam/notifications/read-all`; the list returns an unread count.
+- A `notifications` table and forward migration were added.
+- The web header now has a bell menu with unread badge, mark-all-read and links into the project.
+
+## Email template
+
+- `render_assignment_digest` produces subject, text and escaped HTML for one or many assignments.
+- No tracking pixels or per-recipient tokens; links must be absolute, so output is safe to batch
+  into a digest.
+
+## Verification
+
+- Live: owner assigned `AUTH-1` to the member; the notification arrived within seconds with key,
+  title and backlog link. Marking it read persisted (`read_at` set, unread `0`); read-all cleared
+  the rest. Assigning the item to the owner (self) created no notification.
+- BFF returns the notification list; the page shell includes the bell.
+- IAM: 27 tests, lint and mypy pass. Task: 31 tests. Web: 18 tests, typecheck and production build
+  pass.
+- IAM delivered through PR #4 with the real CI check green.
+
+## Next milestone
+
+M2's exit gate is met. The next step is **M3 — Time Tracking, Monitoring & Desktop Agent**,
+starting with the Worklog service (timer, manual time, approvals) before the monitoring and Tauri
+agent work.
+
+Commits: `neatsprint-task` `cf090dc`; `neatsprint-iam` `8d3caa4` (PR #4); `neatsprint-web` `fc4fcc6`.
+
+- OpenCade

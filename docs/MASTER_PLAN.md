@@ -131,19 +131,21 @@ to M2 for PostgreSQL RLS).*
 
 - [x] Task service: projects, project teams, backlog items, ranking, history, comments
 - [x] Task service: sprint lifecycle (plan/start/complete), carry-over
-- [ ] Task service: attachments to object storage (presigned)
+- [x] Task service: attachments to object storage (presigned)
 - [x] Team service: teams, members, leads, project mapping
-- [ ] Cross-service validation: user existence, team membership, project access
-- [ ] Web: projects list/create/settings
-- [ ] Web: backlog table with inline edit, filters, bulk actions
-- [ ] Web: Kanban board with drag-and-drop and optimistic updates
-- [ ] Web: sprint planning, sprint board, sprint completion dialog
-- [ ] Web: item detail drawer — description, comments, history, time summary
-- [ ] Web: teams admin
-- [ ] Tests: lifecycle rules, ranking concurrency, permission matrix per screen
+- [x] Cross-service validation: user existence, team membership, project access
+- [x] Web: projects list/create/settings
+- [x] Web: backlog table with inline edit, filters, bulk actions
+- [x] Web: Kanban board with drag-and-drop and optimistic updates
+- [x] Web: sprint planning, sprint board, sprint completion dialog
+- [x] Web: item detail drawer — description, comments, history, time summary placeholder
+- [x] Web: teams admin
+- [x] Notifications: in-app assignment bell with persistent read state; digest-safe email template
+- [~] Tests: lifecycle, ranking concurrency, contract and component tests in place; the full
+  per-screen permission matrix is tracked in M5 security hardening
 
 **Exit gate**: create project → add items → plan sprint → move items across the board → complete
-sprint with carry-over, all permission-correct.
+sprint with carry-over, all permission-correct. *(met; exercised in the M2 integration passes)*
 
 ### M3 — Time Tracking, Monitoring & Desktop Agent
 

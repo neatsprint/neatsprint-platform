@@ -18,6 +18,9 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-23 — **Assignment notifications**: Task emits `item.assigned`; IAM stores idempotent
+  notifications and exposes list/mark-read/read-all; the web header bell shows unread counts.
+- 2026-11-23 — **Digest-safe assignment email template** with batch rendering and escaped content.
 - 2026-11-23 — **Shared component library**: DataTable, Drawer, KanbanColumn, StatusBadge,
   PriorityBadge, UserPill and EmptyState, documented with live examples on `/design`.
 - 2026-11-23 — **Screen states**: route-level loading skeletons and error boundaries for projects,

@@ -179,6 +179,9 @@ Legend: **P** = permission required. All endpoints require authentication unless
 | DELETE | `/iam/roles/{id}` | Delete custom role | `core:role:manage` |
 | GET | `/iam/permissions` | Permission catalogue | `core:role:read` |
 | GET | `/iam/audit` | Audit log query | `report:audit:view` |
+| GET | `/iam/notifications` | My notifications and unread count | signed-in user |
+| POST | `/iam/notifications/{id}/read` | Mark one notification read | owner of the notification |
+| POST | `/iam/notifications/read-all` | Mark all my notifications read | signed-in user |
 
 > **Tenancy note (ADR-012)**: a tenant has many users, and each user logs in independently. Email
 > addresses are globally unique, so an invitation for an email that already belongs to another
