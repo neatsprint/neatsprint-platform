@@ -1089,3 +1089,42 @@ So an orphaned query returns nothing, while authorised requests work normally.
 - Orchestrator `4dd4ad3`.
 
 — OpenCade
+
+# Human Message: 20261123210800
+
+continue
+
+# AI Message: 20261123211422
+
+M2 is now **20 of 33 tasks**.
+
+## Delivered
+
+- **Project settings** at `/projects/{id}/settings`: edit name, description and dates, with a
+  read-only view for users lacking `task:project:edit`.
+- **Archive project** with confirmation; archived projects leave the active list.
+- **Sprint completion** in the planning view: a confirmed “Complete sprint” action that returns
+  unfinished items to the backlog (carry-over count shown by the API).
+- BFF routes for project update/archive and sprint completion.
+- Project cards now link to settings.
+
+Verified with a real session:
+
+```
+/projects/{id}/settings 200 (Project settings, Archive project)
+/projects/{id}/planning 200 (Complete sprint)
+```
+
+Typecheck and production build clean.
+
+## Status
+
+- **M2: 20/33**
+- Remaining: attachments, project-team access checks, event emission, bulk backlog actions,
+  grouping/keyboard navigation, saved views, sprint analytics.
+
+## Next
+
+Attachments and project-team access checks, then event emission from Task/Team.
+
+— OpenCade
