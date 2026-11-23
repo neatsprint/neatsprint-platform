@@ -960,3 +960,50 @@ production build clean.
 Sprint planning (backlog ↔ sprint, start/complete), teams admin, then the RLS tenant guard.
 
 — OpenCade
+
+# Human Message: 20261123202400
+
+continue
+
+# AI Message: 20261123202750
+
+M2 is now **18 of 33 tasks**. Sprint planning and teams administration are live.
+
+## Delivered
+
+### Sprint planning
+- `/projects/{id}/planning` — backlog on the left, sprint scope on the right.
+- Add/remove items, live item count and committed points.
+- Create a sprint when none exists; start it when scope is committed.
+- Planning link added to the board and backlog navigation.
+- BFF routes for create sprint, add/remove items, start sprint.
+
+### Teams admin
+- `/teams` — team cards with member counts and lead status.
+- Create team form (visible with `team:team:manage`).
+- Teams enabled in the navigation.
+
+### Backend
+- `GET /tasks/sprints/{id}/items` for the planning view.
+
+Verified with a real session:
+
+```
+/projects/{id}/planning 200 (Backlog + Sprint)
+/teams 200 (Backend Squad)
+```
+
+Typecheck and production build clean; task service rebuilt with the new endpoint.
+
+## Status
+
+- **M2: 18/33**
+- Remaining high-value items: backlog inline edit/filters, project settings, sprint completion
+  dialog, attachments, project-team access checks, RLS guard, event emission, saved views.
+
+## Next
+
+RLS tenant guard (M1-T04) and the remaining Task/Team integration checks, then attachment upload
+and analytics/report hand-off.
+
+— OpenCade
