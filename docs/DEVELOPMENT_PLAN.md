@@ -26,7 +26,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | M0 Foundations | 24 | 21 | 21 done · 2 moved to M1 · 1 partial |
 | M1 Identity & Tenancy | 34 | 34 | Complete |
 | M2 Work Management | 33 | 33 | 33 done · M2 complete |
-| M3 Time, Monitoring & Desktop | 40 | 0 | Not started |
+| M3 Time, Monitoring & Desktop | 40 | 25 | 25 done · desktop agent pending |
 | M4 Reports & Console | 26 | 0 | Not started |
 | M5 Hardening & Launch | 28 | 0 | Not started |
 | P2 Collaboration | 22 | 0 | Deferred |
@@ -357,42 +357,42 @@ carry-over; access control verified for outsider, viewer and member.
 
 ### Epic M3-E1 — Worklog service
 
-- [ ] **M3-T01** Schema: `work_sessions`, `time_entries`, `idle_segments`. *AC*: partitions on
+- [x] **M3-T01** Schema: `work_sessions`, `time_entries`, `idle_segments`. *AC*: partitions on
   `started_at` created by migration.
-- [ ] **M3-T02** `POST /work/start`, `/work/stop`, `GET /work/current` with server-authoritative
+- [x] **M3-T02** `POST /work/start`, `/work/stop`, `GET /work/current` with server-authoritative
   session state and one-active-timer rule. *AC*: concurrent start returns 409 with current session.
-- [ ] **M3-T03** Monotonic duration calculation: client sends elapsed monotonic seconds; server
+- [x] **M3-T03** Monotonic duration calculation: client sends elapsed monotonic seconds; server
   clamps against wall clock and flags anomalies. *AC*: clock rollback cannot add time.
-- [ ] **M3-T04** Manual time entries with edit window and audit trail.
-- [ ] **M3-T05** Idempotent `POST /work/sync` batch endpoint keyed by client UUIDv7.
+- [x] **M3-T04** Manual time entries with edit window and audit trail.
+- [x] **M3-T05** Idempotent `POST /work/sync` batch endpoint keyed by client UUIDv7.
   *AC*: replay of the same batch creates no duplicates.
-- [ ] **M3-T06** Idle handling API: accept/truncate idle segment, recompute totals.
-- [ ] **M3-T07** Timesheet query endpoint (week view, totals by day/project/item).
-- [ ] **M3-T08** CSV export job with permission gating and signed URL.
-- [ ] **M3-T09** Emit `work.session_started/stopped`, `time_entry.recorded` events.
+- [x] **M3-T06** Idle handling API: accept/truncate idle segment, recompute totals.
+- [x] **M3-T07** Timesheet query endpoint (week view, totals by day/project/item).
+- [x] **M3-T08** CSV export job with permission gating and signed URL.
+- [x] **M3-T09** Emit `work.session_started/stopped`, `time_entry.recorded` events.
 
 ### Epic M3-E2 — Monitoring service
 
-- [ ] **M3-T10** Schema: `devices`, `monitoring_sessions`, `screenshots`, `activity_heartbeats`,
+- [x] **M3-T10** Schema: `devices`, `monitoring_sessions`, `screenshots`, `activity_heartbeats`,
   `deletion_audit`. *AC*: weekly partitions for screenshots.
-- [ ] **M3-T11** Device registration: accept public key, bind to user, return `device_id`;
+- [x] **M3-T11** Device registration: accept public key, bind to user, return `device_id`;
   list/revoke devices. *AC*: revoked device cannot upload.
-- [ ] **M3-T12** KMS envelope encryption adapter (dev: local key file; prod: AWS KMS/age key):
+- [x] **M3-T12** KMS envelope encryption adapter (dev: local key file; prod: AWS KMS/age key):
   encrypt on ingest, decrypt only for authorised views. *AC*: round-trip test; key id stored.
-- [ ] **M3-T13** Screenshot upload (multipart or presigned PUT) with session validation, quota,
+- [x] **M3-T13** Screenshot upload (multipart or presigned PUT) with session validation, quota,
   dedupe hash, and `pending` state. *AC*: oversize/invalid type rejected.
-- [ ] **M3-T14** Privacy window engine: `visible_after = captured_at + window`; list endpoints
+- [x] **M3-T14** Privacy window engine: `visible_after = captured_at + window`; list endpoints
   filter by state per role. *AC*: manager cannot fetch pending images.
-- [ ] **M3-T15** Deletion endpoint: authorise owner + inside window, delete blob, null path,
+- [x] **M3-T15** Deletion endpoint: authorise owner + inside window, delete blob, null path,
   set tombstone, write audit, emit `screenshot.deleted`. *AC*: second delete returns 204
   idempotently; blob absent in storage test.
-- [ ] **M3-T16** Background job: promote pending → visible after window (or on explicit user
+- [x] **M3-T16** Background job: promote pending → visible after window (or on explicit user
   approval), emit `screenshot.available`.
-- [ ] **M3-T17** Retention job: hard delete expired blobs + metadata + `ai_embeddings` refs.
-- [ ] **M3-T18** Heartbeat ingest + session activity aggregation (active/idle minutes).
-- [ ] **M3-T19** Manager gallery query with tombstone placeholders and view-audit logging.
-- [ ] **M3-T20** Personal transparency endpoint: my captures, my deletions, my sessions.
-- [ ] **M3-T21** Remote device controls: suspend/revoke/wipe commands queued for agent pickup.
+- [x] **M3-T17** Retention job: hard delete expired blobs + metadata + `ai_embeddings` refs.
+- [x] **M3-T18** Heartbeat ingest + session activity aggregation (active/idle minutes).
+- [x] **M3-T19** Manager gallery query with tombstone placeholders and view-audit logging.
+- [x] **M3-T20** Personal transparency endpoint: my captures, my deletions, my sessions.
+- [x] **M3-T21** Remote device controls: suspend/revoke/wipe commands queued for agent pickup.
 
 ### Epic M3-E3 — Desktop agent foundation
 
@@ -422,12 +422,12 @@ carry-over; access control verified for outsider, viewer and member.
 
 ### Epic M3-E4 — Web: time & monitoring
 
-- [ ] **M3-T37** Timesheet screen: week grid, add manual entry, edit, totals, export button.
-- [ ] **M3-T38** "My screenshots" gallery: pending/visible tabs, delete action with countdown,
+- [x] **M3-T37** Timesheet screen: week grid, add manual entry, edit, totals, export button.
+- [x] **M3-T38** "My screenshots" gallery: pending/visible tabs, delete action with countdown,
   empty state explaining the privacy window.
-- [ ] **M3-T39** Manager monitoring view: user/date filters, session timeline, thumbnail grid,
+- [x] **M3-T39** Manager monitoring view: user/date filters, session timeline, thumbnail grid,
   tombstone cards, view-audit note.
-- [ ] **M3-T40** Personal transparency log screen.
+- [x] **M3-T40** Personal transparency log screen.
 
 **M3 exit gate**: 4-hour offline capture+sync test passes; delete-screenshot test proves blob and
 embedding removal while manager sees tombstone; device revoke and wipe verified.

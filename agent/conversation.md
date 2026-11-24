@@ -1543,3 +1543,65 @@ agent work.
 Commits: `neatsprint-task` `cf090dc`; `neatsprint-iam` `8d3caa4` (PR #4); `neatsprint-web` `fc4fcc6`.
 
 - OpenCade
+
+# Human Message: 20261124082000
+
+Continue and do all possible items of M3
+
+# AI Message: 20261124085623
+
+M3 backend and web work is complete: **25 of 40 tasks**. The 15 desktop-agent tasks remain blocked
+because this machine has no Rust/Tauri toolchain.
+
+## Worklog (M3-T01..T09)
+
+- `work_sessions`, `time_entries` (monthly native partitions), `idle_segments` and an audit table.
+- Server-authoritative start/stop/current, one active session per user, pause/resume.
+- Clock clamping against wall time; rollback cannot add time.
+- Manual entries with a 24 h edit window and audit trail; idempotent batch sync keyed by client id.
+- Idle segments, weekly timesheet aggregates and CSV export through a signed MinIO URL.
+- Emits `work.session_started/stopped` and `time_entry.recorded`.
+
+## Monitoring (M3-T10..T21)
+
+- Devices with key fingerprints, list/revoke/suspend/wipe commands and agent acknowledgement.
+- Monitoring sessions validated against Worklog, heartbeats and activity totals.
+- Screenshot ingest: multipart, MIME/size/dedupe checks, daily quota, AES-GCM envelope encryption.
+- Weekly-partitioned screenshots with pending/visible privacy window and explicit promote.
+- Deletion: owner inside the window, blob removed, tombstone retained, audit row, event emitted.
+- Promotion and retention background jobs.
+- Manager gallery with team scope via Team's new internal scope endpoint, tombstones and view audit.
+- Personal transparency endpoint and capture policy endpoint.
+
+## Web (M3-T37..T40)
+
+- `/timesheet`: week grid, manual add/edit/delete, totals and CSV export.
+- `/me/screenshots`: privacy-window and visible tabs, countdown, delete confirmation.
+- `/monitor`: manager filters, session timeline, thumbnail grid, tombstone cards, audit note.
+- `/me/transparency`: captures, deletions and sessions.
+
+## Verification
+
+- Live Worklog: start 201, concurrent start 409, stop and entry creation, manual entry, sync replay
+  skips duplicates, timesheet totals, signed CSV download.
+- Live Monitoring: device registration, session start, encrypted upload, dedupe, owner content
+  round-trip, manager cannot see pending, promote then manager sees and decrypts, heartbeat totals,
+  delete 204 then idempotent 204, content 404, tombstone in manager gallery, deletion audit,
+  transparency log, revoke queues `REVOKE`, acknowledgement persists.
+- Web: all four screens return 200 with the expected content; manager gets the gallery, member gets
+  the permission state; BFF serves decrypted image bytes.
+- Worklog 10 tests, Monitoring 10 tests, Team 3 tests, Web 18 tests; all lint/mypy/typecheck/build
+  pass.
+- Test rows were removed from the local databases so the demo starts clean.
+
+## Remaining M3 (15 desktop tasks)
+
+`M3-T22..T36` require Rust/Tauri, OS keychain, SQLCipher, capture, updater and installer
+toolchains. `cargo` and `rustc` are not installed here, so I did not create unverifiable desktop
+code or claim those tasks. The M3 exit gate (4-hour offline desktop run and builder evidence)
+therefore remains open.
+
+Commits: `neatsprint-worklog` `536ab6c`; `neatsprint-monitoring` `57891bd`; `neatsprint-team`
+`1edc2c4`; `neatsprint-web` `8d6d533`.
+
+- OpenCade

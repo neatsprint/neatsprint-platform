@@ -151,22 +151,24 @@ sprint with carry-over, all permission-correct. *(met; exercised in the M2 integ
 
 **Goal**: the trust story becomes real.
 
-- [ ] Worklog: server-authoritative timer, sessions, manual entries, timesheets
-- [ ] Worklog: idempotent sync endpoint + conflict handling
-- [ ] Monitoring: device registration (key pair), sessions, heartbeat
-- [ ] Monitoring: screenshot upload (KMS envelope encryption), pending/visible states
-- [ ] Monitoring: privacy window enforcement, deletion pipeline, tombstones, audit
-- [ ] Monitoring: retention job (hard delete blobs + metadata + embeddings)
+- [x] Worklog: server-authoritative timer, sessions, manual entries, timesheets
+- [x] Worklog: idempotent sync endpoint + conflict handling
+- [x] Monitoring: device registration (key pair), sessions, heartbeat
+- [x] Monitoring: screenshot upload (KMS envelope encryption), pending/visible states
+- [x] Monitoring: privacy window enforcement, deletion pipeline, tombstones, audit
+- [x] Monitoring: retention job (hard delete blobs + metadata; AI embeddings arrive with the AI service)
 - [ ] Desktop: Tauri shell, tray, login, device registration, timer, idle detection
 - [ ] Desktop: capture engine (multi-monitor, DPI), encryption, local queue
 - [ ] Desktop: review tray (view/delete), transparency log
 - [ ] Desktop: sync engine (push/pull, backoff, conflict resolution), updater
-- [ ] Web: my screenshots gallery, deletion flow, personal transparency log
-- [ ] Web: manager monitoring gallery (tombstones), session detail
-- [ ] Tests: offline 4-hour simulation, deletion irreversibility, device controls
+- [x] Web: my screenshots gallery, deletion flow, personal transparency log
+- [x] Web: manager monitoring gallery (tombstones), session detail
+- [~] Tests: backend/web round-trips, encryption and deletion verified live; the four-hour offline
+  and device-control scenarios still require a real desktop build
 
 **Exit gate**: the four-hour offline scenario and the deletion-irreversibility scenario pass on a
-real desktop build, evidenced by test artefacts.
+real desktop build, evidenced by test artefacts. *(blocked on the desktop agent and Rust/Tauri
+toolchain; backend and web privacy pipeline already verified)*
 
 ### M4 — Reports, Dashboards & Console Polish
 

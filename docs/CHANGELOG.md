@@ -18,6 +18,16 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-24 — **Worklog service**: server-authoritative timer, pause/resume, idle segments,
+  manual entries with a 24 h edit window, idempotent offline sync, weekly timesheet aggregation and
+  CSV exports via signed URLs.
+- 2026-11-24 — **Monitoring service**: device registration and remote commands, monitoring
+  sessions/heartbeats, encrypted screenshot ingest, pending/visible privacy window, deletion with
+  tombstone and audit, manager gallery with team scope, personal transparency log, promotion and
+  retention jobs.
+- 2026-11-24 — **Time & privacy web screens**: timesheet week grid with manual entry/export,
+  "My screenshots" with countdown and delete, manager monitoring gallery with tombstones, and the
+  personal transparency log.
 - 2026-11-23 — **Assignment notifications**: Task emits `item.assigned`; IAM stores idempotent
   notifications and exposes list/mark-read/read-all; the web header bell shows unread counts.
 - 2026-11-23 — **Digest-safe assignment email template** with batch rendering and escaped content.

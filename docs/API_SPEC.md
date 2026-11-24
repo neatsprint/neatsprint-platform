@@ -290,6 +290,9 @@ Outsiders return `422 assignee_not_eligible`; an unreachable IAM returns
 | GET | `/monitor/devices` | My devices | — |
 | DELETE | `/monitor/devices/{id}` | Revoke device | `monitor:device:manage` or self |
 | POST | `/monitor/devices/{id}/wipe` | Remote wipe | `monitor:device:manage` |
+| POST | `/monitor/devices/{id}/suspend` | Suspend a device | `monitor:device:manage` |
+| GET | `/monitor/devices/{id}/commands` | Pending device commands | self or `monitor:device:manage` |
+| POST | `/monitor/devices/{id}/commands/{commandId}/ack` | Acknowledge command | self or `monitor:device:manage` |
 | POST | `/monitor/sessions/start` | Start monitoring session | `work:timer:start` |
 | POST | `/monitor/sessions/{id}/heartbeat` | Activity pulse | `work:timer:start` |
 | POST | `/monitor/sessions/{id}/stop` | Stop session | `work:timer:start` |
@@ -297,6 +300,7 @@ Outsiders return `422 assignee_not_eligible`; an unreachable IAM returns
 | POST | `/monitor/screenshots/presign` | Presigned PUT | `work:timer:start` |
 | GET | `/monitor/screenshots/mine` | My gallery | — |
 | DELETE | `/monitor/screenshots/{id}` | Privacy delete | owner, inside window |
+| POST | `/monitor/screenshots/{id}/promote` | Share early (visible now) | owner |
 | GET | `/monitor/screenshots` | Manager gallery | `monitor:data:view_team` / `view_all` |
 | GET | `/monitor/screenshots/{id}/content` | Decrypt + stream | owner or `monitor:data:view_*` |
 | GET | `/monitor/sessions` | Session list | `monitor:data:view_team` |
