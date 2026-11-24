@@ -205,8 +205,9 @@ toolchain; backend and web privacy pipeline already verified)*
 - [x] Release pipeline: GHCR image matrix, SBOM and Trivy gate in `.github/workflows/release.yml`
 - [x] Docs: README, release notes, API reference and clean-clone onboarding rehearsal complete
 - [x] Local staging profile with offset ports, seeded UAT data and post-deploy smoke check
-- [~] UAT script executed on staging (9 pass, 1 desktop-blocked); awaiting Laksiri's sign-off
-- [ ] v1.0.0 tagged
+- [x] UAT executed on staging (9 pass, 1 desktop waiver under ADR-019) and signed off
+- [x] v1.0.0 tagged
+- [~] 72-hour post-launch health window in progress
 
 **Exit gate**: SCOPE §8 acceptance criteria satisfied and recorded in `docs/RELEASE_NOTES.md`.
 

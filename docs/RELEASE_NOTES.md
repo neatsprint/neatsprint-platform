@@ -1,7 +1,7 @@
 # Release Notes — v1.0.0 (release candidate)
 
-> Status: **UAT executed 2026-11-24 — awaiting Laksiri's sign-off**. Do not tag `v1.0.0` until
-> the acceptance checklist is signed. Date: 2026-11-24.
+> Status: **released 2026-11-24** — UAT signed off with a desktop waiver under ADR-019.
+> Date: 2026-11-24.
 
 ## Highlights
 

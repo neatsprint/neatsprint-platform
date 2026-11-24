@@ -10,12 +10,11 @@ NeatSprint is a multi-tenant, open-source (AGPLv3) platform for agile task manag
 transparent work tracking. It brings planning, a secure desktop agent, and honest monitoring into
 one product — and gives employees a real way to see and delete what was captured about them.
 
-> **Project status**: MVP feature-complete on the web/backend surface. **M0-M2 complete**,
-> **M3 backend + privacy screens complete (desktop agent deferred)**, **M4 reports/console
-> complete**, **M5 hardening 23/28 — UAT and release gates pending**. Login, RBAC,
-> projects/backlog/sprints, teams, timesheets, encrypted monitoring with privacy deletion,
-> notifications, reports, exports and the admin console work end to end. The Tauri desktop agent
-> is the remaining MVP component. Nothing here is production ready until M5 sign-off.
+> **Project status**: **v1.0.0 released** for the web/backend surface. **M0-M5 complete**
+> (M5 27/28; 72-hour health window running), **M3 backend + privacy screens complete**, **M4
+> reports/console complete**. Login, RBAC, projects/backlog/sprints, teams, timesheets, encrypted
+> monitoring with privacy deletion, notifications, reports, exports and the admin console work end
+> to end. The Tauri desktop agent was waived for v1.0.0 under ADR-019 and is the next component.
 
 ---
 

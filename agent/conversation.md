@@ -2140,3 +2140,31 @@ M5 is now **26 of 28**. Only v1.0.0 sign-off/tag and the post-launch window rema
 Commits: `neatsprint-web` `7263bf2`; orchestrator commit follows.
 
 - OpenCade
+
+# AI Message: 20261124191206
+
+**v1.0.0 sign-off recorded.** Laksiri approved the release candidate with the desktop item waived
+under ADR-019.
+
+## Sign-off
+
+- Product owner: Laksiri Fernando — 2026-11-24.
+- Engineering: OpenCade — 2026-11-24.
+- Waiver: UAT item 4 (4-hour offline desktop) is deferred with the Tauri agent; the web/backend
+  surface is the accepted v1.0.0 scope.
+- `docs/UAT.md`, `docs/RELEASE_NOTES.md` and `docs/MASTER_PLAN.md` now record the sign-off.
+
+## Release
+
+- M5 is **27/28**; only the 72-hour post-launch health window remains.
+- Tagging `v1.0.0` on the orchestrator triggers the GHCR image matrix, SBOM and Trivy gate.
+
+## Post-launch
+
+- Watch health, 5xx and latency for 72 hours (started at tag time).
+- Daily health note in `agent/conversation.md`; T26 closes after 72 hours.
+- Carry the Tauri desktop agent into the next milestone.
+
+Commits: orchestrator release commit and `v1.0.0` tag follow.
+
+- OpenCade

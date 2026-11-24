@@ -28,7 +28,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | M2 Work Management | 33 | 33 | 33 done · M2 complete |
 | M3 Time, Monitoring & Desktop | 40 | 25 | 25 done · desktop agent pending |
 | M4 Reports & Console | 26 | 26 | 26 done · M4 complete |
-| M5 Hardening & Launch | 28 | 26 | 26 done · sign-off pending |
+| M5 Hardening & Launch | 28 | 27 | 27 done · 72h window pending |
 | P2 Collaboration | 22 | 0 | Deferred |
 | P3 Intelligence | 16 | 0 | Deferred |
 | Cross-cutting (X-01…07) | 7 | 0 | Continuous |
@@ -524,7 +524,7 @@ error states; axe and manual keyboard audit pass; visual QA against `UI_UX_DESIG
 
 - [x] **M5-T23** Execute UAT script with Laksiri; record pass/fail per SCOPE §8 item.
 - [x] **M5-T24** Fix UAT defects (timeboxed; critical only).
-- [ ] **M5-T25** Sign-off recorded in `agent/conversation.md`; tag `v1.0.0`.
+- [x] **M5-T25** Sign-off recorded in `agent/conversation.md`; tag `v1.0.0`.
 - [ ] **M5-T26** Post-launch monitoring window (72 h) with daily health report.
 - [x] **M5-T27** Retrospective: what to change in M0–M5 for P2/P3.
 - [x] **M5-T28** Update MASTER_PLAN with P2 kickoff checklist.
