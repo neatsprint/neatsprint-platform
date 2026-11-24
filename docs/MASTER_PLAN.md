@@ -196,7 +196,8 @@ toolchain; backend and web privacy pipeline already verified)*
 
 - [x] Threat model reviewed; mitigations verified
 - [x] OWASP ASVS L2 checklist: self-assessment published; high gaps closed except desktop (ADR-019)
-- [~] Performance test: smoke load passed (0% errors, p95 54 ms); target-scale volume pending
+- [x] Performance test at target volume: 100 tenants / 5,157 users / 1M entries, read p95 267 ms,
+  write p95 77 ms, 0% errors; report aggregation moved into SQL
 - [x] Backup + restore rehearsal documented in `docs/BACKUP_REHEARSAL.md`
 - [x] Observability: alerts, per-service RED dashboard and runbook live
 - [x] Legal drafts: ToS, privacy policy, DPA, sub-processor list, monitoring disclosure

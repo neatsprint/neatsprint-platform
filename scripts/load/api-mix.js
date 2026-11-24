@@ -5,6 +5,13 @@ import { Rate, Trend } from "k6/metrics";
 const readLatency = new Trend("read_latency", true);
 const writeLatency = new Trend("write_latency", true);
 const errors = new Rate("errors");
+const readByEndpoint = {
+  projects: new Trend("read_projects", true),
+  backlog: new Trend("read_backlog", true),
+  timesheet: new Trend("read_timesheet", true),
+  reports: new Trend("read_reports", true),
+  teams: new Trend("read_teams", true),
+};
 
 export const options = {
   scenarios: {
@@ -59,18 +66,21 @@ export default function (data) {
     "Content-Type": "application/json",
   };
   const reads = [
-    `${BASE}/tasks/projects`,
-    `${BASE}/tasks/projects/${data.projectId}/backlog`,
-    `${BASE}/work/timesheet`,
-    `${BASE}/reports/time`,
-    `${BASE}/teams`,
+    { key: "projects", path: `${BASE}/tasks/projects` },
+    { key: "backlog", path: `${BASE}/tasks/projects/${data.projectId}/backlog` },
+    { key: "timesheet", path: `${BASE}/work/timesheet` },
+    { key: "reports", path: `${BASE}/reports/time` },
+    { key: "teams", path: `${BASE}/teams` },
   ];
-  const path = reads[Math.floor(Math.random() * reads.length)];
+  const choice = reads[Math.floor(Math.random() * reads.length)];
+  const path = choice.path;
   const tokenForPath = path.includes("/reports/") ? data.tokens[0] : token;
   const read = http.get(path, {
     headers: { ...headers, Authorization: `Bearer ${tokenForPath}` },
+    tags: { endpoint: choice.key },
   });
   readLatency.add(read.timings.duration);
+  readByEndpoint[choice.key].add(read.timings.duration);
   const ok = check(read, { "read ok": (r) => r.status === 200 });
   errors.add(!ok);
   sleep(0.2);

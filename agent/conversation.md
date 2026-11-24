@@ -1995,3 +1995,38 @@ Commits: service repos at their new `.gitattributes` commits; `neatsprint-iam` `
 orchestrator `45fa4bf` and follow-up commit.
 
 - OpenCade
+
+# Human Message: 20261124163000
+
+Continue
+
+# AI Message: 20261124164723
+
+M5 is now **23 of 28**. T08 (target-volume load) is closed.
+
+## Volume and results
+
+- Seeded **100 tenants, 5,157 users, 1,000,003 time entries, 1,000,009 report facts**.
+- API mix (10 VUs, 50 s): **0% errors**, read p95 **267 ms** (<300), write p95 **77 ms** (<500),
+  ~33 req/s. Excluding reports, read p95 is under 100 ms.
+- 1 MiB screenshot upload with ClamAV: **38 ms** warm p50, 233 ms first upload (<2 s).
+- Reports cold response 84–180 ms, far inside its 5 s cached / 30 s cold target.
+
+## Bottleneck fixed
+
+The first run failed at **4.4 s** read p95. `/reports/time` pulled every fact row into Python and
+aggregated in a loop. It now groups and sums in PostgreSQL; the same data returns in ~100 ms.
+Reports tests, ruff and mypy pass (9 tests).
+
+## Still open (5)
+
+- T17 staging environment.
+- T23 UAT with Laksiri; T25 v1.0.0 tag; T26 72-hour window.
+- T02 desktop verification remains deferred by ADR-019.
+
+Note: the synthetic load rows are local only. Reset with `docker compose down -v` plus
+`./scripts/bootstrap.ps1` before a demo or UAT.
+
+Commits: `neatsprint-reports` `4071571`; orchestrator commit follows.
+
+- OpenCade

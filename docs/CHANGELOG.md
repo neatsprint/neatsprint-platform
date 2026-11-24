@@ -20,6 +20,9 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-24 — **Target-volume load test**: 100 tenants / 5,157 users / 1M entries; read p95
+  267 ms, write p95 77 ms, 0% errors; 1 MiB screenshot upload 38 ms warm; report aggregation
+  rewritten in SQL (`docs/LOAD_TEST.md`).
 - 2026-11-24 — **Onboarding fix**: `.gitattributes` forces LF for service entrypoints, fixing
   CRLF Windows checkouts; fresh-clone bootstrap + seed + web smoke passed (`docs/ONBOARDING_DRY_RUN.md`).
 - 2026-11-24 — **Container/SBOM gate**: all 10 images scanned with Trivy 0.69.3, 0 high/critical;

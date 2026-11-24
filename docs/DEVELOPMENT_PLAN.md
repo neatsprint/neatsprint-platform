@@ -28,7 +28,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | M2 Work Management | 33 | 33 | 33 done · M2 complete |
 | M3 Time, Monitoring & Desktop | 40 | 25 | 25 done · desktop agent pending |
 | M4 Reports & Console | 26 | 26 | 26 done · M4 complete |
-| M5 Hardening & Launch | 28 | 22 | 22 done · hardening in progress |
+| M5 Hardening & Launch | 28 | 23 | 23 done · hardening in progress |
 | P2 Collaboration | 22 | 0 | Deferred |
 | P3 Intelligence | 16 | 0 | Deferred |
 | Cross-cutting (X-01…07) | 7 | 0 | Continuous |
@@ -495,7 +495,7 @@ error states; axe and manual keyboard audit pass; visual QA against `UI_UX_DESIG
 
 ### Epic M5-E2 — Reliability & performance
 
-- [ ] **M5-T08** Load test at target scale (k6): API mix, screenshot upload, reports.
+- [x] **M5-T08** Load test at target scale (k6): API mix, screenshot upload, reports.
   *AC*: NFR-PERF targets met, error rate < 0.1%.
 - [x] **M5-T09** Database review: indexes, slow query log, partition maintenance job.
 - [x] **M5-T10** Backup/restore rehearsal with documented RTO/RPO evidence.
