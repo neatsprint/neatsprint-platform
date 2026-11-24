@@ -17,6 +17,9 @@ Every image in the release matrix built and passed the Trivy gate.
 | UAT | 9/10 pass, desktop waived via ADR-019 |
 | Cross-tenant probe | 8/8 pass |
 
+Patch: **v1.0.1** (backlog create flow) deployed to local staging on 2026-11-24; the 72-hour
+window continues from the v1.0.0 start.
+
 ## Daily check (record one line per day)
 
 ```powershell
