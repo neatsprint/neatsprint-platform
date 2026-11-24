@@ -1,7 +1,7 @@
 # Release Notes — v1.0.0 (release candidate)
 
-> Status: **draft for UAT/sign-off**. Do not tag `v1.0.0` until Laksiri signs the acceptance
-> checklist. Date: 2026-11-24.
+> Status: **UAT executed 2026-11-24 — awaiting Laksiri's sign-off**. Do not tag `v1.0.0` until
+> the acceptance checklist is signed. Date: 2026-11-24.
 
 ## Highlights
 
@@ -17,11 +17,11 @@
 ## Known limitations
 
 - **Desktop agent (Tauri/Rust) is deferred** under ADR-019: offline capture, SQLCipher, signed
-  updater and installer evidence are not available in this release candidate.
-- Upload virus scanning, shared brute-force lockout and a zero-high/critical supply-chain gate are
-  still open M5 items.
+  updater and installer evidence are not available in this release candidate. UAT item 4 is
+  blocked and needs an explicit waiver or a follow-up milestone.
 - PDF exports render directly with ReportLab rather than an HTML-to-PDF headless render.
-- UAT, legal counsel review and the 72-hour post-launch window are pending.
+- Legal counsel review and the 72-hour post-launch window are still pending.
+- Base images use mutable tags; rebuild and re-run the Trivy gate at each release.
 
 ## Upgrade notes
 
@@ -33,6 +33,11 @@
 
 ## Verification
 
-- Cross-tenant probe: PASS (`scripts/security/cross_tenant_probe.py`).
-- Unit/integration: IAM 27, Task 31, Worklog 10, Monitoring 10, Reports 9, Web 20.
+- Cross-tenant probe: 8/8 PASS on local staging.
+- Unit/integration: IAM 27, Task 31, Worklog 10, Monitoring 10, Reports 9, Web 20; all services
+  and Lib green.
+- Load: 100 tenants / 5,157 users / 1M entries; 0% errors, read p95 267 ms, write p95 77 ms.
+- Screenshot upload: 1 MiB accepted in 38 ms warm; EICAR rejected with `422 malware_detected`.
+- Supply chain: Trivy 0 high/critical across 10 images; gitleaks clean across 70 commits.
+- Staging smoke and clean-clone bootstrap: pass.
 - Builds: all services, web production build.
