@@ -180,8 +180,8 @@ toolchain; backend and web privacy pipeline already verified)*
 - [~] Reports: CSV export done; async PDF executive summary still open
 - [x] Web: dashboard with role-aware widgets
 - [x] Web: reports screens with filters, charts, empty/loading/error states
-- [ ] Web: settings (tenant, monitoring policy, retention, aggregation mode)
-- [ ] Web: audit log viewer
+- [ ] Web: settings (tenant, monitoring policy, retention, aggregation mode) — moved to M5
+- [x] Web: audit log viewer
 - [~] Web: responsive + dark mode + accessibility pass started; axe audit still open
 - [ ] Mobile (stretch, only if M0–M4 on schedule): read-only shell
 

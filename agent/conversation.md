@@ -1660,3 +1660,44 @@ Commits: `neatsprint-reports` `0f76f08`; `neatsprint-task` `0a9e9c6`; `neatsprin
 `dfebcb8`; `neatsprint-monitoring` `ddc6612`; `neatsprint-web` `27f53ee`.
 
 - OpenCade
+
+# Human Message: 20261124094200
+
+Continue
+
+# AI Message: 20261124095538
+
+Console completion is in. M4 is now **21 of 26**.
+
+## Delivered
+
+- **Global search + command palette** (`Ctrl/Cmd+K`): projects, backlog items, people and jump
+  commands, with keyboard navigation and a debounced search BFF.
+- **Saved views**: per-user backlog views persisted in the Task service, with save/apply/delete
+  in the backlog toolbar.
+- **Audit viewer** (`/admin/audit`): filters, table and CSV export backed by the new IAM
+  `GET /iam/audit` endpoint.
+- **Search endpoint** in Task, scoped by project access.
+- **Accessibility**: search dialog uses a labelled modal, keyboard operation, visible focus and
+  data-table alternatives on charts; navigation includes Audit.
+
+## Verification
+
+- Search BFF returns projects/items; saved view create/list/delete works through the BFF.
+- Audit endpoint returns rows and the page renders with CSV export.
+- Backlog page exposes saved views; dashboard search trigger is present.
+- Task 31 tests, IAM 27 tests, Web 18 tests; lint, mypy, typecheck and builds pass.
+- IAM delivered through PR #5 with CI green.
+
+## Remaining M4 (5)
+
+- `M4-T03` source backfill command (replay from retained stream works today).
+- `M4-T10` async PDF export (CSV is immediate).
+- `M4-T17` export-job centre.
+- `M4-T25` full responsive pass.
+- `M4-T26` axe/accessibility audit.
+
+Commits: `neatsprint-task` `818e5e5`; `neatsprint-iam` `7962273` (PR #5); `neatsprint-web`
+`08e5d3a`.
+
+- OpenCade

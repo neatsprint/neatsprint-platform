@@ -27,7 +27,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | M1 Identity & Tenancy | 34 | 34 | Complete |
 | M2 Work Management | 33 | 33 | 33 done · M2 complete |
 | M3 Time, Monitoring & Desktop | 40 | 25 | 25 done · desktop agent pending |
-| M4 Reports & Console | 26 | 17 | 17 done · reports + dashboard live |
+| M4 Reports & Console | 26 | 21 | 21 done · console completion live |
 | M5 Hardening & Launch | 28 | 0 | Not started |
 | P2 Collaboration | 22 | 0 | Deferred |
 | P3 Intelligence | 16 | 0 | Deferred |
@@ -466,10 +466,10 @@ embedding removal while manager sees tombstone; device revoke and wipe verified.
 
 ### Epic M4-E3 — Console completion
 
-- [ ] **M4-T19** Global search (items, projects, people) with keyboard shortcut.
-- [ ] **M4-T20** Saved views for backlog/board (per user).
-- [ ] **M4-T21** Command palette (Ctrl/⌘+K): navigate, create item, start timer link.
-- [ ] **M4-T22** Audit log viewer with filters and export (admin only).
+- [x] **M4-T19** Global search (items, projects, people) with keyboard shortcut.
+- [x] **M4-T20** Saved views for backlog/board (per user).
+- [x] **M4-T21** Command palette (Ctrl/⌘+K): navigate, create item, start timer link.
+- [x] **M4-T22** Audit log viewer with filters and export (admin only).
 - [x] **M4-T23** Notification centre (in-app) with unread badge.
 - [x] **M4-T24** Onboarding checklist for new tenants (invite team, create project, start timer).
 - [ ] **M4-T25** Full responsive pass (tablet, narrow laptop), dark mode contrast fixes.

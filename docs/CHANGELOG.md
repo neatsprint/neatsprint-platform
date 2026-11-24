@@ -18,6 +18,8 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-24 — **Console completion**: global search and command palette, per-user saved backlog
+  views, tenant audit viewer with CSV export, and accessible dashboard/report navigation.
 - 2026-11-24 — **Reports service**: rebuildable time/item/monitor/session/sprint facts, replayable
   event projectors with lag status, and cached time/completion/velocity/burndown/monitoring/
   transparency endpoints plus CSV export.
