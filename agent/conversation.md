@@ -1956,3 +1956,42 @@ M5 is now **21 of 28**. T02 (ASVS L2) is closed except the desktop item already 
 Commits: `neatsprint-web` `80d8a8c`; orchestrator commit follows.
 
 - OpenCade
+
+# Human Message: 20261124160000
+
+Continue
+
+# AI Message: 20261124162556
+
+M5 is now **22 of 28**. T21 (clean-clone onboarding) is closed.
+
+## Dry run
+
+- Fresh `git clone --recurse-submodules` into an empty directory + empty volumes.
+- `./scripts/bootstrap.ps1`: all nine services healthy, seed created tenant/6 users/team/project/
+  Sprint 1.
+- Web login `200`; projects, reports, timesheet, teams, monitor, screenshots, admin users/settings
+  all `200`.
+- Rehearsal volumes removed; development stack and data restored afterwards.
+
+## Bug found and fixed
+
+On Windows, a fresh clone checked out `docker/entrypoint.sh` with CRLF, so seven services
+crash-looped with `exec /app/docker/entrypoint.sh: no such file or directory`. Added
+`*.sh text eol=lf` to `.gitattributes` in Core, IAM (PR #7), Monitoring, Reports, Task, Team,
+Worklog and the orchestrator. A second fresh clone bootstrapped cleanly.
+
+README also gained demo accounts, manual setup/reset commands and the optional observability /
+ClamAV profiles; stale Next 15/pnpm/M1 text corrected.
+
+## Still open (6)
+
+- T08: target-scale load + screenshot upload test.
+- T17 staging environment.
+- T23 UAT with Laksiri; T25 v1.0.0 tag; T26 72-hour window.
+- T02 desktop verification remains deferred by ADR-019.
+
+Commits: service repos at their new `.gitattributes` commits; `neatsprint-iam` `9e3a2dc` (PR #7);
+orchestrator `45fa4bf` and follow-up commit.
+
+- OpenCade

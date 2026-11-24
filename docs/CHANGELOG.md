@@ -20,6 +20,8 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-24 — **Onboarding fix**: `.gitattributes` forces LF for service entrypoints, fixing
+  CRLF Windows checkouts; fresh-clone bootstrap + seed + web smoke passed (`docs/ONBOARDING_DRY_RUN.md`).
 - 2026-11-24 — **Container/SBOM gate**: all 10 images scanned with Trivy 0.69.3, 0 high/critical;
   web npm CLI removed from runtime stage and stale Python images rebuilt; SBOMs in `docs/sbom/`.
 - 2026-11-24 — **Dependency remediation**: Next 16/vitest 5 upgrade cleared web audit findings;

@@ -202,7 +202,7 @@ toolchain; backend and web privacy pipeline already verified)*
 - [x] Legal drafts: ToS, privacy policy, DPA, sub-processor list, monitoring disclosure
 - [x] Security headers, CSP and rate limits live; audits clean; lockout, ClamAV and SBOM gate verified
 - [x] Release pipeline: GHCR image matrix, SBOM and Trivy gate in `.github/workflows/release.yml`
-- [~] Docs: README, release notes and API reference published; onboarding dry run pending
+- [x] Docs: README, release notes, API reference and clean-clone onboarding rehearsal complete
 - [ ] UAT script executed with Laksiri; acceptance criteria signed (`docs/UAT.md` prepared)
 - [ ] v1.0.0 tagged
 

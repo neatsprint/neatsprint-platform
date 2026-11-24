@@ -28,7 +28,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | M2 Work Management | 33 | 33 | 33 done · M2 complete |
 | M3 Time, Monitoring & Desktop | 40 | 25 | 25 done · desktop agent pending |
 | M4 Reports & Console | 26 | 26 | 26 done · M4 complete |
-| M5 Hardening & Launch | 28 | 21 | 21 done · hardening in progress |
+| M5 Hardening & Launch | 28 | 22 | 22 done · hardening in progress |
 | P2 Collaboration | 22 | 0 | Deferred |
 | P3 Intelligence | 16 | 0 | Deferred |
 | Cross-cutting (X-01…07) | 7 | 0 | Continuous |
@@ -517,7 +517,7 @@ error states; axe and manual keyboard audit pass; visual QA against `UI_UX_DESIG
   `subprocessors.md`, `monitoring-disclosure-template.md`, `README.md`.
 - [x] **M5-T19** Update root `README.md`: features, architecture, quick start, repo map, status.
 - [x] **M5-T20** Publish API reference (Redoc/Scalar) from contracts.
-- [ ] **M5-T21** Contributor onboarding guide verified by a clean-clone dry run.
+- [x] **M5-T21** Contributor onboarding guide verified by a clean-clone dry run.
 - [x] **M5-T22** `docs/RELEASE_NOTES.md` for v1.0.0.
 
 ### Epic M5-E5 — Acceptance
