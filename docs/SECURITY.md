@@ -509,13 +509,13 @@ built so certification work is an audit exercise, not a rebuild.
 
 ## 16. Verification Checklist (per release)
 
-- [ ] Isolation suite green; one manual cross-tenant probe performed
+- [x] Isolation suite green; one manual cross-tenant probe performed
 - [ ] Authz matrix covers 100% of protected routes (route-registration test)
-- [ ] Privacy deletion verified against storage (blob, key, embeddings)
-- [ ] Pending screenshots inaccessible to managers
-- [ ] Secret scan clean; SBOM generated; container scan no high/critical
+- [x] Privacy deletion verified against storage (blob, key, embeddings)
+- [x] Pending screenshots inaccessible to managers
+- [x] Secret scan clean; SBOM generated; container scan no high/critical
 - [ ] JWT/key rotation rehearsed in staging
-- [ ] Backup restore verified and documented
+- [x] Backup restore verified and documented
 - [ ] Audit log immutability verified (attempted update fails)
 - [ ] Incident contact list and runbook current
 - [ ] Legal pages published and linked (M5)

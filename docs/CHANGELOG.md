@@ -20,6 +20,8 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-24 — **Secret scan**: gitleaks added to platform CI, clean across 70 commits; only
+  illustrative JWT examples in frozen reference docs are allowlisted.
 - 2026-11-24 — **Target-volume load test**: 100 tenants / 5,157 users / 1M entries; read p95
   267 ms, write p95 77 ms, 0% errors; 1 MiB screenshot upload 38 ms warm; report aggregation
   rewritten in SQL (`docs/LOAD_TEST.md`).

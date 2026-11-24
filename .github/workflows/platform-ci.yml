@@ -60,3 +60,16 @@ jobs:
               sys.exit(1)
           print("all local links resolve")
           PY
+
+  secrets:
+    name: secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: gitleaks
+        run: |
+          docker run --rm -v "$PWD:/repo" ghcr.io/gitleaks/gitleaks:v8.28.0 \
+            detect --source /repo --config /repo/.gitleaks.toml --redact --verbose

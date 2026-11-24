@@ -1,0 +1,11 @@
+# Gitleaks configuration.
+#
+# documents/ is the frozen original architecture input and docs/API_SPEC.md shows
+# illustrative JWT-shaped tokens in examples. They are not live credentials and
+# both paths are documentation only. Everything else is scanned normally.
+[allowlist]
+description = "Illustrative tokens in reference documentation"
+paths = [
+  '''documents/.*''',
+  '''docs/API_SPEC\.md''',
+]

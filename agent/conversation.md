@@ -2030,3 +2030,37 @@ Note: the synthetic load rows are local only. Reset with `docker compose down -v
 Commits: `neatsprint-reports` `4071571`; orchestrator commit follows.
 
 - OpenCade
+
+# AI Message: 20261124165409
+
+Release verification pass while UAT/staging are pending.
+
+## Secret scan
+
+- gitleaks v8.28.0 over 70 commits: **no leaks**.
+- Added `.gitleaks.toml` allowing only illustrative JWT examples in the frozen `documents/`
+  reference set and `docs/API_SPEC.md`.
+- Added a `secret scan` job to `platform-ci.yml`.
+
+## Test suite
+
+- IAM, Core, Task, Team, Worklog, Monitoring, Chat, Reports, AI and Lib: **all pass**.
+- Web already passed typecheck, 20 tests and the production build after the Next 16 upgrade.
+
+## Checklist
+
+- `docs/SECURITY.md` release checklist now ticks isolation/cross-tenant probe, privacy deletion,
+  pending-screenshot access, secret/SBOM/container scans and backup restore.
+- ASVS L2 adds secret scanning as PASS.
+- README status now reads M5 23/28, UAT and release gates pending.
+
+## Still open
+
+- **T17 staging** — needs a host/provider decision.
+- **T23 UAT** — needs Laksiri to run `docs/UAT.md` and sign off.
+- **T25 v1.0.0 tag**, **T26 72-hour window** — after UAT.
+- Desktop verification (T02 item) remains deferred by ADR-019.
+
+Commits: orchestrator commit follows.
+
+- OpenCade

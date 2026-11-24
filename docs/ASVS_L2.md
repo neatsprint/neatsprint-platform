@@ -31,6 +31,7 @@ Legend: **PASS** implemented and verified; **PARTIAL** implemented with a docume
 | V12 Files | No path traversal in object keys | PASS | Tenant-prefixed keys |
 | V13 API | OpenAPI generated, versioned contracts | PASS | Contracts repo |
 | V14 Config | Secrets out of git, env examples | PASS | `.gitignore`, `.env.example` |
+| V14 | Secret scanning | PASS | gitleaks in platform CI; clean on 70 commits |
 | V14 | Dependency/container SBOM | PASS | Trivy 0.69.3, 0 high/critical; `docs/SBOM.md` |
 
 ## High/critical gaps to close before launch
