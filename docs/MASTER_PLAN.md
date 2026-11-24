@@ -174,15 +174,15 @@ toolchain; backend and web privacy pipeline already verified)*
 
 **Goal**: managers get answers; the product feels finished.
 
-- [ ] Reports: read-model database and projectors (events/outbox)
-- [ ] Reports: time by project/user, completion, velocity, burndown, monitoring summary
-- [ ] Reports: personal transparency report
-- [ ] Reports: CSV export; PDF executive summary (async job + signed URL)
-- [ ] Web: dashboard with role-aware widgets
-- [ ] Web: reports screens with filters, charts, empty/loading/error states
+- [x] Reports: read-model database and projectors (events/outbox)
+- [x] Reports: time by project/user, completion, velocity, burndown, monitoring summary
+- [x] Reports: personal transparency report
+- [~] Reports: CSV export done; async PDF executive summary still open
+- [x] Web: dashboard with role-aware widgets
+- [x] Web: reports screens with filters, charts, empty/loading/error states
 - [ ] Web: settings (tenant, monitoring policy, retention, aggregation mode)
 - [ ] Web: audit log viewer
-- [ ] Web: responsive + dark mode + accessibility pass
+- [~] Web: responsive + dark mode + accessibility pass started; axe audit still open
 - [ ] Mobile (stretch, only if M0–M4 on schedule): read-only shell
 
 **Exit gate**: report totals reconcile to the second with raw entries; every MVP screen matches

@@ -18,6 +18,12 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-24 — **Reports service**: rebuildable time/item/monitor/session/sprint facts, replayable
+  event projectors with lag status, and cached time/completion/velocity/burndown/monitoring/
+  transparency endpoints plus CSV export.
+- 2026-11-24 — **Dashboard and reports web**: role-aware home widgets, reports hub, time report,
+  Recharts velocity/burndown with data tables, and monitoring heatmap with small-group suppression.
+- 2026-11-24 — **Onboarding checklist** on the dashboard.
 - 2026-11-24 — **Worklog service**: server-authoritative timer, pause/resume, idle segments,
   manual entries with a 24 h edit window, idempotent offline sync, weekly timesheet aggregation and
   CSV exports via signed URLs.

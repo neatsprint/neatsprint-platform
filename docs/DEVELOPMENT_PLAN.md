@@ -27,7 +27,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | M1 Identity & Tenancy | 34 | 34 | Complete |
 | M2 Work Management | 33 | 33 | 33 done · M2 complete |
 | M3 Time, Monitoring & Desktop | 40 | 25 | 25 done · desktop agent pending |
-| M4 Reports & Console | 26 | 0 | Not started |
+| M4 Reports & Console | 26 | 17 | 17 done · reports + dashboard live |
 | M5 Hardening & Launch | 28 | 0 | Not started |
 | P2 Collaboration | 22 | 0 | Deferred |
 | P3 Intelligence | 16 | 0 | Deferred |
@@ -438,31 +438,31 @@ embedding removal while manager sees tombstone; device revoke and wipe verified.
 
 ### Epic M4-E1 — Reports service
 
-- [ ] **M4-T01** Read-model database schema (`report_time_facts`, `report_item_facts`,
+- [x] **M4-T01** Read-model database schema (`report_time_facts`, `report_item_facts`,
   `report_monitor_facts`, `report_sprint_snapshots`). *AC*: rebuildable from scratch.
-- [ ] **M4-T02** Event consumers + projectors with replay support and lag metric.
+- [x] **M4-T02** Event consumers + projectors with replay support and lag metric.
 - [ ] **M4-T03** Backfill command from source services (paginated, resumable).
-- [ ] **M4-T04** `GET /reports/time` (by project/user/team/date). *AC*: reconciles with raw entries.
-- [ ] **M4-T05** `GET /reports/completion` (created vs completed).
-- [ ] **M4-T06** `GET /reports/velocity` (last N sprints).
-- [ ] **M4-T07** `GET /reports/burndown` (sprint scope vs remaining).
-- [ ] **M4-T08** `GET /reports/monitoring` (sessions, active/idle, captures, deletions, rate).
+- [x] **M4-T04** `GET /reports/time` (by project/user/team/date). *AC*: reconciles with raw entries.
+- [x] **M4-T05** `GET /reports/completion` (created vs completed).
+- [x] **M4-T06** `GET /reports/velocity` (last N sprints).
+- [x] **M4-T07** `GET /reports/burndown` (sprint scope vs remaining).
+- [x] **M4-T08** `GET /reports/monitoring` (sessions, active/idle, captures, deletions, rate).
   *AC*: aggregation mode hides rows below threshold.
-- [ ] **M4-T09** `GET /reports/transparency` (personal log).
+- [x] **M4-T09** `GET /reports/transparency` (personal log).
 - [ ] **M4-T10** Export jobs: CSV immediate, PDF async (HTML template → headless render) with
   signed URL + expiry; job status endpoint.
-- [ ] **M4-T11** Report caching layer keyed by filter hash with tenant-scoped invalidation.
+- [x] **M4-T11** Report caching layer keyed by filter hash with tenant-scoped invalidation.
 
 ### Epic M4-E2 — Web: dashboards & reports
 
-- [ ] **M4-T12** Dashboard, role-aware: my day (timer summary, assigned items), team pulse,
+- [x] **M4-T12** Dashboard, role-aware: my day (timer summary, assigned items), team pulse,
   sprint progress, privacy summary for self.
-- [ ] **M4-T13** Reports hub with report cards and date-range picker.
-- [ ] **M4-T14** Time report screen with stacked bar + table + CSV export.
-- [ ] **M4-T15** Velocity + burndown screens with chart library chosen from UI plan (Recharts).
-- [ ] **M4-T16** Monitoring summary screen with heatmap and deletion rate, respecting aggregation.
+- [x] **M4-T13** Reports hub with report cards and date-range picker.
+- [x] **M4-T14** Time report screen with stacked bar + table + CSV export.
+- [x] **M4-T15** Velocity + burndown screens with chart library chosen from UI plan (Recharts).
+- [x] **M4-T16** Monitoring summary screen with heatmap and deletion rate, respecting aggregation.
 - [ ] **M4-T17** Export centre: job list, status, download.
-- [ ] **M4-T18** Charts accessibility: data table alternative, colour-safe palette, no 3D.
+- [x] **M4-T18** Charts accessibility: data table alternative, colour-safe palette, no 3D.
 
 ### Epic M4-E3 — Console completion
 
@@ -470,8 +470,8 @@ embedding removal while manager sees tombstone; device revoke and wipe verified.
 - [ ] **M4-T20** Saved views for backlog/board (per user).
 - [ ] **M4-T21** Command palette (Ctrl/⌘+K): navigate, create item, start timer link.
 - [ ] **M4-T22** Audit log viewer with filters and export (admin only).
-- [ ] **M4-T23** Notification centre (in-app) with unread badge.
-- [ ] **M4-T24** Onboarding checklist for new tenants (invite team, create project, start timer).
+- [x] **M4-T23** Notification centre (in-app) with unread badge.
+- [x] **M4-T24** Onboarding checklist for new tenants (invite team, create project, start timer).
 - [ ] **M4-T25** Full responsive pass (tablet, narrow laptop), dark mode contrast fixes.
 - [ ] **M4-T26** Accessibility pass: axe clean, keyboard traps removed, focus order, ARIA labels,
   reduced-motion support.

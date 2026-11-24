@@ -313,6 +313,29 @@ Status values: `Proposed` · `Accepted` · `Rejected` · `Superseded by ADR-xxx`
 
 ---
 
+## ADR-019 - Desktop agent stays Tauri v2 + Rust; desktop build deferred
+
+- **Status**: Accepted
+- **Date**: 2026-11-24
+- **Context**: Laksiri asked whether .NET or another stack would be better for the desktop
+  agent. The machine has .NET 10 but no Rust/Tauri toolchain. The agent is tray-first and needs
+  native capture, idle detection, OS keychain, SQLCipher, signed updates and low memory.
+- **Decision**: Keep **Tauri v2 + Rust + React/TypeScript** as planned. Do not switch to .NET,
+  Avalonia, Electron, Flutter or Qt. Park `M3-T22..T36` until a Rust/Tauri toolchain and Windows
+  capture lab are available; continue with the rest of the MVP (M4 and M5) in the meantime.
+- **Why**: No desktop code exists yet, so either stack was viable, but switching buys little:
+  both Tauri and Avalonia still require per-OS capture/idle/keychain code; Tauri keeps the
+  smallest footprint, the strongest sandbox/security story, and reuses TypeScript UI skills. .NET
+  would be faster on Windows-only capture, but adds a third runtime and a later cross-platform
+  rewrite or Avalonia dependency.
+- **Consequences**: M3 remains 25/40; the M3 exit gate (4-hour offline run and desktop deletion
+  evidence) is carried forward. Notification/monitoring web screens and backend privacy work are
+  already delivered. Revisit only if the Windows capture spike with Tauri fails its CPU/RSS gate.
+- **Alternatives**: .NET 10 + Avalonia (strong Windows capture and packaging, but stack change and
+  larger footprint); .NET MAUI/WinUI (Windows lock-in); Electron (memory/attack surface).
+
+---
+
 ## Decision Log Summary
 
 | ADR | Title | Status | Milestone |
@@ -335,6 +358,7 @@ Status values: `Proposed` · `Accepted` · `Rejected` · `Superseded by ADR-xxx`
 | 016 | No screenshot backups | Accepted | M3 |
 | 017 | Monotonic time + server clamp | Accepted | M3 |
 | 018 | Runtime language policy (Python / Rust / TS) | Accepted | M3 |
+| 019 | Desktop agent stays Tauri v2 + Rust; deferred | Accepted | M3/M4 |
 
 ## Change Log
 
@@ -342,3 +366,4 @@ Status values: `Proposed` · `Accepted` · `Rejected` · `Superseded by ADR-xxx`
 | :--- | :--- |
 | 2026-11-21 | ADR-001…017 recorded during initial planning |
 | 2026-11-21 | ADR-018 added: runtime language policy (Python services, Rust for CPU-bound work, Next.js not a backend) |
+| 2026-11-24 | ADR-019 added: keep Tauri v2 + Rust for the desktop agent; defer M3 desktop tasks |

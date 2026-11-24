@@ -1605,3 +1605,58 @@ Commits: `neatsprint-worklog` `536ab6c`; `neatsprint-monitoring` `57891bd`; `nea
 `1edc2c4`; `neatsprint-web` `8d6d533`.
 
 - OpenCade
+
+# Human Message: 20261124090000
+
+Keep Rust/Tauri as we planned earlier. Let's attend to it later and do the rest
+
+# AI Message: 20261124094117
+
+The desktop agent stays on **Tauri v2 + Rust** and is deferred. The decision is recorded as
+**ADR-019**. I continued with M4: **17 of 26 tasks** are complete.
+
+## Reports service (M4-T01..T11, partial T10)
+
+- Rebuildable read models: time, item, monitor, session and sprint facts.
+- Replayable event projector with processed-event idempotency, tenant cache invalidation and a
+  projection lag endpoint.
+- Endpoints: time by day/project/user, completion, velocity, burndown, monitoring summary with
+  small-group suppression, personal transparency, immediate CSV export and projection health.
+- Report responses cached for 30 s per tenant; writes invalidate the tenant cache.
+- Source events were enriched: Task item created/updated/transitioned, Worklog entry
+  updated/deleted with timestamps, Monitoring capture timestamps and user ids.
+
+Not done: full source backfill command, async PDF export and export-job centre.
+
+## Web (M4-T12..T18, T23, T24)
+
+- Role-aware dashboard: my day, assigned items, timer, sprint pulse, privacy summary and
+  onboarding checklist.
+- Reports hub, time report with distribution bars/table/CSV, Recharts velocity and burndown with
+  data-table alternatives, and monitoring heatmap/per-person table with suppression notice.
+- Notification centre/bell already existed and is counted under T23.
+
+Not done: settings, audit viewer, saved views, global search, command palette, full responsive and
+axe passes.
+
+## Verification
+
+- Reports endpoints all return `200` with data from the replayed event stream; projection status
+  reports processed count and lag.
+- Dashboard and all report pages return `200`; charts and tables render; member sees the allowed
+  report subset.
+- Demo sprint items were assigned and one item completed so velocity/burndown show real data.
+- Reports 9 tests, Worklog 10, Monitoring 10, Task 31, Web 18; lint, mypy, typecheck and builds
+  pass.
+
+## Status
+
+- M3: 25/40, desktop T22–T36 deferred under ADR-019.
+- M4: 17/26.
+- Remaining M4: backfill, PDF/export jobs, settings, audit viewer, search, saved views, command
+  palette, responsive/axe passes.
+
+Commits: `neatsprint-reports` `0f76f08`; `neatsprint-task` `0a9e9c6`; `neatsprint-worklog`
+`dfebcb8`; `neatsprint-monitoring` `ddc6612`; `neatsprint-web` `27f53ee`.
+
+- OpenCade
