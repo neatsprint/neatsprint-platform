@@ -1701,3 +1701,38 @@ Commits: `neatsprint-task` `818e5e5`; `neatsprint-iam` `7962273` (PR #5); `neats
 `08e5d3a`.
 
 - OpenCade
+
+# Human Message: 20261124095600
+
+Commit, push and continue to close remaining m4 items
+
+# AI Message: 20261124100820
+
+The remaining M4 work is closed except two items. M4 is **24 of 26**.
+
+## Delivered
+
+- **Async exports**: CSV and PDF report jobs generated in the background, uploaded to MinIO,
+  listed with status, and downloaded through short-lived signed URLs.
+- **Export centre** (`/reports/exports`): queue form, job table, auto-refresh while running and
+  download actions.
+- **Responsive shell**: mobile navigation, skip-to-content link, reduced mobile padding and
+  horizontally scrollable tables.
+
+## Verified
+
+- CSV export completed and downloaded (981 bytes).
+- PDF export completed and downloaded with a valid `%PDF` header (2,287 bytes).
+- Export page renders with the export centre and skip link.
+- Reports 9 tests, Web 18 tests; lint, mypy, typecheck and builds pass.
+
+## Remaining M4 (2)
+
+- `M4-T03` source-service backfill command. Event replay from the retained stream works today;
+  a paginated source-API backfill is still open.
+- `M4-T26` axe accessibility audit. Manual keyboard/label/focus and data-table alternatives are in
+  place; an automated axe run is still open.
+
+Commits: `neatsprint-reports`; `neatsprint-web`; orchestrator commit follows.
+
+- OpenCade

@@ -177,9 +177,10 @@ toolchain; backend and web privacy pipeline already verified)*
 - [x] Reports: read-model database and projectors (events/outbox)
 - [x] Reports: time by project/user, completion, velocity, burndown, monitoring summary
 - [x] Reports: personal transparency report
-- [~] Reports: CSV export done; async PDF executive summary still open
+- [x] Reports: CSV export and async PDF exports with signed URLs and job status
 - [x] Web: dashboard with role-aware widgets
 - [x] Web: reports screens with filters, charts, empty/loading/error states
+- [x] Web: export centre with job status and signed downloads
 - [ ] Web: settings (tenant, monitoring policy, retention, aggregation mode) — moved to M5
 - [x] Web: audit log viewer
 - [~] Web: responsive + dark mode + accessibility pass started; axe audit still open

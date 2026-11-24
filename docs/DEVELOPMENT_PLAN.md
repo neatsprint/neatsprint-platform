@@ -27,7 +27,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | M1 Identity & Tenancy | 34 | 34 | Complete |
 | M2 Work Management | 33 | 33 | 33 done · M2 complete |
 | M3 Time, Monitoring & Desktop | 40 | 25 | 25 done · desktop agent pending |
-| M4 Reports & Console | 26 | 21 | 21 done · console completion live |
+| M4 Reports & Console | 26 | 24 | 24 done · exports + responsive pass |
 | M5 Hardening & Launch | 28 | 0 | Not started |
 | P2 Collaboration | 22 | 0 | Deferred |
 | P3 Intelligence | 16 | 0 | Deferred |
@@ -449,7 +449,7 @@ embedding removal while manager sees tombstone; device revoke and wipe verified.
 - [x] **M4-T08** `GET /reports/monitoring` (sessions, active/idle, captures, deletions, rate).
   *AC*: aggregation mode hides rows below threshold.
 - [x] **M4-T09** `GET /reports/transparency` (personal log).
-- [ ] **M4-T10** Export jobs: CSV immediate, PDF async (HTML template → headless render) with
+- [x] **M4-T10** Export jobs: CSV immediate, PDF async (HTML template → headless render) with
   signed URL + expiry; job status endpoint.
 - [x] **M4-T11** Report caching layer keyed by filter hash with tenant-scoped invalidation.
 
@@ -461,7 +461,7 @@ embedding removal while manager sees tombstone; device revoke and wipe verified.
 - [x] **M4-T14** Time report screen with stacked bar + table + CSV export.
 - [x] **M4-T15** Velocity + burndown screens with chart library chosen from UI plan (Recharts).
 - [x] **M4-T16** Monitoring summary screen with heatmap and deletion rate, respecting aggregation.
-- [ ] **M4-T17** Export centre: job list, status, download.
+- [x] **M4-T17** Export centre: job list, status, download.
 - [x] **M4-T18** Charts accessibility: data table alternative, colour-safe palette, no 3D.
 
 ### Epic M4-E3 — Console completion
@@ -472,7 +472,7 @@ embedding removal while manager sees tombstone; device revoke and wipe verified.
 - [x] **M4-T22** Audit log viewer with filters and export (admin only).
 - [x] **M4-T23** Notification centre (in-app) with unread badge.
 - [x] **M4-T24** Onboarding checklist for new tenants (invite team, create project, start timer).
-- [ ] **M4-T25** Full responsive pass (tablet, narrow laptop), dark mode contrast fixes.
+- [x] **M4-T25** Full responsive pass (tablet, narrow laptop), dark mode contrast fixes.
 - [ ] **M4-T26** Accessibility pass: axe clean, keyboard traps removed, focus order, ARIA labels,
   reduced-motion support.
 

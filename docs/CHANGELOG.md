@@ -18,6 +18,10 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-24 — **Export centre**: background CSV/PDF report jobs with status tracking, signed
+  downloads, and an export page.
+- 2026-11-24 — **Responsive shell**: mobile navigation, skip link, horizontal table scrolling and
+  reduced mobile padding.
 - 2026-11-24 — **Console completion**: global search and command palette, per-user saved backlog
   views, tenant audit viewer with CSV export, and accessible dashboard/report navigation.
 - 2026-11-24 — **Reports service**: rebuildable time/item/monitor/session/sprint facts, replayable
