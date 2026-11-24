@@ -2064,3 +2064,31 @@ Release verification pass while UAT/staging are pending.
 Commits: orchestrator commit follows.
 
 - OpenCade
+
+# AI Message: 20261124170116
+
+UAT and staging are the only implementation-adjacent items left; both need a decision or access
+from Laksiri.
+
+## Prepared
+
+- `docs/UAT.md` now records pre-UAT evidence for isolation, load, ASVS, quick start and backup,
+  and corrects the quick-start step (`bootstrap.ps1`/`seed.py`, not `make seed`).
+- Added `scripts/smoke/staging_smoke.py` and a "Staging deploy and smoke" runbook: tag → images
+  from GHCR → health/smoke → Playwright → UAT record.
+- Verified the smoke script locally: ping, login, projects, timesheet, teams, reports and web all
+  pass.
+- Synced the lib lockfile to its 0.4.0 version and bumped the pin.
+
+## Needs a decision
+
+1. **Staging host**: a VM (which provider/size?) or a local single-node staging profile on this
+   workstation? Cloud provisioning has a cost and needs credentials.
+2. **UAT**: when can you run `docs/UAT.md`? I can drive it and record evidence, or you can execute
+   and I will fix anything it finds.
+3. **Desktop**: T02's desktop verification stays deferred by ADR-019 until a Rust/Tauri toolchain
+   owner is assigned.
+
+Commits: `neatsprint-lib` `ccd7665`; orchestrator `31a15e6` and follow-up commit.
+
+- OpenCade

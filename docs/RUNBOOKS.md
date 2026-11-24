@@ -135,6 +135,27 @@ docker run --rm -v /tmp:/work -v trivy-cache:/root/.cache/trivy \
 Use Trivy **0.69.3 or earlier**; v0.69.4 was compromised upstream. Pin `trivy-action` to `0.35.0`
 or a safe SHA. Latest result and SBOM artefacts: `docs/SBOM.md` and `docs/sbom/`.
 
+## Staging deploy and smoke
+
+Staging is a single VM running the Compose stack (or a single-node k8s cluster once Helm lands),
+with managed PostgreSQL/Redis/S3 and no seeded production data.
+
+1. Pin the release: checkout the platform tag and `git submodule update --init --recursive`.
+2. Copy `.env.example` to `.env` on the host and set production secrets, `COMPOSE_PROJECT_NAME`,
+   `NEXT_PUBLIC_API_BASE`, and TLS/domain values. Never commit it.
+3. `docker compose pull && docker compose up -d` (images come from GHCR; do not build on the VM).
+4. Wait for `/ping` and every `/healthz`, then run:
+
+```bash
+BASE_URL=https://staging.example/api/v1 \
+WEB_URL=https://staging.example \
+SMOKE_EMAIL=smoke@example.com SMOKE_PASSWORD=... \
+python scripts/smoke/staging_smoke.py
+```
+
+5. Run the Playwright critical journeys and record the result in `docs/UAT.md`.
+6. Roll back by redeploying the previous image tag; migrations are expand/contract.
+
 ## Certificate expiry
 
 The local stack is HTTP. Production terminates TLS at the ingress/ACME; alert on
