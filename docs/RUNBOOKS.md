@@ -6,17 +6,104 @@ the release image tags from `docs/DEVOPS.md`. Every alert in
 
 ---
 
-## Start / stop
+## Environment lifecycle (dev and staging)
 
-```bash
-docker compose up -d --build        # local stack
-docker compose down                 # stop, keep volumes
-docker compose down -v              # DESTROYS local data; re-seed afterwards
-make seed                           # restore demo tenant and users
+Two isolated Compose projects can run side by side:
+
+| Environment | Project | Web | API | Env file | Entry point |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| Development | `neatsprint` | `:3000` | `:8000` | `.env` | `./scripts/bootstrap.ps1` |
+| Local staging | `neatsprint-staging` | `:3100` | `:8100` | `.env.staging` | `./scripts/staging.ps1` |
+
+Run every command from the repository root.
+
+### Development
+
+```powershell
+# first start, or after a clone/volume reset (creates .env, builds, waits, seeds)
+./scripts/bootstrap.ps1
+
+# normal up; keeps existing volumes and data
+docker compose up -d
+
+# rebuild only what changed, then restart it
+docker compose up -d --build neatsprint-task neatsprint-web
+
+# include ClamAV (also set CLAMAV_HOST=clamav in .env so Task/Monitoring use it)
+docker compose --profile security up -d --build
+
+# include ClamAV and observability
+docker compose --profile "*" up -d --build
+
+# status and logs
+docker compose ps
+docker compose logs -f --tail=100 <service>
+
+# stop containers but keep them, the network and all volumes
+docker compose --profile "*" stop
+
+# remove containers and the network, keep named volumes (data survives)
+docker compose --profile "*" down
+
+# DESTRUCTIVE: removes volumes and all local data; re-run bootstrap/seed afterwards
+docker compose --profile "*" down -v
+
+# idempotent demo data
+python scripts/seed.py
 ```
 
-Health: `GET /healthz`, `GET /readyz`, `/metrics` on every service. Gateway at `:8000`, web at
-`:3000`, Traefik dashboard at `:8089`.
+Plain `docker compose down` only removes services in active profiles. `clamav` (profile
+`security`) and Prometheus/Grafana (profile `observability`) stay up unless you pass
+`--profile "*"`. That is why a bare `down` can appear to leave containers behind.
+
+### Local staging
+
+```powershell
+# build, start, seed and run the smoke check
+./scripts/staging.ps1
+
+# start without rebuilding
+./scripts/staging.ps1 -NoBuild
+
+# DESTRUCTIVE: stop the staging project and delete its volumes
+./scripts/staging.ps1 -Down
+
+# manual equivalents
+docker compose --env-file .env.staging --profile "*" up -d --build
+docker compose --env-file .env.staging --profile "*" stop
+docker compose --env-file .env.staging --profile "*" down
+docker compose --env-file .env.staging ps
+```
+
+Staging has its own network (`neatsprint-staging`), volumes and ports, so it does not touch
+development data. `.env.staging` is git-ignored; it is created from `.env.staging.example` on the
+first run.
+
+### Stop everything without losing data
+
+```powershell
+docker compose --profile "*" stop
+docker compose --env-file .env.staging --profile "*" stop
+```
+
+Restart everything with the matching `--profile "*" up -d` commands. Never add `-v` to a
+stop/down command unless you intend to destroy PostgreSQL, MinIO and Redis data for that
+environment.
+
+### Refresh base images
+
+`--build` alone reuses cached base layers. To pick up refreshed bases and rebuild:
+
+```powershell
+docker compose --profile "*" build --pull
+docker compose --profile "*" up -d
+```
+
+For a fully clean rebuild: `docker compose --profile "*" build --no-cache --pull` before `up -d`.
+
+Health after any change: `GET /healthz`, `GET /readyz`, `/metrics` on every service. Dev gateway
+`:8000`, dev web `:3000`, Traefik dashboard `:8089`; staging gateway `:8100`, web `:3100`,
+Traefik dashboard `:8189`.
 
 ## Service down
 
@@ -138,15 +225,18 @@ docker run --rm -v /tmp:/work -v trivy-cache:/root/.cache/trivy \
 Use Trivy **0.69.3 or earlier**; v0.69.4 was compromised upstream. Pin `trivy-action` to `0.35.0`
 or a safe SHA. Latest result and SBOM artefacts: `docs/SBOM.md` and `docs/sbom/`.
 
-## Staging deploy and smoke
+## Cloud staging deploy and smoke
 
-Staging is a single VM running the Compose stack (or a single-node k8s cluster once Helm lands),
-with managed PostgreSQL/Redis/S3 and no seeded production data.
+The cloud/VPS staging environment is a single host running the Compose stack (or a single-node
+k8s cluster once Helm lands), with managed PostgreSQL/Redis/S3 and no production data. For the
+local staging profile beside dev, use the lifecycle section above instead.
 
 1. Pin the release: checkout the platform tag and `git submodule update --init --recursive`.
-2. Copy `.env.example` to `.env` on the host and set production secrets, `COMPOSE_PROJECT_NAME`,
-   `NEXT_PUBLIC_API_BASE`, and TLS/domain values. Never commit it.
-3. `docker compose pull && docker compose up -d` (images come from GHCR; do not build on the VM).
+2. Create the host env file (for example `.env.staging`) from `.env.staging.example` and set
+   production secrets, `COMPOSE_PROJECT_NAME`, `NEXT_PUBLIC_API_BASE_URL`, and TLS/domain values.
+   Never commit it.
+3. `docker compose --env-file .env.staging pull && docker compose --env-file .env.staging up -d`
+   (images come from GHCR; do not build on the VM).
 4. Wait for `/ping` and every `/healthz`, then run:
 
 ```bash

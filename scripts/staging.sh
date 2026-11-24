@@ -17,7 +17,7 @@ fi
 ENV_ARGS=(--env-file .env.staging --profile security)
 
 if [[ "${1:-}" == "--down" ]]; then
-  docker compose "${ENV_ARGS[@]}" down -v
+  docker compose --env-file .env.staging --profile "*" down -v
   exit 0
 fi
 

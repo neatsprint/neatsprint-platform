@@ -200,6 +200,9 @@ uploads fail closed with `503`; see `docs/RUNBOOKS.md`.
 
 To reset local data: `docker compose down -v` (destroys all local volumes).
 
+Full dev/staging start-stop-rebuild lifecycle and profile behaviour:
+[`docs/RUNBOOKS.md`](docs/RUNBOOKS.md#environment-lifecycle-dev-and-staging).
+
 ### Prerequisites
 
 - Docker Desktop 4.x+ with Compose v2

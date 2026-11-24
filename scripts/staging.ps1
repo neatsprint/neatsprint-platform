@@ -29,7 +29,7 @@ if (-not (Test-Path ".env.staging")) {
 $envArgs = @("--env-file", ".env.staging", "--profile", "security")
 
 if ($Down) {
-    docker compose @envArgs down -v
+    docker compose --env-file .env.staging --profile "*" down -v
     exit $LASTEXITCODE
 }
 
