@@ -204,7 +204,8 @@ toolchain; backend and web privacy pipeline already verified)*
 - [x] Security headers, CSP and rate limits live; audits clean; lockout, ClamAV and SBOM gate verified
 - [x] Release pipeline: GHCR image matrix, SBOM and Trivy gate in `.github/workflows/release.yml`
 - [x] Docs: README, release notes, API reference and clean-clone onboarding rehearsal complete
-- [ ] UAT script executed with Laksiri; acceptance criteria signed (`docs/UAT.md` prepared)
+- [x] Local staging profile with offset ports, seeded UAT data and post-deploy smoke check
+- [~] UAT script executed on staging (9 pass, 1 desktop-blocked); awaiting Laksiri's sign-off
 - [ ] v1.0.0 tagged
 
 **Exit gate**: SCOPE §8 acceptance criteria satisfied and recorded in `docs/RELEASE_NOTES.md`.

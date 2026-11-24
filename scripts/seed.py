@@ -196,16 +196,26 @@ def main() -> int:
         print(f"team: Backend Squad ({status})")
 
     status, users = auth_call("GET", f"{gateway}/api/v1/iam/users", token)
-    member = next(
-        (item for item in users.get("data", []) if item["email"].startswith("member@")), None
-    )
-    if team and member:
-        auth_call(
-            "POST",
-            f"{gateway}/api/v1/teams/{team['id']}/members",
-            token,
-            {"user_id": member["id"], "role_in_team": "MEMBER"},
+    team_users = [
+        (prefix, role_in_team)
+        for prefix, role_in_team in (
+            ("manager@", "MEMBER"),
+            ("lead@", "LEAD"),
+            ("member@", "MEMBER"),
         )
+    ]
+    for prefix, role_in_team in team_users:
+        user = next(
+            (item for item in users.get("data", []) if item["email"].startswith(prefix)),
+            None,
+        )
+        if team and user:
+            auth_call(
+                "POST",
+                f"{gateway}/api/v1/teams/{team['id']}/members",
+                token,
+                {"user_id": user["id"], "role_in_team": role_in_team},
+            )
 
     status, projects = auth_call("GET", f"{gateway}/api/v1/tasks/projects", token)
     project = next((item for item in projects.get("data", []) if item["key"] == "AUTH"), None)

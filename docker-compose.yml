@@ -80,7 +80,7 @@ services:
       - "${MINIO_API_PORT:-9000}:9000"
       - "${MINIO_CONSOLE_PORT:-9001}:9001"
     volumes:
-      - miniodata:/data
+      - miniodata:/bitnami/minio/data
 
   mailpit:
     image: axllent/mailpit:latest
@@ -98,7 +98,7 @@ services:
     mem_limit: 1g
     cpus: 1.0
     ports:
-      - "${CLAMAV_PORT:-3310}:3310"
+      - "${CLAMAV_HOST_PORT:-3310}:3310"
     healthcheck:
       test: ["CMD", "clamdcheck.sh"]
       interval: 30s
@@ -371,6 +371,8 @@ services:
     cpus: 1.0
     build:
       context: ./services/neatsprint-web
+      args:
+        NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-http://localhost:8000/api/v1}
     environment:
       NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-http://localhost:8000/api/v1}
       API_INTERNAL_URL: http://gateway/api/v1
@@ -409,7 +411,7 @@ services:
 
 networks:
   neatsprint:
-    name: neatsprint
+    name: ${COMPOSE_PROJECT_NAME:-neatsprint}
 
 volumes:
   pgdata:

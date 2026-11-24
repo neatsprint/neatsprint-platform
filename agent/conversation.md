@@ -2092,3 +2092,51 @@ from Laksiri.
 Commits: `neatsprint-lib` `ccd7665`; orchestrator `31a15e6` and follow-up commit.
 
 - OpenCade
+
+# Human Message: 20261124170500
+
+Local staging profile and you drive UAT.
+
+# AI Message: 20261124185056
+
+M5 is now **26 of 28**. Only v1.0.0 sign-off/tag and the post-launch window remain.
+
+## Local staging
+
+- `.env.staging.example` + `./scripts/staging.ps1|sh`: project `neatsprint-staging`, ports +1000,
+  separate volumes, ClamAV enabled. It runs beside the development stack.
+- Web image now bakes `NEXT_PUBLIC_API_BASE_URL` at build time; verified client bundles point at
+  `localhost:8100`.
+- `scripts/smoke/staging_smoke.py`: ping, login, projects, timesheet, teams, reports, web page —
+  all pass.
+
+## UAT on staging — 9 PASS, 1 desktop-blocked
+
+1. Invite/accept/login/visibility — PASS.
+2. Permission matrix — PASS (all six roles; unauthorised probes return 403).
+3. Cross-tenant probe — 8/8 PASS.
+5. Screenshot deletion — blob existed before, gone after; subject and manager tombstones; content 404.
+6. Report reconciliation — API 5 s = worklog 5 s = report facts 5 s.
+7. Backup restore — dump/restore of `db_task`, 2 projects / 6 items.
+8. Load — staging 0% errors, p95 37.5 ms; target volume pre-verified.
+9. ASVS — only desktop remains (ADR-019).
+10. Clean-clone quick start — PASS.
+4. 4-hour offline desktop — blocked by ADR-019.
+
+## Defects found and fixed
+
+- Seed only added the member to the squad, so a manager saw no team screenshots. Seed now adds
+  manager, lead and member; manager tombstone check passes.
+- MinIO's named volume was mounted at `/data` but `bitnamilegacy/minio` stores objects under
+  `/bitnami/minio/data`, so blobs were container-local and lost on recreate. Mount fixed in both
+  stacks and verified.
+
+## Remaining
+
+- **T25**: Laksiri signs `docs/UAT.md`; then tag `v1.0.0`. The desktop item needs an explicit
+  waiver or an ADR-019 follow-up milestone.
+- **T26**: 72-hour post-launch health window.
+
+Commits: `neatsprint-web` `7263bf2`; orchestrator commit follows.
+
+- OpenCade

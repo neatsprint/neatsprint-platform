@@ -20,6 +20,9 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-24 — **Local staging + UAT**: offset-port staging profile, web API URL baked at build,
+  post-deploy smoke; UAT 9 pass / 1 desktop-blocked. Fixed seed team membership (manager
+  tombstone visibility) and MinIO data volume path.
 - 2026-11-24 — **Staging smoke + UAT pack**: reusable `scripts/smoke/staging_smoke.py`, deploy
   runbook and pre-UAT evidence in `docs/UAT.md`; staging host still needed.
 - 2026-11-24 — **Secret scan**: gitleaks added to platform CI, clean across 70 commits; only
