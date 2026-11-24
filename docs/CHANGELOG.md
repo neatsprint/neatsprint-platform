@@ -18,6 +18,10 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-24 — **Source backfill**: paginated, resumable report backfill from Task, Worklog and
+  Monitoring internal APIs with a CLI command.
+- 2026-11-24 — **Accessibility audit**: automated axe tests for the backlog and global search,
+  plus skip link, mobile navigation and table scrolling.
 - 2026-11-24 — **Export centre**: background CSV/PDF report jobs with status tracking, signed
   downloads, and an export page.
 - 2026-11-24 — **Responsive shell**: mobile navigation, skip link, horizontal table scrolling and

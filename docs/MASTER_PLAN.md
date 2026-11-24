@@ -183,7 +183,8 @@ toolchain; backend and web privacy pipeline already verified)*
 - [x] Web: export centre with job status and signed downloads
 - [ ] Web: settings (tenant, monitoring policy, retention, aggregation mode) — moved to M5
 - [x] Web: audit log viewer
-- [~] Web: responsive + dark mode + accessibility pass started; axe audit still open
+- [x] Web: responsive pass (mobile nav, table scrolling, reduced padding)
+- [x] Web: accessibility audit with automated axe component suite, skip link and chart data tables
 - [ ] Mobile (stretch, only if M0–M4 on schedule): read-only shell
 
 **Exit gate**: report totals reconcile to the second with raw entries; every MVP screen matches

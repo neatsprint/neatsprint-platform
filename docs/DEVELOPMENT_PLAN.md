@@ -27,7 +27,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | M1 Identity & Tenancy | 34 | 34 | Complete |
 | M2 Work Management | 33 | 33 | 33 done · M2 complete |
 | M3 Time, Monitoring & Desktop | 40 | 25 | 25 done · desktop agent pending |
-| M4 Reports & Console | 26 | 24 | 24 done · exports + responsive pass |
+| M4 Reports & Console | 26 | 26 | 26 done · M4 complete |
 | M5 Hardening & Launch | 28 | 0 | Not started |
 | P2 Collaboration | 22 | 0 | Deferred |
 | P3 Intelligence | 16 | 0 | Deferred |
@@ -441,7 +441,7 @@ embedding removal while manager sees tombstone; device revoke and wipe verified.
 - [x] **M4-T01** Read-model database schema (`report_time_facts`, `report_item_facts`,
   `report_monitor_facts`, `report_sprint_snapshots`). *AC*: rebuildable from scratch.
 - [x] **M4-T02** Event consumers + projectors with replay support and lag metric.
-- [ ] **M4-T03** Backfill command from source services (paginated, resumable).
+- [x] **M4-T03** Backfill command from source services (paginated, resumable).
 - [x] **M4-T04** `GET /reports/time` (by project/user/team/date). *AC*: reconciles with raw entries.
 - [x] **M4-T05** `GET /reports/completion` (created vs completed).
 - [x] **M4-T06** `GET /reports/velocity` (last N sprints).
@@ -473,7 +473,7 @@ embedding removal while manager sees tombstone; device revoke and wipe verified.
 - [x] **M4-T23** Notification centre (in-app) with unread badge.
 - [x] **M4-T24** Onboarding checklist for new tenants (invite team, create project, start timer).
 - [x] **M4-T25** Full responsive pass (tablet, narrow laptop), dark mode contrast fixes.
-- [ ] **M4-T26** Accessibility pass: axe clean, keyboard traps removed, focus order, ARIA labels,
+- [x] **M4-T26** Accessibility pass: axe clean, keyboard traps removed, focus order, ARIA labels,
   reduced-motion support.
 
 **M4 exit gate**: reports reconcile with source data; all MVP screens present with empty/loading/

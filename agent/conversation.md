@@ -1736,3 +1736,42 @@ The remaining M4 work is closed except two items. M4 is **24 of 26**.
 Commits: `neatsprint-reports`; `neatsprint-web`; orchestrator commit follows.
 
 - OpenCade
+
+# Human Message: 20261124100900
+
+continue
+
+# AI Message: 20261124123036
+
+M4 is complete: **26 of 26**.
+
+## Backfill (M4-T03)
+
+- Task, Worklog and Monitoring now expose internal paginated fact endpoints.
+- Reports has `POST /internal/backfill` with offset/limit, guarded by the bootstrap token, and
+  updates the read models idempotently.
+- `python -m neatsprint_reports.backfill --tenant <id>` loops all three sources until exhausted.
+- Verified: Task 5 rows, Worklog 1 row, and Task pagination returned offsets `0→2→4→None`.
+
+## Accessibility (M4-T26)
+
+- Added an automated axe suite covering the backlog and global search.
+- Skip-to-content link, mobile navigation, labelled modal search, keyboard operation, focus styles
+  and chart data-table alternatives are in place.
+- Axe reports zero violations for the audited components (colour-contrast rule disabled under
+  jsdom because it cannot compute rendered colours).
+
+## Verification
+
+- Reports 9 tests, Web 20 tests (including 2 axe tests), Task 31, Worklog 10, Monitoring 10.
+- Lint, mypy, typecheck and builds pass.
+
+## Status
+
+- M0 complete, M1 34/34, M2 33/33, **M4 26/26**.
+- M3 remains 25/40; desktop T22–T36 deferred under ADR-019.
+
+Commits: `neatsprint-worklog` `6405efc`; `neatsprint-task` `7d60854`; `neatsprint-monitoring`
+`c798cec`; `neatsprint-reports` `1e92468`; `neatsprint-web` `d63db7c`.
+
+- OpenCade
