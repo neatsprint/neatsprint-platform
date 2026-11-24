@@ -20,6 +20,8 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-24 — **v1.0.2**: team member add/remove UI, signed-in header with sign out, and removed
+  the route loading skeletons that left pages stuck on “Loading…”; 22 web tests pass.
 - 2026-11-24 — **v1.0.1**: backlog create drawer and BFF POST route; owner create verified,
   viewer `403`; 21 web tests pass.
 - 2026-11-24 — **Environment lifecycle docs**: dev and local-staging up/stop/down/rebuild

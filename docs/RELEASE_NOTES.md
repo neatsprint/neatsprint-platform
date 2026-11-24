@@ -1,5 +1,21 @@
 # Release Notes
 
+## v1.0.2 — 2026-11-24
+
+> Patch release. Team membership UI and a page-rendering fix.
+
+### Fixed
+
+- **Team members**: the Teams page now lists members and lets users with `team:member:manage`
+  add an active user as Member or Lead, or remove a member. New BFF routes proxy the Team API.
+- **Header identity**: the app shell shows the signed-in user's name/initials and a **Sign out**
+  action; it no longer shows a misleading “Sign in” link while authenticated.
+- **Stuck “Loading…” pages**: removed the route-level `loading.tsx` skeletons that left Projects,
+  Teams, Timesheet, Reports, Monitoring and the project pages on their fallback under the
+  Next 16 production streaming path. Content now renders directly.
+- Verified end to end: team add `201`, page shows the member, remove `204`; 22 web tests,
+  typecheck and production build pass.
+
 ## v1.0.1 — 2026-11-24
 
 > Patch release. Adds the missing backlog create flow.
