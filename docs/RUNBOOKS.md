@@ -105,6 +105,21 @@ Health after any change: `GET /healthz`, `GET /readyz`, `/metrics` on every serv
 `:8000`, dev web `:3000`, Traefik dashboard `:8089`; staging gateway `:8100`, web `:3100`,
 Traefik dashboard `:8189`.
 
+### Port already in use
+
+Compose fails before starting a service when a host port is taken, for example
+`bind: Only one usage of each socket address ... :9090`. Find the owner and either stop it or
+move NeatSprint:
+
+```powershell
+Get-NetTCPConnection -LocalPort 9090 -State Listen | Select-Object OwningProcess
+Get-Process -Id <pid>
+```
+
+If the owner is unrelated software, change the matching variable in `.env` (or `.env.staging`):
+`PROMETHEUS_PORT`, `GRAFANA_PORT`, `GATEWAY_HTTP_PORT`, `POSTGRES_PORT`, `WEB_PORT`, and so on.
+Then rerun `docker compose up -d`. Do not stop host services you do not own.
+
 ## Service down
 
 1. `docker compose ps` and `docker compose logs --tail=100 <service>`.

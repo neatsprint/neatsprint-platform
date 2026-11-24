@@ -21,7 +21,8 @@ All notable changes to NeatSprint are recorded here. Format follows
 ### Added
 
 - 2026-11-24 — **Environment lifecycle docs**: dev and local-staging up/stop/down/rebuild
-  commands, profile behaviour and safe "stop everything" procedure in `docs/RUNBOOKS.md`.
+  commands, profile behaviour, safe "stop everything" procedure and port-conflict troubleshooting
+  in `docs/RUNBOOKS.md`.
 - 2026-11-24 — **v1.0.0 released**: UAT signed off 9/10 with the desktop item waived under
   ADR-019; release workflow built all 10 images with SBOM + Trivy clean; 72-hour health window
   started (`docs/HEALTH_WINDOW.md`).
