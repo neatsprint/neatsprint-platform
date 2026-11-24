@@ -28,7 +28,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | M2 Work Management | 33 | 33 | 33 done · M2 complete |
 | M3 Time, Monitoring & Desktop | 40 | 25 | 25 done · desktop agent pending |
 | M4 Reports & Console | 26 | 26 | 26 done · M4 complete |
-| M5 Hardening & Launch | 28 | 12 | 12 done · hardening in progress |
+| M5 Hardening & Launch | 28 | 17 | 17 done · hardening in progress |
 | P2 Collaboration | 22 | 0 | Deferred |
 | P3 Intelligence | 16 | 0 | Deferred |
 | Cross-cutting (X-01…07) | 7 | 0 | Continuous |
@@ -489,7 +489,7 @@ error states; axe and manual keyboard audit pass; visual QA against `UI_UX_DESIG
 - [ ] **M5-T02** OWASP ASVS L2 self-assessment; fix all high/critical gaps.
 - [x] **M5-T03** Cross-tenant penetration script executed; results recorded.
 - [x] **M5-T04** Auth hardening review: token lifetimes, rotation, lockout, CSRF, cookie flags.
-- [ ] **M5-T05** Upload hardening: content sniffing, size limits, virus scan integration.
+- [x] **M5-T05** Upload hardening: content sniffing, size limits, virus scan integration.
 - [ ] **M5-T06** Dependency + container scan zero high/critical; SBOM generated.
 - [x] **M5-T07** Secrets rotation runbook + KMS key rotation rehearsal.
 
@@ -497,9 +497,9 @@ error states; axe and manual keyboard audit pass; visual QA against `UI_UX_DESIG
 
 - [ ] **M5-T08** Load test at target scale (k6): API mix, screenshot upload, reports.
   *AC*: NFR-PERF targets met, error rate < 0.1%.
-- [ ] **M5-T09** Database review: indexes, slow query log, partition maintenance job.
-- [ ] **M5-T10** Backup/restore rehearsal with documented RTO/RPO evidence.
-- [ ] **M5-T11** Chaos-lite: kill a service, verify gateway error shape and recovery.
+- [x] **M5-T09** Database review: indexes, slow query log, partition maintenance job.
+- [x] **M5-T10** Backup/restore rehearsal with documented RTO/RPO evidence.
+- [x] **M5-T11** Chaos-lite: kill a service, verify gateway error shape and recovery.
 - [x] **M5-T12** Resource limits and health probes for every container.
 
 ### Epic M5-E3 — Operations
@@ -508,7 +508,7 @@ error states; axe and manual keyboard audit pass; visual QA against `UI_UX_DESIG
   expiry. *AC*: each alert has a runbook link.
 - [ ] **M5-T14** Grafana dashboards: platform overview, per-service RED, business KPIs.
 - [x] **M5-T15** `docs/RUNBOOKS.md` complete: start/stop/restore/rotate/incident/on-call.
-- [ ] **M5-T16** Release pipeline: versioned images, changelog, GitHub release, rollback.
+- [x] **M5-T16** Release pipeline: versioned images, changelog, GitHub release, rollback.
 - [ ] **M5-T17** Staging environment provisioned; smoke suite runs post-deploy.
 
 ### Epic M5-E4 — Legal & documentation

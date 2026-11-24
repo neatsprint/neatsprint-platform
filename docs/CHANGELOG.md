@@ -20,6 +20,10 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-24 — **Upload hardening**: magic-byte sniffing, content/type mismatch rejection,
+  optional ClamAV INSTREAM scan, and automatic blob cleanup on rejection.
+- 2026-11-24 — **Reliability evidence**: partition maintenance job, backup/restore rehearsal,
+  chaos-lite recovery test and GHCR release workflow with SBOM + Trivy.
 - 2026-11-24 — **M5 hardening**: cross-tenant probe, CSP/security headers, resource limits,
   Prometheus alerts, runbooks, legal drafts, README/release notes and retrospective.
 - 2026-11-24 — **Source backfill**: paginated, resumable report backfill from Task, Worklog and

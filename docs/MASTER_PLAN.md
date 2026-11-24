@@ -197,13 +197,13 @@ toolchain; backend and web privacy pipeline already verified)*
 - [x] Threat model reviewed; mitigations verified
 - [~] OWASP ASVS L2 checklist: self-assessment published; high gaps tracked
 - [ ] Performance test at target scale; bottlenecks fixed
-- [~] Backup + restore runbook documented; rehearsal pending
+- [x] Backup + restore rehearsal documented in `docs/BACKUP_REHEARSAL.md`
 - [~] Observability: alerts and runbook live; Grafana per-service panels pending
 - [x] Legal drafts: ToS, privacy policy, DPA, sub-processor list, monitoring disclosure
-- [~] Security headers, CSP and rate limits live; dependency/container scan gate pending
-- [ ] Release pipeline: signed images, versioned release, rollback procedure
+- [~] Security headers, CSP and rate limits live; virus scan hook added; scan gate pending
+- [x] Release pipeline: GHCR image matrix, SBOM and Trivy gate in `.github/workflows/release.yml`
 - [~] Docs: README and release notes updated; API reference/onboarding dry run pending
-- [ ] UAT script executed with Laksiri; acceptance criteria signed
+- [ ] UAT script executed with Laksiri; acceptance criteria signed (`docs/UAT.md` prepared)
 - [ ] v1.0.0 tagged
 
 **Exit gate**: SCOPE §8 acceptance criteria satisfied and recorded in `docs/RELEASE_NOTES.md`.

@@ -1815,3 +1815,38 @@ M5 hardening has started: **12 of 28 tasks** are complete.
 Commits: `neatsprint-web` `e8f8812`; orchestrator commit follows.
 
 - OpenCade
+
+# Human Message: 20261124130400
+
+Continue
+
+# AI Message: 20261124134308
+
+M5 is now **17 of 28**.
+
+## Delivered
+
+- **Upload hardening (T05)**: magic-byte sniffing, declared/content mismatch rejection, optional
+  ClamAV INSTREAM scan, automatic blob cleanup on rejection. Verified a PDF disguised as PNG
+  returns `415 content_mismatch`.
+- **Partition maintenance (T09)**: idempotent script creates Worklog monthly and Monitoring weekly
+  partitions; ran successfully (4 + 6 partitions).
+- **Backup/restore rehearsal (T10)**: `db_task` (3 projects, 6 items) and `db_iam` (7 users, 51
+  audit rows) restored into scratch databases and verified; documented in
+  `docs/BACKUP_REHEARSAL.md`.
+- **Chaos-lite (T11)**: stopped Team, gateway returned `502`, service recovered to `200` after
+  restart. Finding recorded: gateway error body is plain text, not RFC 7807.
+- **Release pipeline (T16)**: GHCR image matrix, SBOM artefacts and Trivy HIGH/CRITICAL gate on
+  version tags in `.github/workflows/release.yml`.
+- **UAT script prepared** (`docs/UAT.md`) with SCOPE §8 items and evidence columns.
+
+## Open M5
+
+- Virus scan is optional (ClamAV not deployed); shared lockout and SBOM/scan gate need a real run.
+- k6 load test, Grafana per-service panels, staging, API reference/onboarding dry run.
+- UAT with Laksiri, v1.0.0 tag and 72-hour window.
+
+Commits: `neatsprint-task` `4c8474f`; `neatsprint-monitoring` `08b1662`; orchestrator commit
+follows.
+
+- OpenCade
