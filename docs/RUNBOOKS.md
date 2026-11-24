@@ -102,6 +102,39 @@ Screenshot blobs are deliberately excluded from backups.
    safe.
 4. Reports backfill: `python -m neatsprint_reports.backfill --tenant <id>`.
 
+## Upload malware scanning
+
+ClamAV is optional and runs under the `security` profile:
+
+```bash
+CLAMAV_HOST=clamav docker compose --profile security up -d clamav
+docker compose up -d neatsprint-task neatsprint-monitoring
+```
+
+Task and Monitoring call `clamd` INSTREAM on confirm/upload. If the scanner is configured but
+unreachable, uploads fail closed with `503 dependency_unavailable`. The first start downloads the
+virus database and can take several minutes; wait for the healthcheck.
+
+Test with the EICAR sample in a scratch file (never commit it): the upload must return
+`422 malware_detected` and the blob must be removed. Verified 2026-11-24: EICAR →
+`422 malware_detected`; with `clamav` stopped → `503 dependency_unavailable` (fail closed).
+
+## SBOM and vulnerability scan
+
+The release workflow generates an SPDX SBOM per image and runs Trivy at HIGH/CRITICAL with
+`ignore-unfixed: true`. Locally, the Docker daemon is not mounted inside the Trivy container, so
+save the image and scan the archive:
+
+```bash
+docker save neatsprint-neatsprint-web:latest -o /tmp/web.tar
+docker run --rm -v /tmp:/work -v trivy-cache:/root/.cache/trivy \
+  aquasec/trivy:0.69.3 image --input /work/web.tar \
+  --severity HIGH,CRITICAL --ignore-unfixed --scanners vuln
+```
+
+Use Trivy **0.69.3 or earlier**; v0.69.4 was compromised upstream. Pin `trivy-action` to `0.35.0`
+or a safe SHA. Latest result and SBOM artefacts: `docs/SBOM.md` and `docs/sbom/`.
+
 ## Certificate expiry
 
 The local stack is HTTP. Production terminates TLS at the ingress/ACME; alert on

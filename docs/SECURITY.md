@@ -67,14 +67,14 @@ Residual risks accepted for MVP:
 | Cookies | Access/refresh cookies are `HttpOnly`, `SameSite=Lax`, `Secure` in production, `Cache-Control: no-store` | Verified |
 | Rate limits | Gateway applies per-IP auth/public buckets and per-user buckets | Verified in Traefik config |
 | Security headers | Gateway and Next.js set nosniff, frame-deny, referrer and CSP headers | Added in M5 |
-| Uploads | MIME allow-list, 10 MB cap, dedupe hash, quota; virus scanning not integrated | Partial |
+| Uploads | MIME allow-list, magic-byte sniffing, 25 MB cap, dedupe hash, quota; ClamAV INSTREAM scanner fails closed | **PASS** — EICAR `422 malware_detected`; scanner down `503 dependency_unavailable` |
 | Screenshot deletion | Blob delete + tombstone + audit + view log | Verified live |
 | Desktop agent | Tauri tasks deferred; device binding, SQLCipher and update signing unverified | **Open (ADR-019)** |
-| Dependency/container scans | Dependabot and CodeQL run; zero-high/critical gate not yet enforced | Partial |
+| Dependency/container scans | Dependabot, CodeQL and Trivy 0.69.3 on every image | **PASS** — 0 high/critical across 10 images (`docs/SBOM.md`) |
+| Login lockout | Redis counter, 5 failures / 15 minutes, shared across IAM replicas | **PASS** — `429 account_locked` verified |
 | Secrets | No secrets in git; `.env` ignored; rotation runbook added | Verified |
 
-Open M5 security work: ClamAV/virus scanning, shared lockout counters (gateway rate limit is
-per-instance), and desktop-agent verification.
+Open M5 security work: desktop-agent verification (ADR-019) and the staging/UAT gates.
 
 ---
 

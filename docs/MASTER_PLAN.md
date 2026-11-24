@@ -195,12 +195,12 @@ toolchain; backend and web privacy pipeline already verified)*
 **Goal**: defensible release.
 
 - [x] Threat model reviewed; mitigations verified
-- [~] OWASP ASVS L2 checklist: self-assessment published; high gaps tracked
+- [x] OWASP ASVS L2 checklist: self-assessment published; high gaps closed except desktop (ADR-019)
 - [~] Performance test: smoke load passed (0% errors, p95 54 ms); target-scale volume pending
 - [x] Backup + restore rehearsal documented in `docs/BACKUP_REHEARSAL.md`
 - [x] Observability: alerts, per-service RED dashboard and runbook live
 - [x] Legal drafts: ToS, privacy policy, DPA, sub-processor list, monitoring disclosure
-- [x] Security headers, CSP and rate limits live; dependency audits clean; lockout + virus hook added
+- [x] Security headers, CSP and rate limits live; audits clean; lockout, ClamAV and SBOM gate verified
 - [x] Release pipeline: GHCR image matrix, SBOM and Trivy gate in `.github/workflows/release.yml`
 - [~] Docs: README, release notes and API reference published; onboarding dry run pending
 - [ ] UAT script executed with Laksiri; acceptance criteria signed (`docs/UAT.md` prepared)
@@ -225,7 +225,7 @@ toolchain; backend and web privacy pipeline already verified)*
 - [ ] Scaffold Expo mobile with auth, assigned work and offline queue
 - [ ] Add GitHub commit/PR linking with least-privilege tokens
 - [ ] Carry desktop T22–T36 into P2 planning with a Rust/Tauri toolchain owner
-- [ ] Close M5 open items before v1.0.0 (virus scan, shared lockout, SBOM gate, UAT, legal review)
+- [ ] Close M5 open items before v1.0.0 (UAT, legal review, target-scale load, staging)
 - [ ] Saved views and command palette (if not delivered in M4)
 
 ### P3 — Intelligence (post-MVP)

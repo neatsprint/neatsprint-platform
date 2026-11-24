@@ -28,7 +28,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | M2 Work Management | 33 | 33 | 33 done · M2 complete |
 | M3 Time, Monitoring & Desktop | 40 | 25 | 25 done · desktop agent pending |
 | M4 Reports & Console | 26 | 26 | 26 done · M4 complete |
-| M5 Hardening & Launch | 28 | 20 | 20 done · hardening in progress |
+| M5 Hardening & Launch | 28 | 21 | 21 done · hardening in progress |
 | P2 Collaboration | 22 | 0 | Deferred |
 | P3 Intelligence | 16 | 0 | Deferred |
 | Cross-cutting (X-01…07) | 7 | 0 | Continuous |
@@ -486,7 +486,7 @@ error states; axe and manual keyboard audit pass; visual QA against `UI_UX_DESIG
 ### Epic M5-E1 — Security
 
 - [x] **M5-T01** Threat model workshop output committed (`SECURITY.md` §2 updated with findings).
-- [ ] **M5-T02** OWASP ASVS L2 self-assessment; fix all high/critical gaps.
+- [x] **M5-T02** OWASP ASVS L2 self-assessment; fix all high/critical gaps.
 - [x] **M5-T03** Cross-tenant penetration script executed; results recorded.
 - [x] **M5-T04** Auth hardening review: token lifetimes, rotation, lockout, CSRF, cookie flags.
 - [x] **M5-T05** Upload hardening: content sniffing, size limits, virus scan integration.

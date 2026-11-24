@@ -1921,3 +1921,38 @@ Commits: `neatsprint-monitoring` `bd0c731`; `neatsprint-web` `f68f834`; orchestr
 follows.
 
 - OpenCade
+
+# Human Message: 20261124150000
+
+Continue
+
+# AI Message: 20261124155223
+
+M5 is now **21 of 28**. T02 (ASVS L2) is closed except the desktop item already deferred by ADR-019.
+
+## ClamAV (T02/T05)
+
+- `clamav` service added under the `security` profile with a 1 GB limit and healthcheck.
+- EICAR upload → `422 malware_detected`; the rejected blob is deleted.
+- With `clamav` stopped, upload → `503 dependency_unavailable` (fail closed), then the scanner was
+  restarted healthy.
+
+## SBOM and container scan (T02/T06)
+
+- Trivy **0.69.3**, HIGH/CRITICAL, `--ignore-unfixed`, all 10 images: **0 findings**.
+- Fixed 10 highs in npm's bundled CLI by removing npm/npx from the web runtime stage (rescan 0).
+- Rebuilt six stale Python images; their Debian `krb5`/`zlib` findings came from the old base
+  layer and cleared on rebuild.
+- CycloneDX SBOMs committed in `docs/sbom/`; summary in `docs/SBOM.md`.
+- `docs/ASVS_L2.md`: all high gaps closed except desktop; `docs/SECURITY.md` updated.
+
+## Still open (7)
+
+- T08: target-scale load + screenshot upload test.
+- T17 staging, T21 clean-machine onboarding dry run.
+- T23 UAT with Laksiri, T25 v1.0.0 tag, T26 72-hour window.
+- T02 desktop verification remains deferred by ADR-019.
+
+Commits: `neatsprint-web` `80d8a8c`; orchestrator commit follows.
+
+- OpenCade

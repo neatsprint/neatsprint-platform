@@ -90,6 +90,22 @@ services:
       - "${MAILPIT_UI_PORT:-8025}:8025"
       - "${MAILPIT_SMTP_PORT:-1025}:1025"
 
+  clamav:
+    profiles: ["security"]
+    image: clamav/clamav:stable
+    restart: unless-stopped
+    networks: [neatsprint]
+    mem_limit: 1g
+    cpus: 1.0
+    ports:
+      - "${CLAMAV_PORT:-3310}:3310"
+    healthcheck:
+      test: ["CMD", "clamdcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      start_period: 180s
+      retries: 10
+
   gateway:
     image: traefik:v3.3
     restart: unless-stopped
