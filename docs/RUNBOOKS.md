@@ -115,6 +115,9 @@ Task and Monitoring call `clamd` INSTREAM on confirm/upload. If the scanner is c
 unreachable, uploads fail closed with `503 dependency_unavailable`. The first start downloads the
 virus database and can take several minutes; wait for the healthcheck.
 
+If the container stays unhealthy right after the first `freshclam` update, restart it:
+`docker compose restart clamav`. The database is already on disk, so it comes up in seconds.
+
 Test with the EICAR sample in a scratch file (never commit it): the upload must return
 `422 malware_detected` and the blob must be removed. Verified 2026-11-24: EICAR →
 `422 malware_detected`; with `clamav` stopped → `503 dependency_unavailable` (fail closed).

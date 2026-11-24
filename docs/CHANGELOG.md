@@ -21,7 +21,8 @@ All notable changes to NeatSprint are recorded here. Format follows
 ### Added
 
 - 2026-11-24 — **v1.0.0 released**: UAT signed off 9/10 with the desktop item waived under
-  ADR-019; web/backend surface accepted; 72-hour health window started.
+  ADR-019; release workflow built all 10 images with SBOM + Trivy clean; 72-hour health window
+  started (`docs/HEALTH_WINDOW.md`).
 - 2026-11-24 — **Local staging + UAT**: offset-port staging profile, web API URL baked at build,
   post-deploy smoke; UAT 9 pass / 1 desktop-blocked. Fixed seed team membership (manager
   tombstone visibility) and MinIO data volume path.

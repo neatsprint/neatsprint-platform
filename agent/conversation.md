@@ -2168,3 +2168,31 @@ under ADR-019.
 Commits: orchestrator release commit and `v1.0.0` tag follow.
 
 - OpenCade
+
+# AI Message: 20261124191943
+
+`v1.0.0` is tagged and the release pipeline is green.
+
+## Release verification
+
+- Tag `v1.0.0` pushed on the orchestrator; matching tags on contracts, lib, apigw and all ten
+  service/web repos.
+- GitHub release run `45406253483`: **success** for all 10 images, each with SBOM and
+  HIGH/CRITICAL Trivy gate.
+- Staging re-checked after the MinIO fix: 10 services healthy, smoke pass (ping, login, projects,
+  timesheet, teams, reports, web).
+
+## Health window (T26, open)
+
+- Start 2026-11-24 19:12 +05:30; end 2026-11-27 19:12 +05:30.
+- Baseline and daily commands in `docs/HEALTH_WINDOW.md`.
+- Note: ClamAV can stay unhealthy after its first `freshclam` reload; `docker compose restart
+  clamav` clears it (recorded in the runbook).
+
+## Final state
+
+- M5 **27/28**; only T26 remains, and it closes after the three daily health lines.
+- Desktop agent stays deferred under ADR-019; legal counsel review is external.
+- Development stack and local staging are both up.
+
+- OpenCade
