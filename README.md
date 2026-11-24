@@ -38,7 +38,7 @@ one product — and gives employees a real way to see and delete what was captur
 
 | Component | Description | Technology |
 | :--- | :--- | :--- |
-| **Web app** | Planning, boards, reports, admin, monitoring review | Next.js 15, TypeScript, Tailwind, shadcn/ui |
+| **Web app** | Planning, boards, reports, admin, monitoring review | Next.js 16, TypeScript, Tailwind, shadcn/ui |
 | **Desktop agent** | Timer, idle detection, screenshots, offline sync, privacy review tray | Tauri v2, Rust, React, SQLCipher |
 | **Mobile app** *(Phase 2)* | Assigned work, manual time, chat, notifications | React Native (Expo) |
 | **API gateway** | Single ingress, auth, rate limits, routing | Traefik v3 |
@@ -160,24 +160,55 @@ Submodule repositories: `neatsprint-contracts`, `neatsprint-lib`, `neatsprint-ap
 git clone --recurse-submodules https://github.com/neatsprint/neatsprint-platform.git
 cd neatsprint-platform
 ./scripts/bootstrap.ps1     # Windows PowerShell (or ./scripts/bootstrap.sh)
+```
 
+`bootstrap` creates `.env` from `.env.example`, builds and starts the stack, waits for every
+service, then seeds the demo tenant. To do it by hand:
+
+```bash
+cp .env.example .env
 docker compose up -d --build
+python scripts/seed.py
 ```
 
 - Web: <http://localhost:3000>
 - API: <http://localhost:8000/api/v1>
 - Traefik dashboard: <http://localhost:8089>
+- MinIO console: <http://localhost:9001>
 - Mailpit (email): <http://localhost:8025>
 
-Until M1 lands, the stack runs and every service answers `/healthz`; login, invitations and
-seeded demo data arrive with the identity milestone.
+Sign in with any demo account — password `NeatSprint!2026` for all:
+
+| Email | Role |
+| :--- | :--- |
+| `owner@acme-labs.com` | Owner |
+| `admin@acme-labs.com` | Admin |
+| `manager@acme-labs.com` | Manager |
+| `lead@acme-labs.com` | Lead |
+| `member@acme-labs.com` | Member |
+| `viewer@acme-labs.com` | Viewer |
+
+Optional profiles:
+
+```bash
+docker compose --profile observability up -d   # Prometheus :9090, Grafana :3001
+CLAMAV_HOST=clamav docker compose --profile security up -d clamav
+docker compose up -d neatsprint-task neatsprint-monitoring   # pick up CLAMAV_HOST
+```
+
+`CLAMAV_HOST` must be set before starting Task and Monitoring. With it set and the scanner down,
+uploads fail closed with `503`; see `docs/RUNBOOKS.md`.
+
+To reset local data: `docker compose down -v` (destroys all local volumes).
 
 ### Prerequisites
 
 - Docker Desktop 4.x+ with Compose v2
-- Node 22 LTS and pnpm (web)
+- Node 22 LTS and npm (web)
 - Python 3.12 and uv (services)
-- Rust stable + Tauri prerequisites (desktop)
+- Rust stable + Tauri prerequisites (desktop agent only)
+
+A clean-machine walkthrough is recorded in [`docs/ONBOARDING_DRY_RUN.md`](docs/ONBOARDING_DRY_RUN.md).
 
 ---
 
