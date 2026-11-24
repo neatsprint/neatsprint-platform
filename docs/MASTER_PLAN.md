@@ -200,7 +200,7 @@ toolchain; backend and web privacy pipeline already verified)*
 - [x] Backup + restore rehearsal documented in `docs/BACKUP_REHEARSAL.md`
 - [x] Observability: alerts, per-service RED dashboard and runbook live
 - [x] Legal drafts: ToS, privacy policy, DPA, sub-processor list, monitoring disclosure
-- [~] Security headers, CSP and rate limits live; lockout + virus hook added; scan gate pending
+- [x] Security headers, CSP and rate limits live; dependency audits clean; lockout + virus hook added
 - [x] Release pipeline: GHCR image matrix, SBOM and Trivy gate in `.github/workflows/release.yml`
 - [~] Docs: README, release notes and API reference published; onboarding dry run pending
 - [ ] UAT script executed with Laksiri; acceptance criteria signed (`docs/UAT.md` prepared)

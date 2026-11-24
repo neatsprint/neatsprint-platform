@@ -1887,3 +1887,37 @@ M5 is now **19 of 28**.
 Commits: `neatsprint-iam` `9388f21` (PR #6); orchestrator commit follows.
 
 - OpenCade
+
+# Human Message: 20261124143200
+
+continue
+
+# AI Message: 20261124144400
+
+M5 is now **20 of 28**.
+
+## Dependency remediation (T06)
+
+- Web upgraded to **Next 16.4.6**, Vitest 5.1.1, plugin-react 5.2, Vite 7: `npm audit` reports
+  **0 vulnerabilities**; typecheck, 20 tests and production build pass.
+- Monitoring upgraded **cryptography 45 → 50.0.2**, clearing the 7 high alerts.
+- IAM, Task, Team, Worklog, Reports, Lib and Core have zero open high/critical Dependabot alerts.
+- Platform Trivy action was pinned to the safe `0.35.0`; the critical platform alert is cleared.
+
+## Verification
+
+- Next 16 login and `/projects` return 200 in the running stack.
+- Monitoring rebuilt with cryptography 50.x; tests pass.
+- `npm audit` clean; Dependabot high/critical count zero for the checked repos.
+
+## Open M5 (8)
+
+- T02: deploy/verify ClamAV (hook exists) and run the SBOM/Trivy gate.
+- T08: target-scale load + screenshot upload test.
+- T17 staging, T21 onboarding dry run.
+- T23 UAT with Laksiri, T25 v1.0.0 tag, T26 72-hour window.
+
+Commits: `neatsprint-monitoring` `bd0c731`; `neatsprint-web` `f68f834`; orchestrator commit
+follows.
+
+- OpenCade
