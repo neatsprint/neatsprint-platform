@@ -28,7 +28,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | M2 Work Management | 33 | 33 | 33 done · M2 complete |
 | M3 Time, Monitoring & Desktop | 40 | 25 | 25 done · desktop agent pending |
 | M4 Reports & Console | 26 | 26 | 26 done · M4 complete |
-| M5 Hardening & Launch | 28 | 17 | 17 done · hardening in progress |
+| M5 Hardening & Launch | 28 | 19 | 19 done · hardening in progress |
 | P2 Collaboration | 22 | 0 | Deferred |
 | P3 Intelligence | 16 | 0 | Deferred |
 | Cross-cutting (X-01…07) | 7 | 0 | Continuous |
@@ -506,7 +506,7 @@ error states; axe and manual keyboard audit pass; visual QA against `UI_UX_DESIG
 
 - [x] **M5-T13** Prometheus alerts: error rate, latency, queue lag, disk, backup failure, cert
   expiry. *AC*: each alert has a runbook link.
-- [ ] **M5-T14** Grafana dashboards: platform overview, per-service RED, business KPIs.
+- [x] **M5-T14** Grafana dashboards: platform overview, per-service RED, business KPIs.
 - [x] **M5-T15** `docs/RUNBOOKS.md` complete: start/stop/restore/rotate/incident/on-call.
 - [x] **M5-T16** Release pipeline: versioned images, changelog, GitHub release, rollback.
 - [ ] **M5-T17** Staging environment provisioned; smoke suite runs post-deploy.
@@ -516,7 +516,7 @@ error states; axe and manual keyboard audit pass; visual QA against `UI_UX_DESIG
 - [x] **M5-T18** `legal/terms-of-service.md`, `privacy-policy.md`, `dpa.md`,
   `subprocessors.md`, `monitoring-disclosure-template.md`, `README.md`.
 - [x] **M5-T19** Update root `README.md`: features, architecture, quick start, repo map, status.
-- [ ] **M5-T20** Publish API reference (Redoc/Scalar) from contracts.
+- [x] **M5-T20** Publish API reference (Redoc/Scalar) from contracts.
 - [ ] **M5-T21** Contributor onboarding guide verified by a clean-clone dry run.
 - [x] **M5-T22** `docs/RELEASE_NOTES.md` for v1.0.0.
 

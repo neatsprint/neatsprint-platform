@@ -1850,3 +1850,40 @@ Commits: `neatsprint-task` `4c8474f`; `neatsprint-monitoring` `08b1662`; orchest
 follows.
 
 - OpenCade
+
+# Human Message: 20261124134400
+
+continue
+
+# AI Message: 20261124143101
+
+M5 is now **19 of 28**.
+
+## Delivered
+
+- **Login lockout**: Redis-backed failed-login counters shared across IAM replicas (5 failures /
+  15 minutes). Verified: five wrong passwords then a correct login returns `429 account_locked`;
+  key cleared afterwards.
+- **Per-service RED dashboard**: request rate, 5xx, p95 latency, target up/down and gateway panels.
+- **API reference**: merged OpenAPI 3.1 from all nine services (`docs/openapi.json`) plus a Redoc
+  page (`docs/api.html`) and `docs/API_REFERENCE.md`.
+- **Load test**: k6 API-mix script. Smoke run: 0% errors, read p95 ~37 ms, write p95 ~47 ms,
+  overall p95 54 ms at ~41 req/s. Target-scale volume and upload scenario remain open.
+
+## Notes
+
+- The load test initially failed because report reads used a member token (403) and then hit the
+  gateway per-user rate limit; it now uses an owner token for reports and multiple users for the
+  mix.
+- Load-test items were removed from Task and Reports (728 rows each).
+- IAM delivered through PR #6 with CI green.
+
+## Open M5 (9)
+
+- ASVS high gaps: deploy/verify ClamAV, run the SBOM/Trivy gate, final dependency review.
+- Target-scale load/upload test, staging, onboarding dry run.
+- UAT with Laksiri, v1.0.0 tag and 72-hour window.
+
+Commits: `neatsprint-iam` `9388f21` (PR #6); orchestrator commit follows.
+
+- OpenCade

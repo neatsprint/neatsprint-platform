@@ -20,6 +20,8 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-24 — **Security hardening follow-up**: Redis-backed login lockout shared across IAM
+  replicas, per-service Grafana RED dashboard, merged OpenAPI reference and k6 smoke load test.
 - 2026-11-24 — **Upload hardening**: magic-byte sniffing, content/type mismatch rejection,
   optional ClamAV INSTREAM scan, and automatic blob cleanup on rejection.
 - 2026-11-24 — **Reliability evidence**: partition maintenance job, backup/restore rehearsal,
