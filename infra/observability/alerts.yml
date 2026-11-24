@@ -1,0 +1,46 @@
+groups:
+  - name: neatsprint-platform
+    rules:
+      - alert: ServiceDown
+        expr: up == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "{{ $labels.job }}/{{ $labels.instance }} is down"
+          runbook_url: "https://github.com/neatsprint/neatsprint-platform/blob/main/docs/RUNBOOKS.md#service-down"
+
+      - alert: HighErrorRate
+        expr: |
+          sum by (service) (rate(http_requests_total{status=~"5.."}[5m]))
+          /
+          sum by (service) (rate(http_requests_total[5m])) > 0.05
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "{{ $labels.service }} 5xx rate above 5%"
+          runbook_url: "https://github.com/neatsprint/neatsprint-platform/blob/main/docs/RUNBOOKS.md#high-error-rate"
+
+      - alert: HighLatencyP95
+        expr: |
+          histogram_quantile(
+            0.95,
+            sum by (le, service) (rate(http_request_duration_seconds_bucket[5m]))
+          ) > 1
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "{{ $labels.service }} p95 latency above 1s"
+          runbook_url: "https://github.com/neatsprint/neatsprint-platform/blob/main/docs/RUNBOOKS.md#high-latency"
+
+      - alert: Gateway5xx
+        expr: |
+          sum(rate(traefik_service_requests_total{code=~"5.."}[5m])) > 1
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Gateway is returning 5xx responses"
+          runbook_url: "https://github.com/neatsprint/neatsprint-platform/blob/main/docs/RUNBOOKS.md#gateway-5xx"

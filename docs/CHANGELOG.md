@@ -18,6 +18,10 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+### Added
+
+- 2026-11-24 — **M5 hardening**: cross-tenant probe, CSP/security headers, resource limits,
+  Prometheus alerts, runbooks, legal drafts, README/release notes and retrospective.
 - 2026-11-24 — **Source backfill**: paginated, resumable report backfill from Task, Worklog and
   Monitoring internal APIs with a CLI command.
 - 2026-11-24 — **Accessibility audit**: automated axe tests for the backlog and global search,

@@ -194,15 +194,15 @@ toolchain; backend and web privacy pipeline already verified)*
 
 **Goal**: defensible release.
 
-- [ ] Threat model reviewed; mitigations verified
-- [ ] OWASP ASVS L2 checklist (in-scope items) signed off
+- [x] Threat model reviewed; mitigations verified
+- [~] OWASP ASVS L2 checklist: self-assessment published; high gaps tracked
 - [ ] Performance test at target scale; bottlenecks fixed
-- [ ] Backup + restore rehearsal documented in `docs/RUNBOOKS.md`
-- [ ] Observability: dashboards, alerts, SLOs, on-call runbook
-- [ ] Legal: ToS, privacy policy, DPA, sub-processor list, monitoring disclosure template
-- [ ] Security headers, CSP, rate limits, dependency and container scans clean
+- [~] Backup + restore runbook documented; rehearsal pending
+- [~] Observability: alerts and runbook live; Grafana per-service panels pending
+- [x] Legal drafts: ToS, privacy policy, DPA, sub-processor list, monitoring disclosure
+- [~] Security headers, CSP and rate limits live; dependency/container scan gate pending
 - [ ] Release pipeline: signed images, versioned release, rollback procedure
-- [ ] Docs: `README`, onboarding, API reference published
+- [~] Docs: README and release notes updated; API reference/onboarding dry run pending
 - [ ] UAT script executed with Laksiri; acceptance criteria signed
 - [ ] v1.0.0 tagged
 
@@ -216,6 +216,16 @@ toolchain; backend and web privacy pipeline already verified)*
 - [ ] Notification service: in-app, email, push tokens
 - [ ] Mobile app: auth, assigned work, status updates, manual time, chat, push
 - [ ] GitHub integration: commit/PR linking
+
+**P2 kickoff checklist**
+
+- [ ] Finalize chat schema and channel/team binding ADR
+- [ ] Add chat/presence/notification event contracts
+- [ ] Extract notification service and push token registry
+- [ ] Scaffold Expo mobile with auth, assigned work and offline queue
+- [ ] Add GitHub commit/PR linking with least-privilege tokens
+- [ ] Carry desktop T22–T36 into P2 planning with a Rust/Tauri toolchain owner
+- [ ] Close M5 open items before v1.0.0 (virus scan, shared lockout, SBOM gate, UAT, legal review)
 - [ ] Saved views and command palette (if not delivered in M4)
 
 ### P3 — Intelligence (post-MVP)

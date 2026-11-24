@@ -1775,3 +1775,43 @@ Commits: `neatsprint-worklog` `6405efc`; `neatsprint-task` `7d60854`; `neatsprin
 `c798cec`; `neatsprint-reports` `1e92468`; `neatsprint-web` `d63db7c`.
 
 - OpenCade
+
+# Human Message: 20261124123100
+
+m5 hardening
+
+# AI Message: 20261124130327
+
+M5 hardening has started: **12 of 28 tasks** are complete.
+
+## Delivered
+
+- **Cross-tenant probe** (`scripts/security/cross_tenant_probe.py`): creates a second tenant and
+  verifies foreign project, item, team, user and timesheet reads. Result: **PASS**, all 8 checks.
+- **Threat model review** in `SECURITY.md` §2.1 with the probe result and residual risks.
+- **ASVS L2 self-assessment** (`docs/ASVS_L2.md`) with PASS/PARTIAL/N-A and the four high gaps.
+- **Auth/security headers**: CSP, nosniff, frame-deny, referrer and permissions policies; login
+  responses are `Cache-Control: no-store`; cookies already HttpOnly/SameSite/Secure-in-prod.
+- **Resource limits** for Postgres, Redis, MinIO, gateway, web and every app container.
+- **Prometheus alerts** (`infra/observability/alerts.yml`) for service down, 5xx rate, p95 latency
+  and gateway 5xx, each linked to a runbook.
+- **RUNBOOKS.md** covering start/stop, incidents, backup/restore, deletion incidents, key
+  rotation, release/rollback, outbox lag and certificates.
+- **Legal drafts**: ToS, privacy policy, DPA, sub-processors and monitoring disclosure template.
+- **README**, `RELEASE_NOTES.md` and `RETROSPECTIVE.md` updated; P2 kickoff checklist added.
+
+## Verification
+
+- Cross-tenant probe PASS (8/8).
+- `docker compose config` valid; web typecheck/build pass; CSP and frame headers observed live.
+- Existing tests remain green.
+
+## Open M5 items
+
+- Virus scanning, shared brute-force lockout, SBOM/zero-high-critical gate.
+- k6 load test, backup/restore rehearsal, chaos test, per-service Grafana panels.
+- Staging, API reference/onboarding dry run, UAT with Laksiri, v1.0.0 tag and 72-hour window.
+
+Commits: `neatsprint-web` `e8f8812`; orchestrator commit follows.
+
+- OpenCade

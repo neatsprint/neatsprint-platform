@@ -10,11 +10,12 @@ NeatSprint is a multi-tenant, open-source (AGPLv3) platform for agile task manag
 transparent work tracking. It brings planning, a secure desktop agent, and honest monitoring into
 one product — and gives employees a real way to see and delete what was captured about them.
 
-> **Project status**: pre-alpha. **M0** is delivered and **M1 (identity & tenancy)** is complete
-> except the database-level tenant guard, which moves to M2 with PostgreSQL RLS. Login, Google
-> ID-token sign-in, JWT/JWKS, refresh and silent refresh, RBAC, invitations (with resend), password
-> reset, sessions, seat limits, outbox, custom roles and tenant settings all work. Nothing here is
-> production ready yet.
+> **Project status**: MVP feature-complete on the web/backend surface. **M0–M2 complete**,
+> **M3 backend + privacy screens complete (desktop agent deferred)**, **M4 reports/console
+> complete**, **M5 hardening in progress**. Login, RBAC, projects/backlog/sprints, teams,
+> timesheets, encrypted monitoring with privacy deletion, notifications, reports, exports and the
+> admin console work end to end. The Tauri desktop agent is the remaining MVP component.
+> Nothing here is production ready until M5 sign-off.
 
 ---
 
@@ -117,10 +118,10 @@ in [`documents/`](documents) for reference.
 | :--- | :--- | :--- |
 | **M0** | Foundations: repos, Compose, contracts, CI | Done — 21/24 tasks; outbox + seed moved to M1 |
 | **M1** | Identity, tenancy, RBAC | Complete — 34/34 |
-| **M2** | Projects, backlog, sprints, teams | In progress — APIs + project/board/backlog views live |
-| **M3** | Time tracking, monitoring, desktop agent | Planned |
-| **M4** | Reports, dashboards, console polish | Planned |
-| **M5** | Hardening, legal, launch (`v1.0.0`) | Planned |
+| **M2** | Projects, backlog, sprints, teams | Complete - 33/33 |
+| **M3** | Time tracking, monitoring, desktop agent | 25/40 - backend + privacy screens live; desktop deferred (ADR-019) |
+| **M4** | Reports, dashboards, console polish | Complete - 26/26 |
+| **M5** | Hardening, legal, launch (`v1.0.0`) | In progress |
 | **P2** | Chat, notifications, mobile, GitHub | Deferred |
 | **P3** | AI assistant, enterprise compliance, billing | Deferred |
 

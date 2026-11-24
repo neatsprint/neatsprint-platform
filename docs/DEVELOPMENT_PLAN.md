@@ -28,7 +28,7 @@ and verifiable in one working block. Checkboxes are the source of truth for prog
 | M2 Work Management | 33 | 33 | 33 done · M2 complete |
 | M3 Time, Monitoring & Desktop | 40 | 25 | 25 done · desktop agent pending |
 | M4 Reports & Console | 26 | 26 | 26 done · M4 complete |
-| M5 Hardening & Launch | 28 | 0 | Not started |
+| M5 Hardening & Launch | 28 | 12 | 12 done · hardening in progress |
 | P2 Collaboration | 22 | 0 | Deferred |
 | P3 Intelligence | 16 | 0 | Deferred |
 | Cross-cutting (X-01…07) | 7 | 0 | Continuous |
@@ -485,13 +485,13 @@ error states; axe and manual keyboard audit pass; visual QA against `UI_UX_DESIG
 
 ### Epic M5-E1 — Security
 
-- [ ] **M5-T01** Threat model workshop output committed (`SECURITY.md` §2 updated with findings).
+- [x] **M5-T01** Threat model workshop output committed (`SECURITY.md` §2 updated with findings).
 - [ ] **M5-T02** OWASP ASVS L2 self-assessment; fix all high/critical gaps.
-- [ ] **M5-T03** Cross-tenant penetration script executed; results recorded.
-- [ ] **M5-T04** Auth hardening review: token lifetimes, rotation, lockout, CSRF, cookie flags.
+- [x] **M5-T03** Cross-tenant penetration script executed; results recorded.
+- [x] **M5-T04** Auth hardening review: token lifetimes, rotation, lockout, CSRF, cookie flags.
 - [ ] **M5-T05** Upload hardening: content sniffing, size limits, virus scan integration.
 - [ ] **M5-T06** Dependency + container scan zero high/critical; SBOM generated.
-- [ ] **M5-T07** Secrets rotation runbook + KMS key rotation rehearsal.
+- [x] **M5-T07** Secrets rotation runbook + KMS key rotation rehearsal.
 
 ### Epic M5-E2 — Reliability & performance
 
@@ -500,25 +500,25 @@ error states; axe and manual keyboard audit pass; visual QA against `UI_UX_DESIG
 - [ ] **M5-T09** Database review: indexes, slow query log, partition maintenance job.
 - [ ] **M5-T10** Backup/restore rehearsal with documented RTO/RPO evidence.
 - [ ] **M5-T11** Chaos-lite: kill a service, verify gateway error shape and recovery.
-- [ ] **M5-T12** Resource limits and health probes for every container.
+- [x] **M5-T12** Resource limits and health probes for every container.
 
 ### Epic M5-E3 — Operations
 
-- [ ] **M5-T13** Prometheus alerts: error rate, latency, queue lag, disk, backup failure, cert
+- [x] **M5-T13** Prometheus alerts: error rate, latency, queue lag, disk, backup failure, cert
   expiry. *AC*: each alert has a runbook link.
 - [ ] **M5-T14** Grafana dashboards: platform overview, per-service RED, business KPIs.
-- [ ] **M5-T15** `docs/RUNBOOKS.md` complete: start/stop/restore/rotate/incident/on-call.
+- [x] **M5-T15** `docs/RUNBOOKS.md` complete: start/stop/restore/rotate/incident/on-call.
 - [ ] **M5-T16** Release pipeline: versioned images, changelog, GitHub release, rollback.
 - [ ] **M5-T17** Staging environment provisioned; smoke suite runs post-deploy.
 
 ### Epic M5-E4 — Legal & documentation
 
-- [ ] **M5-T18** `legal/terms-of-service.md`, `privacy-policy.md`, `dpa.md`,
+- [x] **M5-T18** `legal/terms-of-service.md`, `privacy-policy.md`, `dpa.md`,
   `subprocessors.md`, `monitoring-disclosure-template.md`, `README.md`.
-- [ ] **M5-T19** Update root `README.md`: features, architecture, quick start, repo map, status.
+- [x] **M5-T19** Update root `README.md`: features, architecture, quick start, repo map, status.
 - [ ] **M5-T20** Publish API reference (Redoc/Scalar) from contracts.
 - [ ] **M5-T21** Contributor onboarding guide verified by a clean-clone dry run.
-- [ ] **M5-T22** `docs/RELEASE_NOTES.md` for v1.0.0.
+- [x] **M5-T22** `docs/RELEASE_NOTES.md` for v1.0.0.
 
 ### Epic M5-E5 — Acceptance
 
@@ -526,8 +526,8 @@ error states; axe and manual keyboard audit pass; visual QA against `UI_UX_DESIG
 - [ ] **M5-T24** Fix UAT defects (timeboxed; critical only).
 - [ ] **M5-T25** Sign-off recorded in `agent/conversation.md`; tag `v1.0.0`.
 - [ ] **M5-T26** Post-launch monitoring window (72 h) with daily health report.
-- [ ] **M5-T27** Retrospective: what to change in M0–M5 for P2/P3.
-- [ ] **M5-T28** Update MASTER_PLAN with P2 kickoff checklist.
+- [x] **M5-T27** Retrospective: what to change in M0–M5 for P2/P3.
+- [x] **M5-T28** Update MASTER_PLAN with P2 kickoff checklist.
 
 **M5 exit gate**: SCOPE §8 satisfied, signed off, `v1.0.0` released.
 

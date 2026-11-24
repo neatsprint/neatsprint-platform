@@ -57,6 +57,25 @@ Residual risks accepted for MVP:
 - Single-region deployment has a regional outage risk.
 - No third-party penetration test before v1.0 (scheduled post-MVP).
 
+### 2.1 M5 hardening review (2026-11-24)
+
+| Area | Finding | Status |
+| :--- | :--- | :--- |
+| Cross-tenant IDOR | Automated probe created a second tenant and attempted project, item, team, user and time reads | **PASS** — every foreign read returned `404` or an empty scoped result (`scripts/security/cross_tenant_probe.py`) |
+| Tenant isolation | Task/Team use PostgreSQL RLS; other services filter `tenant_id` explicitly | Verified in code and probe |
+| Auth headers | Gateway strips inbound `X-User-ID`/`X-Tenant-ID`; services verify JWTs via JWKS | Verified |
+| Cookies | Access/refresh cookies are `HttpOnly`, `SameSite=Lax`, `Secure` in production, `Cache-Control: no-store` | Verified |
+| Rate limits | Gateway applies per-IP auth/public buckets and per-user buckets | Verified in Traefik config |
+| Security headers | Gateway and Next.js set nosniff, frame-deny, referrer and CSP headers | Added in M5 |
+| Uploads | MIME allow-list, 10 MB cap, dedupe hash, quota; virus scanning not integrated | Partial |
+| Screenshot deletion | Blob delete + tombstone + audit + view log | Verified live |
+| Desktop agent | Tauri tasks deferred; device binding, SQLCipher and update signing unverified | **Open (ADR-019)** |
+| Dependency/container scans | Dependabot and CodeQL run; zero-high/critical gate not yet enforced | Partial |
+| Secrets | No secrets in git; `.env` ignored; rotation runbook added | Verified |
+
+Open M5 security work: ClamAV/virus scanning, shared lockout counters (gateway rate limit is
+per-instance), and desktop-agent verification.
+
 ---
 
 ## 3. Authentication

@@ -1,125 +1,108 @@
 # NeatSprint Runbooks
 
-> **Status**: Skeleton (expanded in M5) · **Last updated**: 2026-11-21
-> **Owner**: OpenCade (AI)
-
-Operational procedures. Each entry follows: **symptom → impact → action → verify → follow-up**.
-Commands assume the repository root unless stated.
+Operational procedures for the local/staging stack. Production commands assume Kubernetes and
+the release image tags from `docs/DEVOPS.md`. Every alert in
+`infra/observability/alerts.yml` links to a section here.
 
 ---
 
-## RB-01 — Start the local stack
-
-**Symptom**: need a working environment.
+## Start / stop
 
 ```bash
-./scripts/bootstrap.ps1      # Windows
-./scripts/bootstrap.sh       # macOS/Linux
+docker compose up -d --build        # local stack
+docker compose down                 # stop, keep volumes
+docker compose down -v              # DESTROYS local data; re-seed afterwards
+make seed                           # restore demo tenant and users
 ```
 
-**Verify**: `docker compose ps` shows every service healthy; <http://localhost:8000/ping> returns 200.
+Health: `GET /healthz`, `GET /readyz`, `/metrics` on every service. Gateway at `:8000`, web at
+`:3000`, Traefik dashboard at `:8089`.
 
----
+## Service down
 
-## RB-02 — Stop or reset the stack
+1. `docker compose ps` and `docker compose logs --tail=100 <service>`.
+2. Check dependencies: Postgres (`pg_isready`), Redis (`redis-cli ping`), MinIO health.
+3. Restart one service: `docker compose up -d <service>`.
+4. If the database is unavailable, restore from backup (below) before restarting writers.
+5. Confirm `/readyz` is `200` and the gateway route returns a normal response.
+
+## High error rate
+
+1. Identify the service from the alert labels and check `/metrics` for status classes.
+2. Inspect structured logs; `request_id` is present on every problem response.
+3. If a deploy caused it, roll back the image tag and re-run the smoke suite.
+4. If a dependency is failing, check its health and recent latency before restarting.
+
+## High latency
+
+1. Check Postgres slow queries and connection counts.
+2. Check Redis latency and stream consumer lag.
+3. Confirm report/export jobs are not saturating CPU or MinIO.
+4. Scale the affected service or reduce export concurrency.
+
+## Gateway 5xx
+
+1. Check Traefik logs and `traefik_service_requests_total` by service.
+2. Verify ForwardAuth/IAM is reachable; a JWKS outage causes 5xx on protected routes.
+3. Confirm upstream health; a 502 usually means the container is down or restarting.
+
+## Database backup and restore
+
+Backups are nightly `pg_dump` per logical database, encrypted at rest, retained 14 days.
 
 ```bash
-docker compose down          # stop, keep data
-docker compose down -v       # stop and delete local volumes (destroys data)
+# backup
+docker compose exec -T postgres pg_dump -U neatsprint -Fc db_task > db_task.dump
+# restore into a scratch database first
+docker compose exec -T postgres createdb -U neatsprint db_task_restore
+docker compose exec -T postgres pg_restore -U neatsprint -d db_task_restore < db_task.dump
 ```
 
-**Follow-up**: after `-v`, run bootstrap again; databases are recreated from
-`infra/postgres/init/01-databases.sql`.
+RTO target 2 h, RPO 24 h (MVP). Validate row counts and a login before switching traffic.
+Screenshot blobs are deliberately excluded from backups.
 
----
+## Screenshot deletion incident
 
-## RB-03 — A service is unhealthy
+1. Verify the row is `DELETED` and `storage_key IS NULL`.
+2. Confirm the object is absent from the bucket and the `deletion_audit` row exists.
+3. Check `screenshot_views` for unexpected manager access.
+4. If a blob survives, delete it manually, record the incident and open a P1.
 
-```bash
-docker compose ps
-docker compose logs --tail=200 <service>
-curl -s http://localhost:<port>/healthz
-curl -s http://localhost:<port>/readyz
-```
+## Secret and key rotation
 
-Readiness failing usually means Postgres is down or the database does not exist. Check
-`docker compose logs postgres` and the logical databases.
+1. JWT signing keys rotate every 90 days with overlapping JWKS (`infra/keys` locally, KMS in
+   production).
+2. Rotate `MONITORING_ENCRYPTION_KEY` only with a migration plan: existing objects need the old
+   key to decrypt. Rewrap data keys before removing the old key.
+3. Rotate `BOOTSTRAP_TOKEN` after bootstrap/seed operations and restart services.
+4. Rotate Postgres, MinIO and SMTP credentials in the secret manager; never in git.
+5. Re-run the cross-tenant probe and smoke suite after rotation.
 
----
+## Incident and on-call
 
-## RB-04 — Rebuild one service after a dependency change
+- Severity: P1 data exposure / privacy breach; P2 outage; P3 degraded feature.
+- P1: contain, preserve audit logs, notify the tenant admin within 24 h, post-incident review
+  within 5 days.
+- P2: acknowledge within 15 min, update every 30 min.
+- Every incident gets a timeline, root cause, and a regression test or runbook update.
 
-```bash
-docker compose build --no-cache <service>
-docker compose up -d <service>
-```
+## Release and rollback
 
----
+1. Merge to `main`; CI builds and scans images.
+2. Tag `vX.Y.Z`; publish release notes and images to GHCR.
+3. Deploy to staging, run smoke + cross-tenant probe, then production.
+4. Rollback = redeploy the previous image tag; database migrations are forward-only, so never
+   roll back a schema without a reviewed down plan.
 
-## RB-05 — Rotate local JWT keys (from M1)
+## Outbox / event lag
 
-1. Generate a new RSA key pair; keep the previous public key in JWKS during overlap.
-2. Update the secret/env for IAM.
-3. Restart IAM; verify `/readyz`.
-4. Confirm tokens issued before rotation still validate until expiry.
+1. Check Redis stream length and consumer group pending counts.
+2. Confirm the relay task is running in each producing service.
+3. If a consumer is stuck, restart it; processed-event and source-event idempotency make replay
+   safe.
+4. Reports backfill: `python -m neatsprint_reports.backfill --tenant <id>`.
 
----
+## Certificate expiry
 
-## RB-06 — Restore a database (from M5)
-
-1. Provision a clean database.
-2. Restore the latest verified backup.
-3. Run migrations to head.
-4. Verify row counts and run the smoke suite.
-5. Record actual RTO in `docs/RELEASE_NOTES.md`.
-
-> Screenshot blobs are intentionally excluded from backups (ADR-016). Never attempt to
-> restore deleted screenshot content.
-
----
-
-## RB-07 — Privacy deletion failed (S1)
-
-**Symptom**: a deleted screenshot still returns content, or a blob remains.
-
-1. Disable the monitoring module for the tenant (`PUT /core/tenant-applications/MONITORING`).
-2. Delete the object directly from storage by key; delete its wrapped key.
-3. Purge `ai_embeddings`/`ai_documents` rows for the source.
-4. Verify `screenshots.state = DELETED`, `storage_key IS NULL`.
-5. Write an incident record; notify the tenant admin within 24 h.
-6. Add a regression test mirroring the failure before closing.
-
----
-
-## RB-08 — Suspected cross-tenant access (S1)
-
-1. Revoke the involved sessions/devices.
-2. Freeze the affected service deployment (scale to 0 if data is actively leaking).
-3. Collect request ids, tenant ids and audit rows.
-4. Patch, add an isolation test, deploy through the hotfix path.
-5. Follow `SECURITY.md` §13 notification timeline.
-
----
-
-## RB-09 — Gateway returns 502/503
-
-```bash
-docker compose logs gateway
-docker compose ps
-```
-
-Traefik resolves services by container DNS name. A 502 means the target container is down,
-still starting, or on a different network. Confirm the service name matches
-`services/neatsprint-apigw/dynamic/services.yml`.
-
----
-
-## RB-10 — Disk pressure from screenshots (from M3)
-
-1. Confirm retention settings for the tenant.
-2. Run the retention job manually; verify deletion audit rows.
-3. Reduce the default retention only with tenant notice — it is a privacy commitment.
-
----
-
-**Add a runbook when you add an alert.** An alert without a procedure is not merged.
+The local stack is HTTP. Production terminates TLS at the ingress/ACME; alert on
+`probe_ssl_earliest_cert_expiry` and renew 30 days before expiry.
