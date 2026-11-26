@@ -1,5 +1,29 @@
 # Release Notes
 
+## v1.0.6 — 2026-11-26
+
+> Google sign-in now uses the GSI redirect flow instead of the pop-up flow.
+
+### Fixed
+
+- The Google button uses `ux_mode: "redirect"` with a server login URI
+  (`/api/session/login/google/redirect`), avoiding the pop-up/FedCM screen that could go blank after
+  account selection.
+- The redirect endpoint validates the `g_csrf_token` double-submit cookie, exchanges the ID token
+  with IAM, sets the session cookies, and redirects to `/admin/users`. Failures return to
+  `/login?google_error=...` with a visible message.
+- The login page no longer logs GSI CSP errors.
+
+### Required Google Cloud configuration
+
+For local development, the OAuth **Web application** client must include:
+
+- Authorized JavaScript origins: `http://localhost:3000`, `http://localhost:3100`
+- Authorized redirect URIs: `http://localhost:3000/api/session/login/google/redirect`,
+  `http://localhost:3100/api/session/login/google/redirect`
+
+The invited Google account must also be a test user while the consent screen is in testing.
+
 ## v1.0.5 — 2026-11-26
 
 > Web-only patch for the intermittent sign-in navigation race.

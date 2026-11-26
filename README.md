@@ -10,7 +10,7 @@ NeatSprint is a multi-tenant, open-source (AGPLv3) platform for agile task manag
 transparent work tracking. It brings planning, a secure desktop agent, and honest monitoring into
 one product — and gives employees a real way to see and delete what was captured about them.
 
-> **Project status**: **v1.0.5 released** for the web/backend surface. **M0-M5 complete**
+> **Project status**: **v1.0.6 released** for the web/backend surface. **M0-M5 complete**
 > (M5 27/28; 72-hour health window running), **M3 backend + privacy screens complete**, **M4
 > reports/console complete**. Login, RBAC, projects/backlog/sprints, teams, timesheets, encrypted
 > monitoring with privacy deletion, notifications, reports, exports and the admin console work end

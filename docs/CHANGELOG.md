@@ -20,6 +20,7 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-26 — **v1.0.6**: Google sign-in switched to GSI redirect flow with CSRF check.
 - 2026-11-26 — **v1.0.5**: hard navigation after sign-in/sign-out; GSI style CSP fixed.
 - 2026-11-26 — **v1.0.4**: Python images apply Debian security upgrades; libzstd advisory cleared.
 - 2026-11-26 — **v1.0.3**: reports tenant isolation, database RLS across services, web navigation
