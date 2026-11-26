@@ -1,5 +1,19 @@
 # Release Notes
 
+## v1.0.5 — 2026-11-26
+
+> Web-only patch for the intermittent sign-in navigation race.
+
+### Fixed
+
+- Sign-in and sign-out now use a hard browser navigation (`window.location.assign`) instead of
+  `router.push()` followed immediately by `router.refresh()`. The previous combination could cancel
+  the pending App Router navigation, leaving the login form visible until the user refreshed.
+- Verified three consecutive sign-out → prefilled sign-in cycles in the browser, each landing on
+  `/admin/users` without a manual refresh.
+- Google Identity Services stylesheet is now allowed by CSP (`style-src`), removing the last GSI
+  CSP console error on the login page.
+
 ## v1.0.4 — 2026-11-26
 
 > Build-only patch. Restores a green release gate after a new Debian `libzstd1` advisory.
