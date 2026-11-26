@@ -20,6 +20,7 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-26 — **v1.0.4**: Python images apply Debian security upgrades; libzstd advisory cleared.
 - 2026-11-26 — **v1.0.3**: reports tenant isolation, database RLS across services, web navigation
   and CSP fixes, PostgreSQL report aggregation; all service tests and web build green.
 - 2026-11-24 — **v1.0.2**: team member add/remove UI, signed-in header with sign out, and removed

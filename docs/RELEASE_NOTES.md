@@ -1,5 +1,15 @@
 # Release Notes
 
+## v1.0.4 — 2026-11-26
+
+> Build-only patch. Restores a green release gate after a new Debian `libzstd1` advisory.
+
+### Fixed
+
+- Python runtime images now run `apt-get upgrade -y` before installing `git`/`ca-certificates`, so
+  `libzstd1` and other refreshed Debian packages are included. The v1.0.3 release workflow failed
+  only on `CVE-2026-124851` in `neatsprint-chat`; the rebuilt image rescans clean.
+
 ## v1.0.3 — 2026-11-26
 
 > Security and UX patch following the post-v1.0.2 review. No schema-breaking changes.
