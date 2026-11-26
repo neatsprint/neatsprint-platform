@@ -214,8 +214,8 @@ CREATE INDEX ix_team_members_user ON team_members (user_id);
 
 | Table | Key columns | Notes |
 | :--- | :--- | :--- |
-| `work_sessions` | `tenant_id`, `user_id`, `item_id`, `device_id`, `state`, `started_at`, `ended_at`, `last_heartbeat_at`, `monotonic_elapsed_seconds`, `client_clock_skew_ms`, `comment` | one open session per user (partial unique) |
-| `time_entries` | `tenant_id`, `session_id`, `user_id`, `item_id`, `project_id`, `started_at`, `ended_at`, `duration_seconds`, `source` (`TIMER`/`MANUAL`/`IMPORT`), `comment`, `client_id`, `sync_status` | partitioned by month on `started_at` |
+| `work_sessions` | `tenant_id`, `user_id`, `item_id`, `project_id`, `sprint_id`, `device_id`, `state`, `started_at`, `ended_at`, `last_heartbeat_at`, `monotonic_elapsed_seconds`, `client_clock_skew_ms`, `comment` | one open session per user (partial unique) |
+| `time_entries` | `tenant_id`, `session_id`, `user_id`, `item_id`, `project_id`, `sprint_id`, `started_at`, `ended_at`, `duration_seconds`, `source` (`TIMER`/`MANUAL`/`IMPORT`), `comment`, `client_id`, `sync_status` | partitioned by month on `started_at` |
 | `idle_segments` | `session_id`, `started_at`, `ended_at`, `idle_seconds`, `resolution` (`ACCEPTED`/`DISCARDED`/`TRUNCATED`) | feeds idle reporting |
 
 ```sql
