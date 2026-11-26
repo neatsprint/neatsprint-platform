@@ -35,8 +35,12 @@ python scripts/maintenance/partitions.py
 The script is idempotent (`CREATE TABLE IF NOT EXISTS ... PARTITION OF`). The default partition
 catches out-of-range rows until the next run.
 
-## Follow-ups
+## Follow-ups & Required Improvements (Post-v1.0.2 Review)
 
-- Add an alert if the default partition receives rows.
-- Schedule the script in the staging/production maintenance job.
-- Revisit monthly partitioning for `activity_heartbeats` at scale.
+- [ ] **IMP-DB-01**: Enable PostgreSQL Row-Level Security (RLS) on `db_reports`, `db_worklog`,
+  `db_monitoring` and tenant-scoped `db_iam` tables to match `db_task` and `db_team` (`IMP-T02`).
+- [ ] **IMP-DB-02**: Add an alert if `time_entries_default` (or any default partition) receives rows.
+- [ ] **IMP-DB-03**: Schedule `scripts/maintenance/partitions.py` in the staging/production
+  maintenance cronjob.
+- [ ] **IMP-DB-04**: Convert `screenshots`, `activity_heartbeats` and `audit_log` to declarative
+  partitioned tables via expand/contract migration before production data volume grows.

@@ -25,7 +25,10 @@ Date: 2026-11-24 · Environment: local Docker Compose
 - Client retries should treat 502/503 as transient; the web BFF already surfaces a friendly
   "could not be loaded" state.
 
-## Follow-ups
+## Required Improvements (Post-v1.0.2 Review)
 
-- Add a gateway error-page middleware in production.
-- Add a synthetic probe that verifies a service recovers within 30 s.
+- [ ] **IMP-CHS-01**: Add a Traefik custom error middleware in `neatsprint-apigw` so upstream
+  `502`/`503` failures return RFC 7807 JSON (`503 dependency_unavailable`) instead of plain-text
+  `Bad Gateway` (`IMP-T06`).
+- [ ] **IMP-CHS-02**: Add a synthetic probe that verifies a stopped service recovers and returns
+  `200` on `/readyz` within 30 s.

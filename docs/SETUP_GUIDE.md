@@ -301,3 +301,17 @@ Logs are JSON from services; use `docker compose logs <service> | Select-String 
 
 When you have the Google client ID, put it in `.env` and run the two commands in §2.2; then invite
 your Google address and test the button.
+
+---
+
+## 10. Required Improvements (Post-v1.0.2 Review)
+
+- [ ] **IMP-SET-01 (Replace `scripts/smoke-auth.py` references — §1.5, §6)**: `scripts/smoke-auth.py`
+  was superseded by `python scripts/smoke/staging_smoke.py` and
+  `python scripts/security/cross_tenant_probe.py`. Update §1.5 and §6 to use the current scripts.
+- [ ] **IMP-SET-02 (Google GIS CSP requirement — §2.2)**: Note that `services/neatsprint-web/next.config.ts`
+  must allow `https://accounts.google.com/gsi/client` in `script-src` (`IMP-T04`) for the Google
+  Identity Services button script to load without a CSP violation.
+- [ ] **IMP-SET-03 (Refresh §9 next actions & branch protection status)**: Update §5 and §9 to
+  reflect that `neatsprint-iam` already enforces branch protection (`ci / lint, types and tests`)
+  and that M1–M5 (`v1.0.2`) are delivered.

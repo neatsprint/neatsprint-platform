@@ -42,3 +42,13 @@ Legend: **PASS** implemented and verified; **PARTIAL** implemented with a docume
 4. **Desktop verification** — device binding, SQLCipher, updater signing (ADR-019 deferral).
 
 No unmitigated high/critical issue was found in the web/backend surface during this review.
+
+## Post-v1.0.2 Required Improvements
+
+- [ ] **IMP-ASVS-01 (V4 Access Control)**: Fix `ReportSprintFact` tenant check in
+  `GET /reports/burndown` (`IMP-T01`) and extend PostgreSQL RLS to `db_reports`, `db_worklog`,
+  `db_monitoring` and `db_iam` (`IMP-T02`).
+- [ ] **IMP-ASVS-02 (V3/V14 Web CSP & CSRF)**: Update `next.config.ts` CSP for Google GIS and
+  staging ports (`IMP-T04`), and add explicit `Origin` header validation on mutating BFF routes.
+- [ ] **IMP-ASVS-03 (V4 Automated Route Coverage)**: Add a route-registration test in every service
+  verifying that 100% of endpoints declare a permission or public exemption (`IMP-T08`).

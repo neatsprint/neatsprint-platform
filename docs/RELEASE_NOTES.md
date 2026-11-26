@@ -1,5 +1,33 @@
 # Release Notes
 
+## v1.0.3 — 2026-11-26
+
+> Security and UX patch following the post-v1.0.2 review. No schema-breaking changes.
+
+### Fixed
+
+- **Reports tenant isolation (`IMP-T01`)**: `GET /reports/burndown` now rejects a foreign tenant's
+  `sprint_id` with `404` instead of leaking sprint dates. Task now emits `item.deleted` and Reports
+  removes the projection so soft-deleted items disappear from completion and velocity figures.
+- **Database RLS (`IMP-T02`)**: tenant-bound request sessions and PostgreSQL RLS policies were added
+  for Reports, Worklog, Monitoring, Core tenant settings/applications and IAM
+  sessions/roles/invitations/audit/notifications. Auth-critical tables keep their global-email
+  lookup path.
+- **Web navigation & permissions (`IMP-T03`)**: the Reports sidebar link is enabled; `MEMBER` users
+  can create backlog items (`task:item:create`); Board/Backlog/Planning expose the Settings tab; the
+  topbar timer reflects a running session.
+- **CSP (`IMP-T04`)**: Google Identity Services script/style and the local staging ports are now
+  allowed, removing the login-page CSP errors.
+- **Reports SQL (`IMP-T05`, SQL part)**: completion, velocity, burndown and monitoring reports now
+  aggregate in PostgreSQL instead of loading every fact into Python.
+
+### Verified
+
+- IAM/Core/Task/Reports/Worklog/Monitoring: ruff, mypy and pytest green.
+- Web: typecheck, 22 tests and production build pass.
+- Live smoke: login `200`; projects, teams, reports, timesheet, monitoring, IAM users and tenant
+  settings `200`; 1 MiB screenshot upload 47 ms warm.
+
 ## v1.0.2 — 2026-11-24
 
 > Patch release. Team membership UI and a page-rendering fix.

@@ -289,17 +289,37 @@ Each runbook: symptom, impact, immediate action, verification, communication, fo
 
 Before a service is considered production-ready:
 
-- [ ] Health and readiness endpoints implemented and probed
-- [ ] Metrics exported and dashboarded
-- [ ] Structured logs with request/trace ids, no PII
-- [ ] Alerts defined with runbook links
-- [ ] Resource requests/limits set
-- [ ] Migrations run as a pre-deploy job and are expand/contract safe
-- [ ] Backup/restore implications documented
-- [ ] Graceful shutdown (drain connections, finish in-flight requests)
-- [ ] Timeouts and retries configured on all outbound calls
-- [ ] Rate limits and quotas applied where relevant
-- [ ] Runbook section written
+- [x] Health and readiness endpoints implemented and probed
+- [x] Metrics exported and dashboarded
+- [x] Structured logs with request/trace ids, no PII
+- [x] Alerts defined with runbook links
+- [x] Resource requests/limits set
+- [x] Migrations run as a pre-deploy job and are expand/contract safe
+- [x] Backup/restore implications documented
+- [x] Graceful shutdown (drain connections, finish in-flight requests)
+- [x] Timeouts and retries configured on all outbound calls
+- [x] Rate limits and quotas applied where relevant
+- [x] Runbook section written
+
+---
+
+## 11. Required Improvements (Post-v1.0.2 Review)
+
+- [ ] **IMP-OPS-01 (Web pipeline & package manager alignment — §2.1)**: Update §2.1 to specify
+  `npm ci` (with `package-lock.json`) and Next.js 16.4.6 rather than `pnpm`.
+- [ ] **IMP-OPS-02 (Container hardening & digest pinning — §2.2, §3)**:
+  1. Pin base image digests (`python:3.12-slim@sha256:...`, `node:22-alpine@sha256:...`) so rebuilds
+     are bit-reproducible (`SBOM.md`).
+  2. Add `read_only: true` with `tmpfs: [/tmp]` on stateless service containers in Compose/Helm (§3).
+  3. Add `cosign` keyless image signing to `.github/workflows/release.yml` (§2.1).
+- [ ] **IMP-OPS-03 (ClamAV volume & reload resilience)**: Persist `/var/lib/clamav` in a named
+  volume so virus definitions survive container recreation, and add an auto-restart/watchdog hook if
+  `clamd` stalls during its initial `freshclam` reload (`RUNBOOKS.md`).
+- [ ] **IMP-OPS-04 (Makefile completeness)**: Add `migrate`, `seed` and `staging` targets to the
+  root `Makefile` (`IMP-T09`).
+- [ ] **IMP-OPS-05 (Loki / Promtail & OpenTelemetry Collector profiles)**: Wire Loki + Promtail and
+  an OTel Collector into the `observability` Compose profile (currently only Prometheus and Grafana
+  are defined in `docker-compose.yml`).
 
 ---
 

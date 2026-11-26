@@ -20,6 +20,8 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-26 — **v1.0.3**: reports tenant isolation, database RLS across services, web navigation
+  and CSP fixes, PostgreSQL report aggregation; all service tests and web build green.
 - 2026-11-24 — **v1.0.2**: team member add/remove UI, signed-in header with sign out, and removed
   the route loading skeletons that left pages stuck on “Loading…”; 22 web tests pass.
 - 2026-11-24 — **v1.0.1**: backlog create drawer and BFF POST route; owner create verified,

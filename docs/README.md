@@ -48,9 +48,20 @@ repository root is the original input architecture and is kept as read-only refe
 | [`GLOSSARY.md`](GLOSSARY.md) | Shared vocabulary and naming conventions | OpenCade | Living |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Branching, standards, PR checklist, rules | OpenCade | Living |
 | [`SETUP_GUIDE.md`](SETUP_GUIDE.md) | Operator checklist: local setup, Google, CAPTCHA, GitHub | Laksiri | Approved |
-| `CHANGELOG.md` | Delivered changes | OpenCade | Living |
-| `RUNBOOKS.md` | Operational procedures | OpenCade | Created at M0, completed M5 |
-| `RELEASE_NOTES.md` | Version history | OpenCade | Created at M5 |
+| [`CHANGELOG.md`](CHANGELOG.md) | Delivered changes | OpenCade | Living |
+| [`RUNBOOKS.md`](RUNBOOKS.md) | Operational procedures and environment lifecycle | OpenCade | Completed M5 |
+| [`RELEASE_NOTES.md`](RELEASE_NOTES.md) | Version history (`v1.0.0`–`v1.0.2`) | OpenCade | Completed M5 |
+| [`API_REFERENCE.md`](API_REFERENCE.md) | Merged OpenAPI 3.1 generation and Redoc viewer (`api.html`, `openapi.json`) | OpenCade | Completed M5 |
+| [`ASVS_L2.md`](ASVS_L2.md) | OWASP ASVS L2 self-assessment and gap closure evidence | OpenCade | Completed M5 |
+| [`SBOM.md`](SBOM.md) | Container Trivy scan results and CycloneDX SBOM index (`docs/sbom/`) | OpenCade | Completed M5 |
+| [`LOAD_TEST.md`](LOAD_TEST.md) | Target-volume k6 load test and screenshot upload benchmark | OpenCade | Completed M5 |
+| [`DATABASE_REVIEW.md`](DATABASE_REVIEW.md) | Index review and partition maintenance job | OpenCade | Completed M5 |
+| [`BACKUP_REHEARSAL.md`](BACKUP_REHEARSAL.md) | PostgreSQL dump/restore drill and RPO/RTO evidence | OpenCade | Completed M5 |
+| [`CHAOS_TEST.md`](CHAOS_TEST.md) | Service-outage and gateway recovery test | OpenCade | Completed M5 |
+| [`ONBOARDING_DRY_RUN.md`](ONBOARDING_DRY_RUN.md) | Clean-clone bootstrap rehearsal and Windows CRLF fix | OpenCade | Completed M5 |
+| [`UAT.md`](UAT.md) | SCOPE §8 acceptance script, evidence and v1.0.0 sign-off | Laksiri / OpenCade | Signed off M5 |
+| [`HEALTH_WINDOW.md`](HEALTH_WINDOW.md) | 72-hour post-launch monitoring window baseline and daily log | OpenCade | Active M5 |
+| [`RETROSPECTIVE.md`](RETROSPECTIVE.md) | M0–M5 engineering retrospective and P2 lessons | OpenCade | Completed M5 |
 
 ---
 
@@ -162,12 +173,21 @@ Mapping of the reference files:
 
 ## 6. Review Checklist for This Documentation Set
 
-- [ ] Scope boundaries match Laksiri's intent
-- [ ] Open questions in `SCOPE.md` §12 answered
-- [ ] ADR-001, 005, 010, 012, 015 confirmed
-- [ ] Repository names and org confirmed in `REPOSITORIES.md` §9
-- [ ] Milestone sequence and effort accepted
-- [ ] Design system direction accepted (colours, type, layout)
+- [x] Scope boundaries match Laksiri's intent *(confirmed 2026-11-21)*
+- [x] Open questions in `SCOPE.md` §12 answered *(confirmed 2026-11-21)*
+- [x] ADR-001, 005, 010, 012, 015 confirmed *(confirmed 2026-11-21; ADR-018/019 added later)*
+- [x] Repository names and org confirmed in `REPOSITORIES.md` §9 *(confirmed 2026-11-21)*
+- [x] Milestone sequence and effort accepted *(confirmed 2026-11-21)*
+- [x] Design system direction accepted (colours, type, layout) *(confirmed 2026-11-21)*
+
+---
+
+## 7. Required Improvements (Post-v1.0.2 Review)
+
+- [ ] **IMP-DOC-01** Refresh status headers (`Last updated`) across `docs/*.md` whenever a post-MVP
+  reconciliation pass updates a document.
+- [ ] **IMP-DOC-02** Extend `platform-ci.yml` documentation checks to verify that every `docs/*.md`
+  file is listed in `docs/README.md` §2 so new operational reports never become orphaned.
 
 ---
 

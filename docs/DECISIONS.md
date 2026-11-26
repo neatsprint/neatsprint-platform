@@ -367,3 +367,15 @@ Status values: `Proposed` · `Accepted` · `Rejected` · `Superseded by ADR-xxx`
 | 2026-11-21 | ADR-001…017 recorded during initial planning |
 | 2026-11-21 | ADR-018 added: runtime language policy (Python services, Rust for CPU-bound work, Next.js not a backend) |
 | 2026-11-24 | ADR-019 added: keep Tauri v2 + Rust for the desktop agent; defer M3 desktop tasks |
+
+---
+
+## Required Improvements (Post-v1.0.2 Review)
+
+- [ ] **IMP-ADR-01 (Update ADR-014 for Next.js 16 & npm)**: Record an amendment to ADR-014 noting
+  the M5 upgrade from Next.js 15 to **Next.js 16.4.6** (Vitest 5 / Vite 7) to clear high/critical
+  dependency advisories, the use of `npm` (`package-lock.json`), and the removal of route-level
+  `loading.tsx` files in `v1.0.2` to work around Next.js 16 standalone RSC streaming behavior.
+- [ ] **IMP-ADR-02 (Record PDF rendering decision from M4)**: Add a brief note or ADR recording the
+  selection of **ReportLab** over headless Chromium/WeasyPrint for M4 PDF exports (`ARCHITECTURE.md`
+  §17, `RELEASE_NOTES.md`).

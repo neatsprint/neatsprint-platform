@@ -36,4 +36,23 @@ Date: 2026-11-24 · Author: OpenCade · Owner review: Laksiri
 - [ ] Scaffold Expo mobile with auth, assigned work and offline queue.
 - [ ] Add GitHub commit/PR linking with least-privilege installation tokens.
 - [ ] Carry desktop T22–T36 into P2 planning with a Rust/Tauri toolchain owner.
-- [ ] Close M5 open items: virus scanning, shared lockout, SBOM gate, UAT, legal review, v1.0.0.
+- [ ] Close remaining M5/post-v1.0.2 items: 72-hour health window (`M5-T26`), external legal counsel review, and the post-v1.0.2 required improvements in `DEVELOPMENT_PLAN.md` §8.1.
+
+## Required Improvements Identified After v1.0.2
+
+1. **Streaming SSR vs route `loading.tsx` skeletons** — Next.js 16 production standalone builds left
+   route-level `loading.tsx` boundaries stuck on `"Loading…"` in the browser even though the server
+   streamed complete HTML (`v1.0.2` removed `loading.tsx` to fix rendering). Investigate Next.js 16
+   RSC streaming / reverse-proxy buffering before re-introducing suspense skeletons.
+2. **UI CRUD completeness checks at milestone gates** — `v1.0.0` passed API and UAT checks while
+   missing web UI controls for creating backlog items (fixed in `v1.0.1`) and adding/removing team
+   members (fixed in `v1.0.2`), and with the `Reports` desktop sidebar link disabled. Gate reviews
+   must verify every create/edit/delete user journey through the rendered browser UI, not only via
+   API tests.
+3. **Container volume mount verification** — `bitnamilegacy/minio` writes to `/bitnami/minio/data`,
+   so the initial `/data` mount left objects ephemeral until fixed during UAT. Always verify data
+   persistence across container recreation (`--force-recreate`) when adding stateful containers.
+4. **Database-enforced tenant isolation across all services** — PostgreSQL RLS was added to Task and
+   Team in M2, but Reports, Worklog, Monitoring and IAM still rely on application-level
+   `tenant_id` filters (which allowed an unscoped `session.get(ReportSprintFact, sprint_id)` in
+   `neatsprint-reports`). Extend RLS across all tenant-owned tables.

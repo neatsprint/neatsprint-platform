@@ -380,4 +380,38 @@ Enforced in code **and** protected by constraints where possible:
 
 ---
 
+## 16. Required Improvements (Post-v1.0.2 Review)
+
+The following schema and documentation discrepancies between `DATA_MODEL.md` and the live Alembic
+migrations must be reconciled:
+
+- [ ] **IMP-DM-01 (Universal PostgreSQL Row-Level Security)**: Only `db_task` and `db_team`
+  currently enforce PostgreSQL RLS policies (`app.tenant_id`). Add RLS migrations and
+  `get_tenant_session` enforcement to `db_reports`, `db_worklog`, `db_monitoring` and tenant-scoped
+  tables in `db_iam` (`IMP-T02`).
+- [ ] **IMP-DM-02 (Document additional implemented tables)**: Add the tables created during M1–M4
+  that are missing from §2–§8:
+  - `db_iam`: `notifications`, `password_reset_tokens`
+  - `db_task`: `saved_views`
+  - `db_worklog`: `time_entry_audit`
+  - `db_monitoring`: `screenshot_views`, `device_commands`
+  - `db_reports`: `report_session_facts`, `report_processed_events`, `report_exports`
+- [ ] **IMP-DM-03 (Reconcile Reports fact schemas in §8)**: Update §8 to match the implemented
+  entity-level projection tables (`report_time_facts` keyed by `entry_id`, `report_item_facts`
+  keyed by `item_id`, `report_sprint_snapshots` keyed by `sprint_id`, `report_monitor_facts` keyed
+  by `screenshot_id`) rather than pre-aggregated daily rollup columns.
+- [ ] **IMP-DM-04 (Composite PK & declarative partitioning alignment)**:
+  - In `db_worklog`, `time_entries` is partitioned by `RANGE (started_at)` with DB primary key
+    `(id, started_at)`. Update the SQLAlchemy `TimeEntry` model primary key definition and lookup
+    queries (`select(TimeEntry).where(TimeEntry.id == entry_id, TimeEntry.tenant_id == ...)`) so
+    ORM identity-map lookups do not rely on a single-column `session.get(TimeEntry, entry_id)`.
+  - In `db_monitoring` and `db_iam`, convert `screenshots`, `activity_heartbeats`, and `audit_log`
+    to declarative partitioned tables in Alembic migrations (currently only `time_entries` is
+    declaratively partitioned in its initial migration).
+- [ ] **IMP-DM-05 (Backlog item `labels` column)**: `backlog_items` in §4.1 specifies
+  `labels text[] NOT NULL DEFAULT '{}'`, which is not yet present in the `db_task` migration. Add
+  the column when label filtering lands.
+
+---
+
 **End of Data Model**

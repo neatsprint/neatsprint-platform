@@ -41,8 +41,11 @@ and the orchestrator. A second fresh clone produced an LF entrypoint and the ful
 - Corrected the web stack description to Next.js 16 and the web package manager to npm.
 - Removed the stale "until M1 lands" note.
 
-## Residual
+## Residual & Required Improvements (Post-v1.0.2 Review)
 
-- Docker Desktop, Python and Node were already installed; a truly blank Windows/macOS/Linux host
-  still needs a manual prerequisites pass. Re-run this procedure on a clean VM before launch if
-  that risk matters.
+- [ ] **IMP-ONB-01**: Re-run the clean-clone onboarding procedure on a blank VM (no pre-cached
+  Docker layers) to measure cold-start download and build time against the 30-minute target
+  (`MASTER_PLAN.md` §1 #5).
+- [ ] **IMP-ONB-02**: Have `scripts/bootstrap.ps1` and `scripts/bootstrap.sh` check for host port
+  conflicts (`8000`, `3000`, `5432`, `6379`, `9000`, `9090`) up front and print the owning PID and
+  the `.env` override variable before invoking `docker compose up`.

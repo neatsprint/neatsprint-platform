@@ -68,11 +68,19 @@ Get-Content scripts/load/api-mix.js | docker run --rm -i grafana/k6 run -
 python scripts/load/screenshot_upload.py
 ```
 
-## Not measured
+## Required Improvements (Post-v1.0.2 Review)
 
-- Web LCP (NFR-PERF-04) — needs Lighthouse against a production build and a throttled profile.
-- Report export at 250-person scale (async path).
-- Gateway rate-limit behaviour with dedicated load-test users at higher VU counts.
+- [ ] **IMP-PRF-01 (Move remaining report endpoints to SQL & Redis cache)**: Rewrite
+  `completion_report`, `velocity_report`, `burndown_report` and `monitoring_report` in
+  `neatsprint-reports` to aggregate in PostgreSQL (`GROUP BY`/`SUM`) and back `services/cache.py`
+  with Redis + single-flight locking to eliminate the 30 s cache-expiry stampede (`IMP-T05`).
+- [ ] **IMP-PRF-02 (Web LCP benchmark — `NFR-PERF-04`)**: Run Lighthouse against the production
+  web build on a throttled profile to verify LCP < 2.5 s (`TC-PERF-005`).
+- [ ] **IMP-PRF-03 (Async report export benchmark at 250-person scale)**: Benchmark cold CSV/PDF
+  export generation (`POST /reports/exports`) at 250-user / 1M-entry volume (< 30 s target).
+- [ ] **IMP-PRF-04 (Cleanup script for target-volume seed)**: Add `scripts/load/cleanup_volume.sql`
+  to remove synthetic `load-tenant-*` / `loaduser-*` / `load-entry-*` rows without requiring a full
+  `docker compose down -v`.
 
 The synthetic rows live only in the local database. Reset with `docker compose down -v` and
 re-run `./scripts/bootstrap.ps1` before a demo or UAT.

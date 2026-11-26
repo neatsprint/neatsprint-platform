@@ -12,3 +12,10 @@ python scripts/docs/export_openapi.py
 - Gateway base URL: `http://localhost:8000/api/v1`.
 
 Regenerate after any contract change and commit both `openapi.json` and the service that changed.
+
+## Required Improvements (Post-v1.0.2 Review)
+
+- [ ] **IMP-REF-01**: Add a CI check in `platform-ci.yml` (or contract-ci) that verifies
+  `docs/openapi.json` is valid OpenAPI 3.1 and has no unresolved `$ref` pointers.
+- [ ] **IMP-REF-02**: Serve or link the interactive API reference from the developer documentation
+  index and keep `neatsprint-contracts` synced with `docs/openapi.json` on every service release.

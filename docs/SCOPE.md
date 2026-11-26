@@ -472,4 +472,26 @@ open questions remain for M0–M5.
 
 ---
 
+## 14. Required Improvements (Post-v1.0.2 Review)
+
+The following scope and requirement alignments were identified during the post-v1.0.2 review and
+must be addressed before closing the post-launch cycle or starting Phase 2:
+
+- [ ] **IMP-SCP-01 (Reconcile `FR-PRJ-13` virus scanning & size caps)**: `FR-PRJ-13` (§4.4) states
+  "virus scanning in Phase 2", whereas ClamAV `INSTREAM` fail-closed scanning was delivered in M5
+  (`M5-T05`) for both Task attachments (25 MB cap) and Monitoring screenshots (10 MB cap). Update
+  `FR-PRJ-13` to reflect M5 delivery.
+- [ ] **IMP-SCP-02 (Desktop MVP waiver tracking — `FR-DSK-01..10`, §8 #4)**: `v1.0.0`–`v1.0.2`
+  shipped for the web/backend surface with an explicit product-owner waiver for the desktop agent
+  under ADR-019. Keep §8 #4 (4-hour offline desktop capture and sync) as a mandatory release gate
+  for the desktop milestone before claiming full three-client MVP completion.
+- [ ] **IMP-SCP-03 (GDPR DSAR & erasure automation — `NFR-SEC-07`)**: While manual/admin profile
+  edits, screenshot deletion, and report exports exist, dedicated self-service DSAR JSON export and
+  asynchronous user/tenant erasure jobs (`SECURITY.md` §12) are not yet implemented as API
+  endpoints. Track them as explicit tasks before onboarding external production tenants.
+- [ ] **IMP-SCP-04 (MFA for admin roles — `FR-IAM-10`)**: Marked `S` (should) for MVP, not yet
+  implemented. Schedule TOTP MFA for `OWNER`/`ADMIN` roles prior to public cloud launch.
+
+---
+
 **End of Scope**

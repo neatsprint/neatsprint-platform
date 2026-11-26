@@ -522,15 +522,35 @@ aggregation and worker parallelism before adding a Rust build to CI.
 
 ---
 
-## 17. Open Architecture Items
+## 17. Resolved Architecture Items (M0–M5)
 
-| Item | Needed by | Note |
+| Item | Needed by | Resolution |
 | :--- | :--- | :--- |
-| Confirm FastAPI stack (ADR-001) | M0 | Blocks scaffolding |
-| Confirm KMS envelope vs E2E (ADR-005) | M3 | Blocks monitoring implementation |
-| Choose KMS provider for MVP (local file vs cloud KMS) | M3 | Dev uses local key file |
-| Decide PDF renderer (headless Chromium vs WeasyPrint) | M4 | Affects image size |
-| Confirm desktop platform order | M3 | Windows first proposal |
+| Confirm FastAPI stack (ADR-001) | M0 | Confirmed (Python 3.12 + FastAPI) |
+| Confirm KMS envelope vs E2E (ADR-005) | M3 | Confirmed (KMS envelope encryption, AES-256-GCM) |
+| Choose KMS provider for MVP (local file vs cloud KMS) | M3 | Local/env master key in MVP; AWS KMS / Vault adapter for production |
+| Decide PDF renderer (headless Chromium vs WeasyPrint) | M4 | ReportLab direct PDF generation chosen in M4 to keep container image small |
+| Confirm desktop platform order | M3 | Tauri v2 + Rust retained; desktop build deferred under ADR-019 |
+
+---
+
+## 18. Required Improvements (Post-v1.0.2 Review)
+
+- [ ] **IMP-ARC-01 (Event completeness for soft deletes & updates)**: `neatsprint-task` does not yet
+  emit `item.deleted` when soft-deleting a backlog item, so `neatsprint-reports` retains deleted
+  items in `report_item_facts`. Add `item.deleted` to the event model (§10), emit it in Task, and
+  delete the corresponding fact in Reports (`IMP-T01`).
+- [ ] **IMP-ARC-02 (Distributed caching in Redis vs in-process dicts)**: §12 specifies Redis-backed
+  caches (`rpt:{tenant}:{hash}`, `acl:proj:{project}:{user}`), whereas `neatsprint-reports`,
+  `neatsprint-task` and `neatsprint-monitoring` currently use per-process Python dictionaries with
+  30–60 s TTLs. Migrate those caches to Redis so multi-replica deployments share invalidations and
+  avoid cache stampedes (`IMP-T05`).
+- [ ] **IMP-ARC-03 (Gateway RFC 7807 error formatting)**: When an upstream service is down, Traefik
+  returns plain-text `502 Bad Gateway` (`CHAOS_TEST.md`). Add a Traefik custom error middleware so
+  all 502/503/504 edge responses conform to the RFC 7807 JSON contract (`IMP-T06`).
+- [ ] **IMP-ARC-04 (Dead-letter stream & consumer lag metrics)**: Outbox and Redis Streams consumers
+  retry in place; add explicit dead-letter stream routing after max attempts and export
+  `outbox_pending` / `stream_consumer_lag` Prometheus gauges (§10, `DEVOPS.md` §5.2).
 
 ---
 

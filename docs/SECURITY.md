@@ -522,4 +522,30 @@ built so certification work is an audit exercise, not a rebuild.
 
 ---
 
+## 17. Required Improvements (Post-v1.0.2 Review)
+
+- [ ] **IMP-SEC-01 (Tenant check in Reports burndown — S1)**: In `neatsprint-reports`
+  `GET /reports/burndown` (`src/neatsprint_reports/api/router.py:275`), `session.get(ReportSprintFact, sprint_id)`
+  must verify `snapshot.tenant_id == principal.tenant_id` so a foreign `sprint_id` cannot leak
+  sprint start/completion dates (`IMP-T01`).
+- [ ] **IMP-SEC-02 (PostgreSQL RLS across all services — S2)**: Extend PostgreSQL Row-Level Security
+  from Task and Team to Reports, Worklog, Monitoring and tenant-scoped IAM tables (`IMP-T02`).
+- [ ] **IMP-SEC-03 (Web CSP for Google Identity Services & dynamic API/S3 origins — S2)**:
+  `services/neatsprint-web/next.config.ts` currently blocks `https://accounts.google.com/gsi/client`
+  in `script-src` and hardcodes `http://localhost:8000` / `http://localhost:9000`. Update the CSP
+  to allow Google GIS when enabled, derive API/S3 origins from environment configuration, and
+  migrate toward per-request CSP nonces (§10, `IMP-T04`).
+- [ ] **IMP-SEC-04 (BFF CSRF Origin check & cookie prefix)**: Add explicit `Origin`/`Referer`
+  validation on state-changing BFF routes (`/api/session/**`) and use `__Host-` cookie prefixes
+  when running behind HTTPS in production (§10).
+- [ ] **IMP-SEC-05 (Close remaining §16 release checklist items)**:
+  1. Add an automated route-registration test asserting 100% of FastAPI routes declare a permission
+     dependency or an explicit public allow-list entry (`IMP-T08`).
+  2. Add an automated integration test asserting `UPDATE`/`DELETE` on `audit_log` fails via the DB
+     trigger.
+  3. Rehearse JWT key rotation (`two active kids`) on staging and record evidence.
+  4. Render and link the legal documents (`legal/*.md`) in the web footer (`IMP-T10`).
+
+---
+
 **End of Security & Privacy Model**

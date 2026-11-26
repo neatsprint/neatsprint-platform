@@ -307,4 +307,15 @@ releases.
 
 ---
 
+## 11. Required Improvements (Post-v1.0.2 Review)
+
+- [ ] **IMP-REP-01 (Tick completed §9 repository creation checklist)**: All 15 component
+  repositories and submodule pins exist and are tagged (`v1.0.0`–`v1.0.2`). Mark §9 items 1–4 and
+  8–9 complete, and track branch protection rollout across the non-IAM repositories.
+- [ ] **IMP-REP-02 (Update web stack & image naming — §2, §8)**: Update `#14 neatsprint-web` in §2
+  from `Next.js 15` to `Next.js 16`, and update §8 image naming to
+  `ghcr.io/neatsprint/neatsprint-<svc>:vX.Y.Z` to match `.github/workflows/release.yml`.
+
+---
+
 **End of Repository Strategy**

@@ -344,6 +344,7 @@ Full records in `docs/DECISIONS.md`.
 | 016 | Screenshot blobs excluded from backups | Accepted |
 | 017 | Monotonic time + server clamp for durations | Accepted |
 | 018 | Runtime policy: Python services, Rust for CPU-bound, Next.js not a backend | Accepted |
+| 019 | Desktop agent stays Tauri v2 + Rust; desktop build deferred (`M3-T22..T36`) | Accepted |
 
 ---
 
@@ -391,12 +392,35 @@ line in §5 is ticked only when its exit gate passes.
 
 ## 13. Next Actions (this planning cycle)
 
-1. Laksiri reviews `SCOPE.md` (especially §12 open questions), `REPOSITORIES.md`, and the
-   milestone sequence.
-2. Laksiri creates the 16 GitHub repositories and adds remotes; AI adds them as submodules.
-3. AI executes **M0** as the first development task.
-4. AI scaffolds the service template and one reference service (IAM) as the pattern for the rest.
-5. Gate G6 review after M0.
+1. Complete the 72-hour post-launch monitoring window (`M5-T26`, `docs/HEALTH_WINDOW.md`).
+2. Execute the post-v1.0.2 required improvements in §14 and `DEVELOPMENT_PLAN.md` §8.1 (`IMP-T01`…`IMP-T10`).
+3. Provision a Rust/Tauri toolchain and Windows capture lab to deliver the deferred desktop agent (`M3-T22..T36`, ADR-019).
+4. Complete external legal counsel review of the drafts in `legal/` before opening public cloud sign-ups.
+5. Kick off Phase 2 (Collaboration) once the post-v1.0.2 patch items are closed.
+
+---
+
+## 14. Required Improvements (Post-v1.0.2 Review)
+
+During the post-v1.0.2 system and documentation audit, the following concrete improvements were
+identified and added to the backlog (`DEVELOPMENT_PLAN.md` §8.1):
+
+- [x] **IMP-MP-01 (Tenant isolation in Reports & universal PostgreSQL RLS)**: Fix the unscoped
+  `ReportSprintFact` lookup in `GET /reports/burndown` (`IMP-T01`), emit/project `item.deleted`, and
+  extend PostgreSQL RLS from Task/Team to Worklog, Monitoring, Reports and IAM (`IMP-T02`).
+- [x] **IMP-MP-02 (Web navigation, RBAC & live timer shell polish)**: Enable the `Reports` link in
+  the desktop sidebar (`app-shell.tsx`), gate the backlog **New item** button on `task:item:create`
+  rather than `task:item:edit`, add the `Settings` tab to project Board/Backlog/Planning headers,
+  and connect the topbar timer pill to live `/api/session/work/current` state (`IMP-T03`).
+- [x] **IMP-MP-03 (Web CSP for Google GIS & dynamic API origins)**: Update `next.config.ts` CSP so
+  Google Identity Services (`https://accounts.google.com/gsi/client`) and non-8000 API/storage ports
+  (staging `:8100` / `:9100`) are permitted without console errors (`IMP-T04`).
+- [ ] **IMP-MP-04 (Reports SQL aggregation & Redis cache)**: Move remaining Python in-memory report
+  aggregations (`completion`, `velocity`, `burndown`, `monitoring`) to SQL and back the report cache
+  with Redis (`IMP-T05`).
+- [ ] **IMP-MP-05 (Gateway RFC 7807 errors, idempotency & E2E CI)**: Serve RFC 7807 JSON on gateway
+  502/503 responses (`IMP-T06`), enforce `Idempotency-Key` / `ETag` headers (`IMP-T07`), and wire
+  Playwright E2E + route-registration authz checks into CI (`IMP-T08`).
 
 ---
 

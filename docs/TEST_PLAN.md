@@ -423,3 +423,23 @@ gates and recorded with screenshots.
 | Date | Change | Reason |
 | :--- | :--- | :--- |
 | 2026-11-21 | Plan v1 created | Initial planning cycle |
+| 2026-11-24 | M5 verification executed (`LOAD_TEST.md`, `UAT.md`, `SBOM.md`, `ASVS_L2.md`) | v1.0.0–v1.0.2 release |
+
+---
+
+## 13. Required Improvements (Post-v1.0.2 Review)
+
+- [ ] **IMP-TST-01 (Automated route-registration permission test — §6.1)**: Add a test in every
+  FastAPI service that inspects `app.routes` and fails if any non-public endpoint lacks an explicit
+  permission dependency (`IMP-T08`).
+- [ ] **IMP-TST-02 (Expand cross-tenant probe to Reports & Monitoring — §6.2)**: Extend
+  `scripts/security/cross_tenant_probe.py` to test foreign `sprint_id` on `GET /reports/burndown`
+  (regression test for `IMP-T01`), foreign `export_id` on `GET /reports/exports/{id}/download`, and
+  foreign `screenshot_id` / `session_id` / `device_id` on Monitoring endpoints (`IMP-T08`).
+- [ ] **IMP-TST-03 (Playwright browser E2E suite in CI — §2)**: Add automated Playwright browser
+  tests covering login, project/backlog item creation (`v1.0.1`), team member add/remove (`v1.0.2`),
+  board transition, timesheet entry, screenshot deletion and report viewing, and wire `make e2e`
+  into `web-ci.yml` (`IMP-T08`).
+- [ ] **IMP-TST-04 (Audit log immutability & Lighthouse LCP checks)**: Add an automated test
+  verifying the `trg_audit_no_update` PostgreSQL trigger rejects `UPDATE`/`DELETE` on `audit_log`,
+  and add a Lighthouse CI check for `NFR-PERF-04` (LCP < 2.5 s, `TC-PERF-005`).

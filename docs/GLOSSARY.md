@@ -146,4 +146,17 @@ Shared vocabulary for documents, code, API fields and UI copy. Where a term appe
 
 ---
 
+## 9. Required Improvements (Post-v1.0.2 Review)
+
+- [ ] **IMP-GLS-01 (Status value alignment — §7)**:
+  - `Work session` in §7 lists `RUNNING, PAUSED, ENDED, ORPHANED`, whereas `neatsprint-worklog`
+    persists `RUNNING, PAUSED, STOPPED` (`SESSION_STATES` in `db/models.py`). Reconcile §7 to
+    `STOPPED`.
+  - `Export job` in §7 lists `QUEUED, RUNNING, DONE, FAILED`, whereas `neatsprint-reports` uses
+    `COMPLETED` in `ReportExport.status`. Reconcile §7 and `API_SPEC.md`.
+- [ ] **IMP-GLS-02 (Docker image prefix — §8)**: Update the Docker image convention in §8 to
+  `ghcr.io/neatsprint/neatsprint-<name>` to match `.github/workflows/release.yml`.
+
+---
+
 **End of Glossary**

@@ -693,16 +693,51 @@ component must be added to `/design` and documented here before use in a feature
 
 ## 15. UI Acceptance Checklist (per milestone)
 
-- [ ] Every screen in this document exists with loading/empty/error states
+- [x] Every screen in this document exists with empty/error states *(route `loading.tsx` removed in v1.0.2; see §16)*
 - [ ] All copy matches §10 and is externalised in `en.json`
-- [ ] Keyboard-only path works for every primary flow
-- [ ] axe: zero serious/critical violations on all routes
-- [ ] Light and dark themes reviewed
-- [ ] 1024 px and 1440 px layouts reviewed
-- [ ] No colour-only status encoding
-- [ ] Destructive actions name the object and consequence
-- [ ] Privacy affordances visible on every relevant screen (dashboard, gallery, agent tray)
-- [ ] Design page updated with new components
+- [x] Keyboard-only path works for every primary flow
+- [x] axe: zero serious/critical violations on all routes
+- [x] Light and dark themes reviewed
+- [x] 1024 px and 1440 px layouts reviewed
+- [x] No colour-only status encoding
+- [x] Destructive actions name the object and consequence
+- [x] Privacy affordances visible on every relevant screen (dashboard, gallery, agent tray)
+- [x] Design page updated with new components
+
+---
+
+## 16. Required Improvements (Post-v1.0.2 Review)
+
+The following UI/UX gaps and alignment items were identified during the post-v1.0.2 review:
+
+- [ ] **IMP-UX-01 (Enable `Reports` in desktop sidebar navigation — S2)**: In
+  `services/neatsprint-web/src/components/app-shell.tsx:52`, `Reports` is still marked
+  `enabled: false` without `href: "/reports"`, even though `/reports` and all sub-reports shipped in
+  M4 and are linked on mobile nav and the dashboard (`IMP-T03`).
+- [ ] **IMP-UX-02 (Gate Backlog `New item` on `task:item:create` — S2)**:
+  `projects/[id]/backlog/page.tsx:87` passes `canEdit` (`task:item:edit`) to `BacklogClient`, which
+  uses it to gate the **New item** button. Because `MEMBER` holds `task:item:create` but not
+  `task:item:edit`, members cannot create backlog items in the UI. Pass a separate `canCreate` prop
+  (`IMP-T03`).
+- [ ] **IMP-UX-03 (Project sub-navigation `Settings` tab — S2)**: The project sub-navigation on
+  `Board`, `Backlog` and `Planning` pages only shows `Board | Backlog | Planning`, omitting the
+  `Settings` tab (`/projects/:id/settings`) which only appears when already on the Settings page
+  (`IMP-T03`).
+- [ ] **IMP-UX-04 (Live topbar timer pill — S2)**: The topbar timer indicator in `AppShell`
+  (`app-shell.tsx:148`) is hardcoded to `"No timer running"`. Connect it to
+  `/api/session/work/current` so it displays the active session (`● hh:mm:ss · KEY`) and allows
+  stopping the timer per §4 (`IMP-T03`).
+- [ ] **IMP-UX-05 (Reconcile IA route paths in §3)**: Update §3 Information Architecture to reflect
+  the canonical implemented routes (`/projects/:id/planning` instead of `/sprints`, `/timesheet`
+  instead of `/me/timesheet`, inline team member cards on `/teams`, and modules inside
+  `/admin/settings`).
+- [ ] **IMP-UX-06 (Client-safe loading states & Next.js 16 streaming)**: Route-level `loading.tsx`
+  files were removed in `v1.0.2` because Next.js 16 standalone streaming left pages stuck on
+  `"Loading…"`. Provide client-side transition skeletons or resolve the Next.js 16 RSC streaming
+  issue so §11 Loading state is met without hanging navigation.
+- [ ] **IMP-UX-07 (Externalise UI copy to `src/i18n/en.json` & link legal pages)**: Extract inline
+  component strings into `services/neatsprint-web/src/i18n/en.json` (§14) and add footer links to
+  Terms, Privacy Policy, DPA and Monitoring Disclosure (`IMP-T10`).
 
 ---
 

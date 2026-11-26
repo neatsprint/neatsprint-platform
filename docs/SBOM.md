@@ -40,9 +40,14 @@ docker run --rm -v /tmp:/work -v trivy-cache:/root/.cache/trivy \
 The release workflow (`.github/workflows/release.yml`) runs the same gate with
 `aquasecurity/trivy-action@0.35.0` and uploads a per-image SPDX SBOM.
 
-## Residual risk
+## Residual Risk & Required Improvements (Post-v1.0.2 Review)
 
-- Base images are mutable tags (`python:3.12-slim`, `node:22-alpine`). Rebuild regularly and
-  re-run the gate; pin digests when the release process moves to a registry with retention.
-- `--ignore-unfixed` hides findings with no upstream patch. They are tracked by Dependabot and
-  reviewed at each release.
+- [ ] **IMP-SBM-01 (Pin base image digests)**: Base images currently use mutable tags
+  (`python:3.12-slim`, `node:22-alpine`). Pin `@sha256:...` digests in every `Dockerfile` and
+  refresh monthly via Dependabot (`IMP-OPS-02`).
+- [ ] **IMP-SBM-02 (Generate CycloneDX SBOMs for all 10 images locally)**: `docs/sbom/` currently
+  commits `web.cdx.json` and `core.cdx.json` as representative artefacts (while `.github/workflows/release.yml`
+  generates SPDX SBOMs for all 10 images in CI). Add a helper script `scripts/security/export_sboms.py`
+  to regenerate all 10 local SBOMs on demand.
+- [ ] **IMP-SBM-03 (Track unfixed base-OS advisories)**: `--ignore-unfixed` hides Debian/Alpine
+  CVEs that have no upstream patch yet; review unfixed high/critical findings at each release.

@@ -17,8 +17,9 @@ Every image in the release matrix built and passed the Trivy gate.
 | UAT | 9/10 pass, desktop waived via ADR-019 |
 | Cross-tenant probe | 8/8 pass |
 
-Patch: **v1.0.1** (backlog create) and **v1.0.2** (team members, header identity, page-rendering
-fix) deployed to local staging on 2026-11-24; the 72-hour window continues from the v1.0.0 start.
+Patch: **v1.0.1** (backlog create), **v1.0.2** (team members, header identity, page-rendering
+fix) and **v1.0.3** (reports isolation, RLS, navigation/CSP, SQL reports) deployed to local
+staging on 2026-11-24/26; the 72-hour window continues from the v1.0.0 start.
 
 ## Daily check (record one line per day)
 

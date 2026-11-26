@@ -558,4 +558,33 @@ Retries: 5 attempts with exponential backoff; delivery log exposed in the admin 
 
 ---
 
+## 7. Required Improvements (Post-v1.0.2 Review)
+
+- [ ] **IMP-API-01 (Reconcile endpoint catalogue with implemented routes)**:
+  - **Task (§2.4)**: Update attachment routes to `POST /tasks/backlog/{item_id}/attachments/presign`,
+    `POST /tasks/backlog/{item_id}/attachments`, and `GET /tasks/attachments/{attachment_id}/url`.
+    Add implemented routes `GET /tasks/search`, `GET /tasks/projects/{id}/views`,
+    `POST /tasks/projects/{id}/views`, `DELETE /tasks/projects/{id}/views/{view_id}`, and
+    `GET /tasks/sprints/{id}/items`.
+  - **Reports (§2.8)**: Add implemented routes `GET /reports/exports/{id}/download` and
+    `POST /reports/backfill`; note that `GET /reports/completion` requires `report:agile:view`.
+  - **Payload examples (§3.4, §3.5)**: Update §3.4 to show multipart form fields (`session_id`,
+    `device_id`, `captured_at`, `width`, `height`, `display_index`, `file`) and §3.5 to show
+    `total_seconds` and `rows: [{ key, seconds }]`.
+- [ ] **IMP-API-02 (Idempotency-Key enforcement — §1.5)**: Implement server-side `Idempotency-Key`
+  storage in Redis (24 h TTL) for `POST /tasks/backlog`, `PATCH /tasks/backlog/{id}`,
+  `POST /work/start`, `POST /work/stop`, and `POST /reports/exports`, returning
+  `409 idempotency_key_reused` when the same key is sent with a different payload (`IMP-T07`).
+- [ ] **IMP-API-03 (ETag / `If-Match` optimistic concurrency — §1.1)**: Add `version` / `ETag`
+  checking on `PATCH /tasks/backlog/{id}` returning `409 version_conflict` on stale updates
+  (`IMP-T07`).
+- [ ] **IMP-API-04 (Rate-limit response headers — §1.6)**: Emit `RateLimit-Limit`,
+  `RateLimit-Remaining`, `RateLimit-Reset` and `Retry-After` headers from the gateway/rate-limit
+  middleware (`IMP-T06`).
+- [ ] **IMP-API-05 (Generated OpenAPI TypeScript types in Web)**: Wire `openapi-typescript`
+  generation from `docs/openapi.json` into `neatsprint-web` and CI so client types cannot drift from
+  service schemas (§6 #4).
+
+---
+
 **End of API Specification**

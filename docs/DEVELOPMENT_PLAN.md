@@ -529,7 +529,63 @@ error states; axe and manual keyboard audit pass; visual QA against `UI_UX_DESIG
 - [x] **M5-T27** Retrospective: what to change in M0–M5 for P2/P3.
 - [x] **M5-T28** Update MASTER_PLAN with P2 kickoff checklist.
 
-**M5 exit gate**: SCOPE §8 satisfied, signed off, `v1.0.0` released.
+**M5 exit gate**: SCOPE §8 satisfied, signed off, `v1.0.0` released (`v1.0.1` and `v1.0.2` patch
+releases shipped on 2026-11-24).
+
+### 8.1 Post-v1.0.2 Required Improvements (Patch Backlog)
+
+Identified during the post-v1.0.2 architectural, code and documentation review. Execute in order of
+severity before starting Phase 2:
+
+- [x] **IMP-T01 (S1 Security / Tenant Isolation — Reports)**: In `neatsprint-reports`
+  `GET /reports/burndown` (`src/neatsprint_reports/api/router.py:275`), verify
+  `snapshot.tenant_id == principal.tenant_id` (or query with `tenant_id`) so a foreign tenant's
+  `sprint_id` cannot leak sprint start/end dates. Also emit `item.deleted` from `neatsprint-task`
+  `delete_item` and handle `item.deleted` in `neatsprint-reports` `projector.py` so deleted items
+  are removed from `report_item_facts`. *AC*: cross-tenant burndown test returns empty/default
+  dates; deleting an item removes it from report facts.
+- [x] **IMP-T02 (S2 Security / Database RLS)**: Extend PostgreSQL Row-Level Security (RLS) from
+  `db_task` and `db_team` to `db_reports`, `db_worklog`, `db_monitoring`, and tenant-owned tables
+  in `db_iam`. *AC*: migrations enable and force RLS with `app.tenant_id` policy; unscoped queries
+  return 0 rows.
+- [x] **IMP-T03 (S2 Web UX & RBAC Gaps)**:
+  1. Enable `Reports` (`href: "/reports", enabled: true`) in the desktop sidebar navigation
+     (`services/neatsprint-web/src/components/app-shell.tsx:52`).
+  2. Pass `canCreate={profile.permissions.includes("task:item:create")}` from
+     `projects/[id]/backlog/page.tsx` to `BacklogClient` so `MEMBER` users (who have
+     `task:item:create` but not `task:item:edit`) can create backlog items.
+  3. Add the **Settings** tab link (`/projects/${id}/settings`) to the project sub-navigation on
+     `projects/[id]/board/page.tsx`, `backlog/page.tsx`, and `planning/page.tsx`.
+  4. Poll or fetch `/api/session/work/current` in `AppShell` so the topbar timer pill reflects an
+     active timer instead of hardcoded `"No timer running"`.
+  *AC*: Vitest component tests cover all four fixes.
+- [x] **IMP-T04 (S2 Web CSP & Google Sign-In)**: Update `Content-Security-Policy` in
+  `services/neatsprint-web/next.config.ts` to allow `https://accounts.google.com/gsi/client` in
+  `script-src`, `https://accounts.google.com` in `frame-src`/`connect-src`, and dynamic
+  `NEXT_PUBLIC_API_BASE_URL` / S3 origins so Google Sign-In and staging ports (`:8100`, `:9100`)
+  produce zero CSP console errors. *AC*: browser console on `/login` has 0 CSP errors.
+- [ ] **IMP-T05 (S2 Reports SQL Aggregation & Redis Cache)**: Rewrite `completion_report`,
+  `velocity_report`, `burndown_report` and `monitoring_report` in `neatsprint-reports` to use
+  PostgreSQL `GROUP BY`/`SUM` instead of loading all fact rows into Python memory, and move
+  `neatsprint_reports/services/cache.py` from an in-process dictionary to Redis with stampede
+  protection. *AC*: all report endpoints pass unit/integration tests and stay < 300 ms at target
+  volume.
+- [ ] **IMP-T06 (S3 Gateway RFC 7807 Error Pages & Rate-Limit Headers)**: Configure Traefik error
+  middleware in `neatsprint-apigw` so upstream `502`/`503` failures return RFC 7807 JSON
+  (`503 dependency_unavailable`) instead of plain-text `Bad Gateway`, and emit `RateLimit-*` /
+  `Retry-After` headers (`API_SPEC.md` §1.6).
+- [ ] **IMP-T07 (S3 API Idempotency & Optimistic Concurrency)**: Implement `Idempotency-Key`
+  request replay/conflict handling (`409 idempotency_key_reused`) on mutating endpoints and
+  `If-Match`/`ETag` version checks on `PATCH /tasks/backlog/{id}` (`API_SPEC.md` §1.1, §1.5).
+- [ ] **IMP-T08 (S2 Automated Authz Route-Registration & Playwright E2E CI)**: Add a FastAPI
+  route-inspector test in every service asserting 100% of routes declare a permission or public
+  allow-list entry (`SECURITY.md` §16), extend `scripts/security/cross_tenant_probe.py` to cover
+  Reports and Monitoring endpoints, and wire Playwright E2E critical journeys into CI.
+- [ ] **IMP-T09 (S3 Makefile & Tooling Alignment)**: Add missing `migrate` and `seed` targets to the
+  root `Makefile` (`M0-T03`) and add an `npm run lint` script in `services/neatsprint-web/package.json`.
+- [ ] **IMP-T10 (S3 Legal Footer Links & GDPR DSAR Endpoints)**: Render and link `/legal/terms`,
+  `/legal/privacy` and `/legal/dpa` from the web login/app footer (`SECURITY.md` §16,
+  `TEST_PLAN.md` §11), and add self-service GDPR export/erasure endpoints (`SCOPE.md` `NFR-SEC-07`).
 
 ---
 

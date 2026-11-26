@@ -237,4 +237,17 @@ submit the code under that licence. Do not copy code with incompatible licensing
 
 ---
 
+## 13. Required Improvements (Post-v1.0.2 Review)
+
+- [ ] **IMP-CNT-01 (Web package manager & scripts — §2.2)**: Update §2.2 from `pnpm` to `npm`
+  (`npm ci`, `npm run dev`, `npm run typecheck`, `npm test`, `npm run build`) and add an
+  `npm run lint` script to `services/neatsprint-web/package.json` (`IMP-T09`).
+- [ ] **IMP-CNT-02 (Demo credentials reference — §2)**: Update §2 line 34 to reference `README.md`
+  and `docs/SETUP_GUIDE.md` §1.4 (`services/README.md` documents submodule workflow, not credentials).
+- [ ] **IMP-CNT-03 (Pre-commit & branch protection parity)**: Apply the `neatsprint-iam` branch
+  protection ruleset across all remaining component repositories so direct pushes to `main` are
+  uniformly blocked.
+
+---
+
 **End of Contributing Guide**

@@ -268,3 +268,12 @@ python scripts/smoke/staging_smoke.py
 
 The local stack is HTTP. Production terminates TLS at the ingress/ACME; alert on
 `probe_ssl_earliest_cert_expiry` and renew 30 days before expiry.
+
+## Required Improvements (Post-v1.0.2 Review)
+
+- [ ] **IMP-RNB-01**: Add a named Docker volume for `/var/lib/clamav` so ClamAV signature databases
+  persist across container recreation and avoid the multi-minute first-boot `freshclam` download.
+- [ ] **IMP-RNB-02**: Document the automated KMS data-key re-wrap script (`neatsprint_monitoring`
+  key rotation CLI) referenced in **Secret and key rotation** step 2.
+- [ ] **IMP-RNB-03**: Populate the concrete on-call contact tree and escalation channels in
+  **Incident and on-call** before onboarding external tenants (`SECURITY.md` §16).
