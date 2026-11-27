@@ -29,9 +29,18 @@ $env:BASE_URL="http://localhost:8100/api/v1"; $env:WEB_URL="http://localhost:310
 $env:SMOKE_PASSWORD="NeatSprint!2026"; python scripts/smoke/staging_smoke.py
 ```
 
-- Day 1 (2026-11-25):
-- Day 2 (2026-11-26):
-- Day 3 (2026-11-27):
+- Day 1 (2026-11-25): 15/15 services running, 0 restarts, 0 tracebacks, no 5xx in the gateway
+  log. Backfilled on 2026-11-27 from container state and logs; the smoke script was not run that
+  day.
+- Day 2 (2026-11-26): 15/15 running after the v1.0.3 redeploy (08:54 IST); 2× `502` on
+  `POST /api/v1/auth/login` between 03:23:44Z and 03:24:29Z while IAM restarted, recovered
+  automatically; 0 restarts and 0 tracebacks after the redeploy. Smoke not run that day.
+- Day 3 (2026-11-27, 20:43 IST): 15/15 running and healthy; gateway `/ping` 200, web `/login` 200;
+  staging smoke 7/7 pass (ping, login, projects, timesheet, teams, reports, web); 0 restarts
+  across the stack for the whole window; 0 tracebacks; total 5xx over 72 h = the 2 redeploy 502s
+  above. Note: the staging images predate the unreleased sprint-selection, CSV `sprint_id` and
+  timesheet hydration fixes (web image built 2026-11-26 06:38Z), so those three changes were not
+  exercised by this window.
 
 Also review the RED dashboard (`docker compose --env-file .env.staging --profile observability up -d`,
 Grafana `:3201`) and `infra/observability/alerts.yml`. Record any 5xx burst, p95 regression or
