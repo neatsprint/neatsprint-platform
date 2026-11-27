@@ -20,9 +20,10 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
-- 2026-11-26 — **Unreleased**: Log time gains sprint selection and a tenant "allow time without
-  sprint" policy; timesheet CSV export includes `sprint_id`; fixed the timesheet hydration warning
-  caused by timezone-dependent time formatting.
+- 2026-11-27 - **v1.0.7**: Log time gains sprint selection and a tenant "allow time without
+  sprint" policy (Core setting, Worklog server-side enforcement); timesheet CSV export includes
+  `sprint_id`; fixed the timesheet hydration warning caused by timezone-dependent time formatting;
+  72-hour post-launch health window closed with 0 restarts and no P0/P1.
 - 2026-11-26 — **v1.0.6**: Google sign-in switched to GSI redirect flow with CSRF check.
 - 2026-11-26 — **v1.0.5**: hard navigation after sign-in/sign-out; GSI style CSP fixed.
 - 2026-11-26 — **v1.0.4**: Python images apply Debian security upgrades; libzstd advisory cleared.

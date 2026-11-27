@@ -207,7 +207,8 @@ toolchain; backend and web privacy pipeline already verified)*
 - [x] Local staging profile with offset ports, seeded UAT data and post-deploy smoke check
 - [x] UAT executed on staging (9 pass, 1 desktop waiver under ADR-019) and signed off
 - [x] v1.0.0 tagged
-- [~] 72-hour post-launch health window in progress
+- [x] 72-hour post-launch health window complete (2026-11-24 19:12 → 2026-11-27 19:12 +05:30,
+  no P0/P1; `docs/HEALTH_WINDOW.md`)
 
 **Exit gate**: SCOPE §8 acceptance criteria satisfied and recorded in `docs/RELEASE_NOTES.md`.
 
@@ -392,8 +393,9 @@ line in §5 is ticked only when its exit gate passes.
 
 ## 13. Next Actions (this planning cycle)
 
-1. Complete the 72-hour post-launch monitoring window (`M5-T26`, `docs/HEALTH_WINDOW.md`).
-2. Execute the post-v1.0.2 required improvements in §14 and `DEVELOPMENT_PLAN.md` §8.1 (`IMP-T01`…`IMP-T10`).
+1. Verify `v1.0.7` on staging (sprint selection, CSV `sprint_id`, timesheet hydration) and confirm
+   Google sign-in once the OAuth client carries the local origins and redirect URIs.
+2. Execute the remaining improvements in §14 and `DEVELOPMENT_PLAN.md` §8.1 (`IMP-T05`…`IMP-T10`).
 3. Provision a Rust/Tauri toolchain and Windows capture lab to deliver the deferred desktop agent (`M3-T22..T36`, ADR-019).
 4. Complete external legal counsel review of the drafts in `legal/` before opening public cloud sign-ups.
 5. Kick off Phase 2 (Collaboration) once the post-v1.0.2 patch items are closed.

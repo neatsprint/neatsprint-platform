@@ -50,3 +50,13 @@ firing alert, with the response taken.
 
 T26 closes when the three daily lines are recorded and no unresolved P0/P1 issue remains. Open a
 follow-up task for anything deferred (desktop agent, legal review).
+
+**Closed 2026-11-27 19:12 +05:30.** No P0/P1 found. Deferred: desktop agent (`M3-T22..T36`,
+ADR-019), external legal review, and Google sign-in verification once the OAuth client carries the
+local origins and redirect URIs. `v1.0.7` (sprint selection, CSV `sprint_id`, hydration fix) was
+released after this window; verify it on staging before the next soak.
+
+**v1.0.7 staging verification (2026-11-27 21:00 +05:30)**: images rebuilt from `main`, all 15
+services healthy, smoke 7/7, 13/13 targeted API checks (policy flag, sprint inheritance from the
+task, unknown-sprint rejection, CSV `sprint_id` column and value), and `/timesheet` renders
+`03:30Z` as `09:00–12:00` with zero console errors.

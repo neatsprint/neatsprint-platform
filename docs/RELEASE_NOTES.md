@@ -1,6 +1,39 @@
 # Release Notes
 
-## v1.0.6 — 2026-11-26
+## v1.0.7 - 2026-11-27
+
+> Sprint-aware time logging, a sprint column in the timesheet export, and the hydration fix.
+
+### Added
+
+- Sprint selection in the **Log time** dialog. Choosing a sprint filters the task list to that
+  sprint; choosing none leaves every assigned task available.
+- Tenant setting **Allow logging time without a sprint** (`allow_time_without_sprint`, default
+  on), enforced server-side in Worklog. With it off, a sprint is required and the API returns
+  `sprint_required`.
+- `sprint_id` stored on `work_sessions` and `time_entries` (Worklog migration `wrksprint0001`),
+  returned in payloads and accepted on start, manual entry, sync and edit.
+- `sprint_id` column in the `/work/export` CSV, between `item_id` and `comment`.
+- Internal Core endpoint `/internal/tenants/{id}/time-policy` and Worklog `GET /work/policy`.
+
+### Changed
+
+- A task that belongs to a sprint, logged without an explicit sprint, inherits that task's sprint.
+
+### Fixed
+
+- Timesheet hydration warning (#418). Timezone-dependent times now render only after mount, so the
+  server HTML and the first client render match; times still display in the viewer's local time.
+
+### Verification
+
+- Core, Task and Worklog: ruff, mypy and pytest green; Web: typecheck, 22 tests and production
+  build.
+- Live stack: the export header and populated `sprint_id` were checked in a downloaded CSV;
+  `/timesheet` reports zero console errors and correct local times (`03:30Z` → `09:00–12:00`).
+- 72-hour health window closed (`M5-T26`) with 0 restarts, 0 tracebacks and no P0/P1.
+
+## v1.0.6 - 2026-11-26
 
 > Google sign-in now uses the GSI redirect flow instead of the pop-up flow.
 
