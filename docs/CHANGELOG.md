@@ -20,7 +20,7 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
-- 2026-11-27 - **Unreleased**: Google sign-in failures now name the real cause - a missing
+- 2026-11-28 - **v1.0.8**: Google sign-in failures now name the real cause - a missing
   workspace invitation, an unverifiable token, or a CSRF mismatch - instead of always blaming the
   OAuth configuration.
 - 2026-11-27 - **v1.0.7**: Log time gains sprint selection and a tenant "allow time without

@@ -1,5 +1,27 @@
 # Release Notes
 
+## v1.0.8 - 2026-11-28
+
+> Google sign-in now reports the real reason a sign-in fails.
+
+### Fixed
+
+- The Google redirect route mapped every IAM failure to a single reason, so the login page told
+  users to "check the Google OAuth origin/redirect configuration" even when the account simply had
+  no invitation. Failures are now classified:
+  - `invitation_required` - "This Google account isn't invited to this workspace. Ask an admin to
+    invite it."
+  - unverifiable token - "Google could not verify this sign-in. Please try again."
+  - CSRF mismatch - "Google sign-in could not be verified. Please try again."
+  - anything else - "Google sign-in failed. Please try again or use your email and password."
+
+### Verification
+
+- Web: 29 tests pass (7 new for the error mapping), typecheck and production build green.
+- Staging: a junk credential yields `?google_error=rejected`, every message was checked in the
+  browser, and Google sign-in completed end to end on `:3100` (invitation consumed, user created
+  and linked).
+
 ## v1.0.7 - 2026-11-27
 
 > Sprint-aware time logging, a sprint column in the timesheet export, and the hydration fix.
