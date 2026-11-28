@@ -436,8 +436,12 @@ carry-over; access control verified for outsider, viewer and member.
   tests including a **30-minute simulated soak** (6 frames, rows == files, cleanup removes the
   deleted frame); real probe captured 1920×1080, 1.69 MB ciphertext, decrypts to a PNG, cleaned up.
   A real-time 30-minute soak on the staging machine remains the final gate item.
-- [ ] **M3-T28** Review tray: gallery of pending screenshots, preview (decrypt in memory),
-  delete with confirmation, countdown to window close.
+- [x] **M3-T28** Review tray: gallery of pending screenshots, preview (decrypt in memory), delete with
+  confirmation, countdown to window close. Done 2026-11-28: grid of pending captures with countdown
+  and size, preview decrypted in memory, downscaled to 480 px and sent as a data URL (no plaintext on
+  disk), delete with confirmation destroys blob and row, privacy window pulled from
+  `/monitor/policy` (24 h default). Verified by 3 tests and a real probe: 1 frame, 24 h remaining,
+  125 KB preview, delete left 0 pending.
 - [ ] **M3-T29** Sync engine: queue worker, exponential backoff, batch sizes, conflict resolution,
   server-sent new-task pull, sync status UI.
 - [ ] **M3-T30** Transparency log file (readable by user) of every event sent.

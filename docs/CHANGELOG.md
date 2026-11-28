@@ -20,6 +20,9 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-28 - **Unreleased**: desktop review tray (`M3-T28`): pending captures listed with a
+  privacy-window countdown (server `/monitor/policy`), previews decrypted in memory and downscaled
+  to a 480 px data URL, delete with confirmation destroying blob and row.
 - 2026-11-28 - **Unreleased**: encrypted capture engine (`M3-T27`): GDI multi-monitor capture with
   per-monitor DPI awareness, randomised 3–7 minute interval, captures gated on a running timer and
   recent input, AES-256-GCM encrypt-before-disk with a keychain key, orphan/deleted cleanup, and a

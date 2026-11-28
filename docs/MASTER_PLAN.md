@@ -164,7 +164,8 @@ sprint with carry-over, all permission-correct. *(met; exercised in the M2 integ
 - [x] Desktop: task list + quick switch, assigned-task sync into the local store (`M3-T26`)
 - [x] Desktop: capture engine (multi-monitor, DPI), encryption, local queue
 - [ ] Desktop: real-time 30-minute capture soak on the staging machine (M3-T27 gate)
-- [ ] Desktop: review tray (view/delete), transparency log
+- [x] Desktop: review tray, in-memory preview, delete with confirmation, window countdown (`M3-T28`)
+- [ ] Desktop: transparency log (`M3-T30`)
 - [ ] Desktop: sync engine (push/pull, backoff, conflict resolution), updater
 - [x] Web: my screenshots gallery, deletion flow, personal transparency log
 - [x] Web: manager monitoring gallery (tombstones), session detail
