@@ -275,7 +275,7 @@ Each screen lists its purpose, primary action, key components, permissions and s
     sprint** (items outside an active sprint are excluded; Done is included), ordered
     In progress → To do → In review → Blocked → Done. The list shows up to five items, each with
     its status badge, and a **More… (n)** control expands the rest; **Show less** collapses it
-    again.
+    again. When nothing qualifies it shows the hint "No active-sprint items."
   - Sprint pulse: active sprint name, days left, progress bar, blocked count.
   - Team activity (managers): active members now, items moved yesterday.
   - Privacy summary (self): captures today, deletions, link to transparency log.
