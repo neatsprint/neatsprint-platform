@@ -20,9 +20,10 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
-- 2026-11-28 - **Unreleased**: dashboard "My day" counts every assigned item, Done included,
-  orders them In progress → To do → In review → Blocked → Done, lists up to five with status
-  badges, and expands the rest with **More…**; count text is pluralised.
+- 2026-11-28 - **Unreleased**: dashboard "My day" counts every assigned item in an active sprint
+  (items outside an active sprint are excluded, Done is included), orders them In progress →
+  To do → In review → Blocked → Done, lists up to five with status badges, and expands the rest
+  with **More…**; count text is pluralised.
 - 2026-11-28 - **Unreleased**: topbar account menu — the user's name and sign-out moved into a
   popup behind the initials avatar, which sits flush right; a disabled **Neat AI** placeholder pill
   sits to its left.
