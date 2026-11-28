@@ -42,6 +42,9 @@ docker compose logs -f --tail=100 <service>
 # stop containers but keep them, the network and all volumes
 docker compose --profile "*" stop
 
+# resume stopped containers in place (no recreate, no config change)
+docker compose --profile "*" start
+
 # remove containers and the network, keep named volumes (data survives)
 docker compose --profile "*" down
 
@@ -69,15 +72,39 @@ Plain `docker compose down` only removes services in active profiles. `clamav` (
 ./scripts/staging.ps1 -Down
 
 # manual equivalents
-docker compose --env-file .env.staging --profile "*" up -d --build
-docker compose --env-file .env.staging --profile "*" stop
-docker compose --env-file .env.staging --profile "*" down
+docker compose --env-file .env.staging --profile "*" up -d --build  # build + up
+docker compose --env-file .env.staging --profile "*" up -d          # up, no rebuild
+docker compose --env-file .env.staging --profile "*" start          # resume stopped containers
+docker compose --env-file .env.staging --profile "*" stop           # stop, keep containers
+docker compose --env-file .env.staging --profile "*" down           # remove containers, keep data
+docker compose --env-file .env.staging --profile "*" down -v        # DESTRUCTIVE: delete data too
 docker compose --env-file .env.staging ps
 ```
 
 Staging has its own network (`neatsprint-staging`), volumes and ports, so it does not touch
 development data. `.env.staging` is git-ignored; it is created from `.env.staging.example` on the
 first run.
+
+### Lifecycle matrix
+
+Same actions for both projects; only the environment file differs. `--profile "*"` includes
+`security` (ClamAV) and `observability` (Prometheus/Grafana).
+
+| Action | Development (`--env-file .env`, default) | Local staging (`--env-file .env.staging`) | Data |
+| :--- | :--- | :--- | :--- |
+| Build + up | `docker compose --profile "*" up -d --build` | `docker compose --env-file .env.staging --profile "*" up -d --build` | kept |
+| Up (recreate changed) | `docker compose --profile "*" up -d` | `docker compose --env-file .env.staging --profile "*" up -d` | kept |
+| Start (resume stopped) | `docker compose --profile "*" start` | `docker compose --env-file .env.staging --profile "*" start` | kept |
+| Restart in place | `docker compose --profile "*" restart` | `docker compose --env-file .env.staging --profile "*" restart` | kept |
+| Stop (keep containers) | `docker compose --profile "*" stop` | `docker compose --env-file .env.staging --profile "*" stop` | kept |
+| Down (remove containers + network) | `docker compose --profile "*" down` | `docker compose --env-file .env.staging --profile "*" down` | kept |
+| Down + volumes | `docker compose --profile "*" down -v` | `docker compose --env-file .env.staging --profile "*" down -v` | **destroyed** |
+
+`stop` + `start` keeps the exact container state and is the fastest way to pause work. `up -d`
+reconciles the definition (recreating containers whose image or env changed). `down` removes
+containers and the network but leaves named volumes, so PostgreSQL, MinIO and Redis data survive;
+only `-v` deletes them. After `down -v`, run `./scripts/bootstrap.ps1` (dev) or
+`./scripts/staging.ps1` (staging) to recreate and seed.
 
 ### Stop everything without losing data
 
