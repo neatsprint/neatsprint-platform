@@ -415,8 +415,13 @@ carry-over; access control verified for outsider, viewer and member.
   key sealed with AES-256-GCM under an Argon2id KEK (wrap secret in the OS keychain), envelope in
   `db.key`. Verified: plain SQLite reports "file is not a database"; schema names absent from the
   raw file; the key does not appear in the envelope; round-trip test covers reopen and state.
-- [ ] **M3-T25** Timer module: start/stop/switch, monotonic clock, idle detection hook, crash-safe
-  resume. *AC*: kill process mid-session → resume reconciles correctly.
+- [x] **M3-T25** Timer module: start/stop/switch, monotonic clock, idle detection hook, crash-safe
+  resume. *AC*: kill process mid-session → resume reconciles correctly. Done 2026-11-28: state
+  machine persisted in SQLCipher (`state`, `started_at`, `last_seen_at`, `accumulated_ms`,
+  `item_id`), 1 s heartbeat with a 10 s grace window, `GetLastInputInfo` idle hook, and stop
+  enqueues a `pending_worklogs` row. Verified by 4 unit tests and a cross-process probe: start,
+  heartbeat at 3 s, kill, 14 s later status reports **Paused / 3 s elapsed** (no dead time),
+  then stop queues one entry.
 - [ ] **M3-T26** Task list + quick switch UI, sync from server.
 - [ ] **M3-T27** Capture engine: randomised interval, multi-monitor selection, DPI-correct,
   encrypt-at-capture to temp store. *AC*: 30-minute soak produces expected count, no leaks.

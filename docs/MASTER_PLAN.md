@@ -160,7 +160,7 @@ sprint with carry-over, all permission-correct. *(met; exercised in the M2 integ
 - [x] Desktop: Tauri v2 shell, tray, single instance, auto-start, IPC status, Windows CI (`M3-T22`)
 - [x] Desktop: login, device registration, Ed25519 keychain identity, signed requests (`M3-T23`)
 - [x] Desktop: SQLCipher store with Argon2id-wrapped key and offline queue schema (`M3-T24`)
-- [ ] Desktop: timer, idle detection (`M3-T25`)
+- [x] Desktop: crash-safe timer, pause/resume, idle hook, queue-on-stop (`M3-T25`)
 - [ ] Desktop: capture engine (multi-monitor, DPI), encryption, local queue
 - [ ] Desktop: review tray (view/delete), transparency log
 - [ ] Desktop: sync engine (push/pull, backoff, conflict resolution), updater

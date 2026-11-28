@@ -20,6 +20,9 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-28 - **Unreleased**: crash-safe timer (`M3-T25`): start/pause/resume/stop with a
+  persisted state machine, 1 s heartbeat and 10 s grace window so a killed process resumes paused
+  at the last heartbeat, `GetLastInputInfo` idle hook, and "stop" enqueues a pending worklog.
 - 2026-11-28 - **Unreleased**: encrypted local store (`M3-T24`): SQLCipher (AES-256) with a random
   database key sealed by AES-256-GCM under an Argon2id KEK, wrap secret in the OS keychain; tables
   `local_tasks`, `pending_worklogs`, `pending_screenshots`, `sync_state`; agent UI shows path,

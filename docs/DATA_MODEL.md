@@ -399,7 +399,7 @@ The agent keeps its offline queue in SQLCipher (AES-256) under
 | `local_tasks` | `id`, `project_id`, `sprint_id`, `key`, `title`, `status`, `updated_at` | Offline task cache |
 | `pending_worklogs` | `client_id`, `item_id`, `sprint_id`, `started_at`, `ended_at`, `duration_seconds`, `comment`, `created_at`, `attempts`, `next_attempt_at`, `last_error` | Queued time entries (UUIDv7 client ids) |
 | `pending_screenshots` | `id`, `captured_at`, `blob_path`, `state`, `attempts`, `next_attempt_at`, `last_error` | Encrypted captures awaiting upload |
-| `sync_state` | `key`, `value`, `updated_at` | Cursors and device settings |
+| `sync_state` | `key`, `value`, `updated_at` | Cursors, settings and the timer anchors (`timer.state`, `timer.started_at`, `timer.last_seen_at`, `timer.accumulated_ms`, `timer.item_id`) |
 
 Schema version lives in `PRAGMA user_version` (currently `1`).
 
