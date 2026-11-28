@@ -272,8 +272,9 @@ Each screen lists its purpose, primary action, key components, permissions and s
 - **Purpose**: answer "what should I do now?"
 - **Widgets** (role-aware):
   - My day: running timer, today's logged time, and every item assigned to you regardless of
-    status (Done included). The list shows up to five items, each with its status badge, and a
-    **More… (n)** control expands the rest; **Show less** collapses it again.
+    status (Done included), ordered In progress → To do → In review → Blocked → Done. The list
+    shows up to five items, each with its status badge, and a **More… (n)** control expands the
+    rest; **Show less** collapses it again.
   - Sprint pulse: active sprint name, days left, progress bar, blocked count.
   - Team activity (managers): active members now, items moved yesterday.
   - Privacy summary (self): captures today, deletions, link to transparency log.
