@@ -4,6 +4,10 @@
 
 param([switch]$Quiet)
 
+# Pick up toolchain entries installed after this shell started (rustup, nvm, nasm, perl).
+$env:Path = [Environment]::GetEnvironmentVariable("Path", "Machine") + ";" +
+    [Environment]::GetEnvironmentVariable("Path", "User") + ";" + $env:Path
+
 $rows = @()
 
 function Add-Row {
