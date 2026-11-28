@@ -396,8 +396,11 @@ carry-over; access control verified for outsider, viewer and member.
 
 ### Epic M3-E3 — Desktop agent foundation
 
-- [ ] **M3-T22** Tauri v2 workspace: React UI + Rust core, IPC commands, tray icon, single
-  instance, auto-start option. *AC*: builds on Windows CI; dev hot reload documented.
+- [x] **M3-T22** Tauri v2 workspace: React UI + Rust core, IPC commands, tray icon, single
+  instance, auto-start option. *AC*: builds on Windows CI; dev hot reload documented. Done
+  2026-11-28: `neatsprint-desktop@5e7a713`, CI run `46155877720` green (Prettier, ESLint,
+  `cargo fmt`, `clippy -D warnings`, tests, `tauri build --debug`); tray, close-to-tray and
+  single instance verified on the built exe; hot reload documented in the desktop README.
 - [ ] **M3-T23** Login + device registration; key pair generation (Ed25519); private key in OS
   keychain; signed request nonce. *AC*: token theft alone cannot be replayed from another device.
 - [ ] **M3-T24** SQLCipher local DB with Argon2id-derived key, schema for `local_tasks`,

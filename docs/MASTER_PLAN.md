@@ -157,18 +157,19 @@ sprint with carry-over, all permission-correct. *(met; exercised in the M2 integ
 - [x] Monitoring: screenshot upload (KMS envelope encryption), pending/visible states
 - [x] Monitoring: privacy window enforcement, deletion pipeline, tombstones, audit
 - [x] Monitoring: retention job (hard delete blobs + metadata; AI embeddings arrive with the AI service)
-- [ ] Desktop: Tauri shell, tray, login, device registration, timer, idle detection
+- [x] Desktop: Tauri v2 shell, tray, single instance, auto-start, IPC status, Windows CI (`M3-T22`)
+- [ ] Desktop: login, device registration, timer, idle detection (`M3-T23`, `M3-T25`)
 - [ ] Desktop: capture engine (multi-monitor, DPI), encryption, local queue
 - [ ] Desktop: review tray (view/delete), transparency log
 - [ ] Desktop: sync engine (push/pull, backoff, conflict resolution), updater
 - [x] Web: my screenshots gallery, deletion flow, personal transparency log
 - [x] Web: manager monitoring gallery (tombstones), session detail
 - [~] Tests: backend/web round-trips, encryption and deletion verified live; the four-hour offline
-  and device-control scenarios still require a real desktop build
+  and device-control scenarios still require the remaining desktop modules
 
 **Exit gate**: the four-hour offline scenario and the deletion-irreversibility scenario pass on a
-real desktop build, evidenced by test artefacts. *(blocked on the desktop agent and Rust/Tauri
-toolchain; backend and web privacy pipeline already verified)*
+real desktop build, evidenced by test artefacts. *(toolchain ready 2026-11-28, ADR-020; blocked on
+the remaining desktop tasks `M3-T23..T36`; backend and web privacy pipeline already verified)*
 
 ### M4 — Reports, Dashboards & Console Polish
 
@@ -228,7 +229,8 @@ toolchain; backend and web privacy pipeline already verified)*
 - [ ] Extract notification service and push token registry
 - [ ] Scaffold Expo mobile with auth, assigned work and offline queue
 - [ ] Add GitHub commit/PR linking with least-privilege tokens
-- [ ] Carry desktop T22–T36 into P2 planning with a Rust/Tauri toolchain owner
+- [x] Carry desktop T22-T36 into P2 planning with a Rust/Tauri toolchain owner - toolchain
+  provisioned and desktop work resumed inside M3 (ADR-020)
 - [ ] Close M5 open items before v1.0.0 (UAT, legal review, target-scale load, staging)
 - [ ] Saved views and command palette (if not delivered in M4)
 
