@@ -20,6 +20,9 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-28 - **Unreleased**: desktop agent development resumed (ADR-020); Windows Rust/Tauri
+  prerequisites documented in `docs/DESKTOP_AGENT_SETUP.md` with a
+  `scripts/check-desktop-prereqs.ps1` verifier.
 - 2026-11-28 - **Unreleased**: dashboard "My day" counts every assigned item in an active sprint
   (items outside an active sprint are excluded, Done is included), orders them In progress →
   To do → In review → Blocked → Done, lists up to five with status badges, and expands the rest

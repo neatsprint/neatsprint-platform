@@ -396,7 +396,8 @@ line in §5 is ticked only when its exit gate passes.
 1. Verify `v1.0.7` on staging (sprint selection, CSV `sprint_id`, timesheet hydration) and confirm
    Google sign-in once the OAuth client carries the local origins and redirect URIs.
 2. Execute the remaining improvements in §14 and `DEVELOPMENT_PLAN.md` §8.1 (`IMP-T05`…`IMP-T10`).
-3. Provision a Rust/Tauri toolchain and Windows capture lab to deliver the deferred desktop agent (`M3-T22..T36`, ADR-019).
+3. Deliver the desktop agent (`M3-T22..T36`) on the Windows Rust/Tauri toolchain (ADR-020; setup
+   in `docs/DESKTOP_AGENT_SETUP.md`).
 4. Complete external legal counsel review of the drafts in `legal/` before opening public cloud sign-ups.
 5. Kick off Phase 2 (Collaboration) once the post-v1.0.2 patch items are closed.
 

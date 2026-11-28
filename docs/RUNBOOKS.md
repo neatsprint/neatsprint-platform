@@ -106,6 +106,15 @@ containers and the network but leaves named volumes, so PostgreSQL, MinIO and Re
 only `-v` deletes them. After `down -v`, run `./scripts/bootstrap.ps1` (dev) or
 `./scripts/staging.ps1` (staging) to recreate and seed.
 
+### Desktop agent toolchain
+
+Windows setup, install commands and verification are in `docs/DESKTOP_AGENT_SETUP.md`.
+Check a machine with:
+
+```powershell
+./scripts/check-desktop-prereqs.ps1
+```
+
 ### Stop everything without losing data
 
 ```powershell

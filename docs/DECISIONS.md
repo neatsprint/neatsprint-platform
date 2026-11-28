@@ -336,6 +336,29 @@ Status values: `Proposed` · `Accepted` · `Rejected` · `Superseded by ADR-xxx`
 
 ---
 
+## ADR-020 - Desktop agent development resumed on a Windows toolchain
+
+- **Status**: Accepted
+- **Date**: 2026-11-28
+- **Context**: ADR-019 parked `M3-T22..T36` until a Rust/Tauri toolchain and a Windows capture lab
+  were available. Laksiri has decided to start desktop development now. The workstation is Windows
+  11 Pro (12 cores, 88 GB free) with WebView2 158, Node 24 via nvm4w, Git and winget, but no Rust,
+  no MSVC C++ tools and no Windows SDK.
+- **Decision**: Resume the desktop agent as **Tauri v2 + Rust + React/TypeScript**, Windows first,
+  and lift the deferral in ADR-019. Baseline toolchain: Rust stable `x86_64-pc-windows-msvc`,
+  Visual Studio 2022 Build Tools with the C++ workload and Windows 11 SDK, **Node 22 LTS** for
+  parity with web/CI, and NASM + Strawberry Perl so SQLCipher can build against vendored OpenSSL.
+  Setup steps live in `docs/DESKTOP_AGENT_SETUP.md`; `scripts/check-desktop-prereqs.ps1` verifies a
+  machine.
+- **Consequences**: `M3-T22..T36` are actionable again and the M3 exit gate (4-hour offline run,
+  desktop deletion evidence) is still open until they land. The desktop repo gains a Windows CI
+  workflow. macOS builds stay deferred (unsigned dev build at `M3-T34` only). No change to the stack
+  choice itself; ADR-019's rationale stands.
+- **Alternatives**: stay on the deferred path until M6; switch to .NET/Avalonia (rejected again for
+  the same reasons as ADR-019).
+
+---
+
 ## Decision Log Summary
 
 | ADR | Title | Status | Milestone |
@@ -359,6 +382,7 @@ Status values: `Proposed` · `Accepted` · `Rejected` · `Superseded by ADR-xxx`
 | 017 | Monotonic time + server clamp | Accepted | M3 |
 | 018 | Runtime language policy (Python / Rust / TS) | Accepted | M3 |
 | 019 | Desktop agent stays Tauri v2 + Rust; deferred | Accepted | M3/M4 |
+| 020 | Desktop agent development resumed on a Windows toolchain | Accepted | M3 |
 
 ## Change Log
 
@@ -367,6 +391,7 @@ Status values: `Proposed` · `Accepted` · `Rejected` · `Superseded by ADR-xxx`
 | 2026-11-21 | ADR-001…017 recorded during initial planning |
 | 2026-11-21 | ADR-018 added: runtime language policy (Python services, Rust for CPU-bound work, Next.js not a backend) |
 | 2026-11-24 | ADR-019 added: keep Tauri v2 + Rust for the desktop agent; defer M3 desktop tasks |
+| 2026-11-28 | ADR-020 added: desktop agent development resumed on the Windows Rust/Tauri toolchain |
 
 ---
 
