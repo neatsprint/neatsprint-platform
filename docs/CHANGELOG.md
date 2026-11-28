@@ -20,6 +20,11 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-28 - **Unreleased**: final brand assets adopted: the neural-brain square
+  (`neatsprint-brain-app-icon.png`) for the app shell, desktop icons and favicon, and the
+  `neatsprint-website-logo-brain.png` banner on the sign-in panel.
+- 2026-11-28 - **Unreleased**: desktop task sync (`M3-T26`): assigned tasks pulled through signed
+  requests into `local_tasks`, quick-switch list ordered by status, Start binds the selected item.
 - 2026-11-28 - **Unreleased**: crash-safe timer (`M3-T25`): start/pause/resume/stop with a
   persisted state machine, 1 s heartbeat and 10 s grace window so a killed process resumes paused
   at the last heartbeat, `GetLastInputInfo` idle hook, and "stop" enqueues a pending worklog.

@@ -40,10 +40,13 @@ no gradients on data surfaces, no glassmorphism, no emoji in navigation.
 ### 2.1 Logo & mark
 
 - Wordmark: **NeatSprint** in Inter SemiBold, tightened tracking (-1%).
-- Mark: a rounded square containing a single diagonal "sprint" stroke that resolves into a check.
-- App icon: mark on `--color-primary-600`, 22% corner radius, no text.
-- Clear space: height of the "N" on all sides. Never stretch, recolour outside the palette, or add
-  effects.
+- Mark (final, 2026-11-28): a neon neural-brain on a deep-blue gradient plate, with a cyan orbit
+  ring and circuit traces. App icon: 505×505, 22% corner radius, no text
+  (`reference/neatsprint-brain-app-icon.png`).
+- Banner lockup: mark + wordmark + "AI POWERED ENTERPRISE AGILE" on a 1536×495 plate
+  (`reference/neatsprint-website-logo-brain.png`). Used on the sign-in brand panel.
+- Usage: app shell and favicon use the square mark; never place the banner on a light surface
+  without the plate, and never stretch or recolour either asset.
 
 ### 2.2 Colour tokens
 

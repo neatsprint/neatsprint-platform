@@ -422,7 +422,12 @@ carry-over; access control verified for outsider, viewer and member.
   enqueues a `pending_worklogs` row. Verified by 4 unit tests and a cross-process probe: start,
   heartbeat at 3 s, kill, 14 s later status reports **Paused / 3 s elapsed** (no dead time),
   then stop queues one entry.
-- [ ] **M3-T26** Task list + quick switch UI, sync from server.
+- [x] **M3-T26** Task list + quick switch UI, sync from server. Done 2026-11-28: `sync_tasks` pulls
+  `/auth/me`, projects and each backlog through signed requests, filters items assigned to the
+  user and upserts them into `local_tasks`; the agent lists cached tasks ordered in progress → to
+  do → review → blocked → done, click-to-select, and Start binds the selected `item_id`. Verified
+  live: two assigned AUTH items cached and read back in order; unit test covers ordering and
+  upsert-in-place.
 - [ ] **M3-T27** Capture engine: randomised interval, multi-monitor selection, DPI-correct,
   encrypt-at-capture to temp store. *AC*: 30-minute soak produces expected count, no leaks.
 - [ ] **M3-T28** Review tray: gallery of pending screenshots, preview (decrypt in memory),
