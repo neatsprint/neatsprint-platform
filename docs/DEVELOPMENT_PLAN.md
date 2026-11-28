@@ -428,8 +428,14 @@ carry-over; access control verified for outsider, viewer and member.
   do → review → blocked → done, click-to-select, and Start binds the selected `item_id`. Verified
   live: two assigned AUTH items cached and read back in order; unit test covers ordering and
   upsert-in-place.
-- [ ] **M3-T27** Capture engine: randomised interval, multi-monitor selection, DPI-correct,
-  encrypt-at-capture to temp store. *AC*: 30-minute soak produces expected count, no leaks.
+- [x] **M3-T27** Capture engine: randomised interval, multi-monitor selection, DPI-correct,
+  encrypt-at-capture to temp store. *AC*: 30-minute soak produces expected count, no leaks. Done
+  2026-11-28: GDI capture per selected monitor (DPI-awareness v2), 3–7 min randomised interval,
+  worker gated on a running timer and idle < 5 min, AES-256-GCM encrypt-before-disk with a keychain
+  key, rows in `pending_screenshots`, cleanup removing deleted rows and orphan blobs. Verified: 10
+  tests including a **30-minute simulated soak** (6 frames, rows == files, cleanup removes the
+  deleted frame); real probe captured 1920×1080, 1.69 MB ciphertext, decrypts to a PNG, cleaned up.
+  A real-time 30-minute soak on the staging machine remains the final gate item.
 - [ ] **M3-T28** Review tray: gallery of pending screenshots, preview (decrypt in memory),
   delete with confirmation, countdown to window close.
 - [ ] **M3-T29** Sync engine: queue worker, exponential backoff, batch sizes, conflict resolution,

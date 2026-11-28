@@ -69,7 +69,7 @@ Residual risks accepted for MVP:
 | Security headers | Gateway and Next.js set nosniff, frame-deny, referrer and CSP headers | Added in M5 |
 | Uploads | MIME allow-list, magic-byte sniffing, 25 MB cap, dedupe hash, quota; ClamAV INSTREAM scanner fails closed | **PASS** — EICAR `422 malware_detected`; scanner down `503 dependency_unavailable` |
 | Screenshot deletion | Blob delete + tombstone + audit + view log | Verified live |
-| Desktop agent | Device binding and SQLCipher store verified (Ed25519 in keychain, per-request proofs, Argon2id-wrapped DB key, plain SQLite cannot read the file); capture encryption and update signing still open | **Partial (M3-T23/T24)** |
+| Desktop agent | Device binding and SQLCipher store verified (Ed25519 in keychain, per-request proofs, Argon2id-wrapped DB key, plain SQLite cannot read the file); captures are AES-256-GCM encrypted before disk; upload window/AI purge and update signing still open | **Partial (M3-T23..T27)** |
 | Dependency/container scans | Dependabot, CodeQL and Trivy 0.69.3 on every image | **PASS** — 0 high/critical across 10 images (`docs/SBOM.md`) |
 | Login lockout | Redis counter, 5 failures / 15 minutes, shared across IAM replicas | **PASS** — `429 account_locked` verified |
 | Secrets | No secrets in git; `.env` ignored; rotation runbook added | Verified |

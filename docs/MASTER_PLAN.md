@@ -162,7 +162,8 @@ sprint with carry-over, all permission-correct. *(met; exercised in the M2 integ
 - [x] Desktop: SQLCipher store with Argon2id-wrapped key and offline queue schema (`M3-T24`)
 - [x] Desktop: crash-safe timer, pause/resume, idle hook, queue-on-stop (`M3-T25`)
 - [x] Desktop: task list + quick switch, assigned-task sync into the local store (`M3-T26`)
-- [ ] Desktop: capture engine (multi-monitor, DPI), encryption, local queue
+- [x] Desktop: capture engine (multi-monitor, DPI), encryption, local queue
+- [ ] Desktop: real-time 30-minute capture soak on the staging machine (M3-T27 gate)
 - [ ] Desktop: review tray (view/delete), transparency log
 - [ ] Desktop: sync engine (push/pull, backoff, conflict resolution), updater
 - [x] Web: my screenshots gallery, deletion flow, personal transparency log

@@ -20,6 +20,10 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-28 - **Unreleased**: encrypted capture engine (`M3-T27`): GDI multi-monitor capture with
+  per-monitor DPI awareness, randomised 3–7 minute interval, captures gated on a running timer and
+  recent input, AES-256-GCM encrypt-before-disk with a keychain key, orphan/deleted cleanup, and a
+  Screenshots card in the agent.
 - 2026-11-28 - **Unreleased**: final brand assets adopted: the neural-brain square
   (`neatsprint-brain-app-icon.png`) for the app shell, desktop icons and favicon, and the
   `neatsprint-website-logo-brain.png` banner on the sign-in panel.
