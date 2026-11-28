@@ -20,6 +20,9 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-28 - **Unreleased**: topbar account menu — the user's name and sign-out moved into a
+  popup behind the initials avatar, which sits flush right; a disabled **Neat AI** placeholder pill
+  sits to its left.
 - 2026-11-28 - **v1.0.8**: Google sign-in failures now name the real cause - a missing
   workspace invitation, an unverifiable token, or a CSRF mismatch - instead of always blaming the
   OAuth configuration.

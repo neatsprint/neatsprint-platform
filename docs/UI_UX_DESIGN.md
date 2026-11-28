@@ -190,7 +190,10 @@ Navigation rules:
 ```
 
 - **Topbar** (56 px): tenant name + enabled apps switcher, global search (`Ctrl/⌘ K`), live timer
-  pill, notification bell, avatar menu.
+  pill, notification bell, and — flush right — a **Neat AI** placeholder pill (dashed outline,
+  disabled, "Neat AI is coming soon") immediately left of the **avatar menu**. The avatar shows the
+  user's initials; clicking it opens a menu with the full name, email and **Sign out**. The name and
+  sign-out control live only in this menu, not inline in the topbar.
 - **Timer pill**: shows `● 01:24:36 · AUTH-142` when running; click opens the timer popover
   (switch task, stop, open desktop). Amber dot = recording; grey = idle.
 - **Sidebar** (240 px): navigation, and at the bottom a **Privacy card** — "Screenshots are on /
