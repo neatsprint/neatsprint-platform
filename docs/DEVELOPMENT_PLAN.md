@@ -409,9 +409,12 @@ carry-over; access control verified for outsider, viewer and member.
   unbound web token unaffected) and the agent's `device_probe` example passes. The access token
   stays in memory because Credential Manager caps an entry at 2560 bytes; only the refresh token
   is at rest.
-- [ ] **M3-T24** SQLCipher local DB with Argon2id-derived key, schema for `local_tasks`,
+- [x] **M3-T24** SQLCipher local DB with Argon2id-derived key, schema for `local_tasks`,
   `pending_worklogs`, `pending_screenshots`, `sync_state`. *AC*: raw file unreadable; key never on
-  disk unwrapped.
+  disk unwrapped. Done 2026-11-28: SQLCipher via `rusqlite` + vendored OpenSSL, random 32-byte DB
+  key sealed with AES-256-GCM under an Argon2id KEK (wrap secret in the OS keychain), envelope in
+  `db.key`. Verified: plain SQLite reports "file is not a database"; schema names absent from the
+  raw file; the key does not appear in the envelope; round-trip test covers reopen and state.
 - [ ] **M3-T25** Timer module: start/stop/switch, monotonic clock, idle detection hook, crash-safe
   resume. *AC*: kill process mid-session → resume reconciles correctly.
 - [ ] **M3-T26** Task list + quick switch UI, sync from server.

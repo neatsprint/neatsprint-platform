@@ -380,7 +380,32 @@ Enforced in code **and** protected by constraints where possible:
 
 ---
 
-## 16. Required Improvements (Post-v1.0.2 Review)
+## 16. Desktop Local Store (client-side)
+
+The agent keeps its offline queue in SQLCipher (AES-256) under
+`%APPDATA%\NeatSprint\agent.db`; `db.key` holds only a sealed envelope.
+
+**Key hierarchy** (`M3-T24`):
+
+1. On first run the agent generates a random 32-byte database key.
+2. A 32-byte wrapping secret is created in the OS keychain (Windows Credential Manager).
+3. Argon2id (m=64 MiB, t=3, p=4, 16-byte salt) derives a KEK from that secret.
+4. AES-256-GCM seals the database key; `{version, salt, nonce, wrapped}` is written to
+   `db.key`. The database key is never stored unwrapped, and the access token stays in memory
+   only (Credential Manager caps an entry at 2560 bytes).
+
+| Table | Columns | Purpose |
+| :--- | :--- | :--- |
+| `local_tasks` | `id`, `project_id`, `sprint_id`, `key`, `title`, `status`, `updated_at` | Offline task cache |
+| `pending_worklogs` | `client_id`, `item_id`, `sprint_id`, `started_at`, `ended_at`, `duration_seconds`, `comment`, `created_at`, `attempts`, `next_attempt_at`, `last_error` | Queued time entries (UUIDv7 client ids) |
+| `pending_screenshots` | `id`, `captured_at`, `blob_path`, `state`, `attempts`, `next_attempt_at`, `last_error` | Encrypted captures awaiting upload |
+| `sync_state` | `key`, `value`, `updated_at` | Cursors and device settings |
+
+Schema version lives in `PRAGMA user_version` (currently `1`).
+
+---
+
+## 17. Required Improvements (Post-v1.0.2 Review)
 
 The following schema and documentation discrepancies between `DATA_MODEL.md` and the live Alembic
 migrations must be reconciled:

@@ -20,6 +20,10 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-28 - **Unreleased**: encrypted local store (`M3-T24`): SQLCipher (AES-256) with a random
+  database key sealed by AES-256-GCM under an Argon2id KEK, wrap secret in the OS keychain; tables
+  `local_tasks`, `pending_worklogs`, `pending_screenshots`, `sync_state`; agent UI shows path,
+  schema version, queue counts and the encryption check.
 - 2026-11-28 - **Unreleased**: device-bound sessions (`M3-T23`): Ed25519 identity in the OS
   keychain, `POST /auth/device-session`, `did` token claim, per-request proofs verified in
   ForwardAuth, single-use nonces, device key lookup in Monitoring, refresh keeps the binding.

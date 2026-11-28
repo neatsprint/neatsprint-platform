@@ -159,6 +159,7 @@ sprint with carry-over, all permission-correct. *(met; exercised in the M2 integ
 - [x] Monitoring: retention job (hard delete blobs + metadata; AI embeddings arrive with the AI service)
 - [x] Desktop: Tauri v2 shell, tray, single instance, auto-start, IPC status, Windows CI (`M3-T22`)
 - [x] Desktop: login, device registration, Ed25519 keychain identity, signed requests (`M3-T23`)
+- [x] Desktop: SQLCipher store with Argon2id-wrapped key and offline queue schema (`M3-T24`)
 - [ ] Desktop: timer, idle detection (`M3-T25`)
 - [ ] Desktop: capture engine (multi-monitor, DPI), encryption, local queue
 - [ ] Desktop: review tray (view/delete), transparency log
