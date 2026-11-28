@@ -48,7 +48,7 @@ if ($rustc -and $cargo) {
 }
 
 if ($rustup) {
-    Add-Row "rustup" "OK" (& rustup --version | Select-Object -First 1) "" -Required
+    Add-Row "rustup" "OK" ((& rustup --version 2>$null | Select-Object -First 1) -join "") "" -Required
 } else {
     Add-Row "rustup" "MISSING" "" "winget install --id Rustlang.Rustup -e" -Required
 }

@@ -30,19 +30,22 @@ build, ~10 minutes more the first time SQLCipher and OpenSSL compile.
 
 ---
 
-## 2. Machine status at 2026-11-28
+## 2. Machine status at 2026-11-28 (installed)
 
 | Check | Result |
 | :--- | :--- |
 | Windows 11 Pro, 12 cores, 88 GB free | ready |
+| Rust `1.100.1`, host `x86_64-pc-windows-msvc` | ready |
+| rustup `1.29.3`, `rustfmt` + `clippy` | ready |
+| VS Build Tools `17.14.37906.3` with VC.Tools | ready |
+| Windows SDK `10.0.26100.0` | ready |
 | WebView2 `158.0.4370.45` | ready |
-| Node `24.18.1` (nvm4w), npm `12.0.2` | switch to 22 LTS for parity |
-| Git, winget, PowerShell 7 | ready |
-| Rust / cargo / rustup | **missing** |
-| MSVC C++ tools (`cl`, `link`) | **missing** (only SSMS is installed) |
-| NASM, Strawberry Perl | **missing** |
+| Node `22.23.5` via nvm4w, npm `10.9.9` | ready |
+| NASM `2.16.01`, Strawberry Perl `5.42.3` | ready |
+| Git `2.55`, winget `1.29` | ready |
+| `cargo build` link smoke test (`Hello, world!`) | pass |
 
-Run `./scripts/check-desktop-prereqs.ps1` for a live version of this table.
+`./scripts/check-desktop-prereqs.ps1` reprints this table live.
 
 ---
 
