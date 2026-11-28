@@ -142,6 +142,7 @@ services:
       BOOTSTRAP_TOKEN: ${BOOTSTRAP_TOKEN:-dev-bootstrap-token-change-me}
       SERVICE_TOKEN: ${BOOTSTRAP_TOKEN:-dev-bootstrap-token-change-me}
       CORE_INTERNAL_URL: http://neatsprint-core:8000
+      MONITORING_INTERNAL_URL: http://neatsprint-monitoring:8000
       OUTBOX_ENABLED: "true"
       RUN_MIGRATIONS: "true"
       S3_ENDPOINT: http://minio:9000

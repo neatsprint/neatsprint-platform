@@ -401,8 +401,14 @@ carry-over; access control verified for outsider, viewer and member.
   2026-11-28: `neatsprint-desktop@5e7a713`, CI run `46155877720` green (Prettier, ESLint,
   `cargo fmt`, `clippy -D warnings`, tests, `tauri build --debug`); tray, close-to-tray and
   single instance verified on the built exe; hot reload documented in the desktop README.
-- [ ] **M3-T23** Login + device registration; key pair generation (Ed25519); private key in OS
+- [x] **M3-T23** Login + device registration; key pair generation (Ed25519); private key in OS
   keychain; signed request nonce. *AC*: token theft alone cannot be replayed from another device.
+  Done 2026-11-28: Ed25519 key pair in Windows Credential Manager, `POST /auth/device-session`
+  issues a `did`-bound token, ForwardAuth verifies the per-request proof and rejects reused
+  nonces; 12-check probe green (no proof, replay, wrong key, device mismatch, refresh binding,
+  unbound web token unaffected) and the agent's `device_probe` example passes. The access token
+  stays in memory because Credential Manager caps an entry at 2560 bytes; only the refresh token
+  is at rest.
 - [ ] **M3-T24** SQLCipher local DB with Argon2id-derived key, schema for `local_tasks`,
   `pending_worklogs`, `pending_screenshots`, `sync_state`. *AC*: raw file unreadable; key never on
   disk unwrapped.

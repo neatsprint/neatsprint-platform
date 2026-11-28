@@ -20,6 +20,10 @@ All notable changes to NeatSprint are recorded here. Format follows
 
 ### Added
 
+- 2026-11-28 - **Unreleased**: device-bound sessions (`M3-T23`): Ed25519 identity in the OS
+  keychain, `POST /auth/device-session`, `did` token claim, per-request proofs verified in
+  ForwardAuth, single-use nonces, device key lookup in Monitoring, refresh keeps the binding.
+  `neatsprint-lib` v0.5.0 carries the device id on principals.
 - 2026-11-28 - **Unreleased**: desktop toolchain installed and verified (ADR-020): Rust 1.100.1
   (MSVC), Build Tools 17.14 + SDK 10.0.26100, Node 22.23.5, NASM, Strawberry Perl; prerequisites
   documented in `docs/DESKTOP_AGENT_SETUP.md` with `scripts/check-desktop-prereqs.ps1`.

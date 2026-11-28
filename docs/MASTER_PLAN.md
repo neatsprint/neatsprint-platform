@@ -158,7 +158,8 @@ sprint with carry-over, all permission-correct. *(met; exercised in the M2 integ
 - [x] Monitoring: privacy window enforcement, deletion pipeline, tombstones, audit
 - [x] Monitoring: retention job (hard delete blobs + metadata; AI embeddings arrive with the AI service)
 - [x] Desktop: Tauri v2 shell, tray, single instance, auto-start, IPC status, Windows CI (`M3-T22`)
-- [ ] Desktop: login, device registration, timer, idle detection (`M3-T23`, `M3-T25`)
+- [x] Desktop: login, device registration, Ed25519 keychain identity, signed requests (`M3-T23`)
+- [ ] Desktop: timer, idle detection (`M3-T25`)
 - [ ] Desktop: capture engine (multi-monitor, DPI), encryption, local queue
 - [ ] Desktop: review tray (view/delete), transparency log
 - [ ] Desktop: sync engine (push/pull, backoff, conflict resolution), updater

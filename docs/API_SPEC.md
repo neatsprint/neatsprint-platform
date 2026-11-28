@@ -145,6 +145,7 @@ Legend: **P** = permission required. All endpoints require authentication unless
 | :--- | :--- | :--- | :--- |
 | POST | `/auth/login` | Email/password login | public |
 | POST | `/auth/refresh` | Rotate refresh token | public (refresh token) |
+| POST | `/auth/device-session` | Bind the session to a registered device (Ed25519 proof, body hash) | - |
 | POST | `/auth/logout` | Revoke current session | — |
 | POST | `/auth/logout-all` | Revoke every session | — |
 | POST | `/auth/forgot-password` | Start reset | public |
